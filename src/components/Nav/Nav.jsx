@@ -77,7 +77,7 @@ const Nav = () => {
               <IoNotifications />
             </button>
 
-            <span className="absolute -top-2 sm:-top-3 -right-1.5 sm:-right-3 bg-pClr rounded-full px-1.5 font-semibold text-sm sm:text-base ">
+            <span className="absolute -top-2 -right-1.5 sm:-right-2.5 bg-pClr rounded-full px-1.5 font-semibold text-sm">
               10
             </span>
           </div>

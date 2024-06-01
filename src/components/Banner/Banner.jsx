@@ -13,6 +13,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 // import required modules
 import { Pagination, Navigation, Autoplay, Keyboard } from 'swiper/modules';
+import { IoIosSearch } from 'react-icons/io';
 
 const Banner = () => {
   return (
@@ -84,10 +85,26 @@ const Banner = () => {
           </div>
         </SwiperSlide>
       </Swiper>
-      <div className="h-[400px] md:min-h-screen absolute top-0 left-0 z-10 w-full flex items-center justify-center ">
-        <h1 className="bannerFont text-4xl md:text-7xl text-white text-center max-w-[750px] mx-auto px-4">
-          Lorem ipsum dolor sit amet consectetur.
+      <div className="h-[400px] md:min-h-screen absolute top-0 left-1/2 -translate-x-1/2 z-10 w-full flex flex-col items-center justify-center max-w-[750px] mx-auto text-center gap-4 px-4 pt-10 sm:pt-0">
+        <h1 className="text-4xl sm:text-5xl font-bold text-center mx-auto">
+          Welcome to University Hostel
         </h1>
+        <p className="text-base sm:text-lg text-slate-200">
+          Log in to view daily meal plans and share your reviews. Enhance your
+          dining experience with easy access to meal information and feedback
+          options.
+          {/* `Welcome! Explore today's meal options, share your feedback, and enjoy a smooth dining experience with easy access to meal details and reviews.` */}
+        </p>
+        <div className="relative w-full max-w-72 sm:max-w-96 sm:mt-7">
+          <input
+            className="py-1.5 sm:py-2 w-full px-3 rounded bg-[#ffffff13] border placeholder-slate-300 outline-none"
+            type="text"
+            placeholder="Search Keyword"
+          />
+          <span className="text-xl absolute -translate-y-1/2 right-3 text-slate-300 top-1/2 cursor-pointer">
+            <IoIosSearch />
+          </span>
+        </div>
       </div>
     </div>
   );
