@@ -1,0 +1,81 @@
+[
+  {
+    "mealImage": "https://example.com/images/spaghetti_bolognese.jpg",
+    "adminName": "John Doe",
+    "description": "A classic Italian pasta dish with rich meat sauce.",
+    "ingredients": [
+      "Spaghetti",
+      "Ground Beef",
+      "Tomato Sauce",
+      "Onion",
+      "Garlic",
+      "Parmesan Cheese"
+    ],
+    "postTime": "2024-05-01T12:00:00Z",
+    "rating": 4.5,
+    "likes": 120
+  },
+  {
+    "mealImage": "https://example.com/images/veggie_burger.jpg",
+    "adminName": "Jane Smith",
+    "description": "A delicious and healthy veggie burger served with a side of fries.",
+    "ingredients": [
+      "Veggie Patty",
+      "Whole Wheat Bun",
+      "Lettuce",
+      "Tomato",
+      "Avocado",
+      "Sweet Potato Fries"
+    ],
+    "postTime": "2024-05-02T18:30:00Z",
+    "rating": 4.7,
+    "likes": 200
+  },
+  {
+    "mealImage": "https://example.com/images/chicken_curry.jpg",
+    "adminName": "Mike Johnson",
+    "description": "Spicy and flavorful chicken curry served with steamed rice.",
+    "ingredients": [
+      "Chicken",
+      "Coconut Milk",
+      "Curry Paste",
+      "Onion",
+      "Garlic",
+      "Rice"
+    ],
+    "postTime": "2024-05-03T13:15:00Z",
+    "rating": 4.8,
+    "likes": 180
+  },
+  {
+    "mealImage": "https://example.com/images/pancakes.jpg",
+    "adminName": "Anna Lee",
+    "description": "Fluffy pancakes served with maple syrup and fresh berries.",
+    "ingredients": [
+      "Flour",
+      "Eggs",
+      "Milk",
+      "Baking Powder",
+      "Maple Syrup",
+      "Berries"
+    ],
+    "postTime": "2024-05-04T08:00:00Z",
+    "rating": 4.6,
+    "likes": 250
+  },
+  {
+    "mealImage": "https://example.com/images/caesar_salad.jpg",
+    "adminName": "Chris Brown",
+    "description": "Crisp Caesar salad with homemade dressing and croutons.",
+    "ingredients": [
+      "Romaine Lettuce",
+      "Caesar Dressing",
+      "Parmesan Cheese",
+      "Croutons",
+      "Chicken"
+    ],
+    "postTime": "2024-05-05T12:45:00Z",
+    "rating": 4.9,
+    "likes": 300
+  }
+]
