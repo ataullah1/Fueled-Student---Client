@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { ImSpinner9 } from 'react-icons/im';
 import ProfileMenu from '../ProfileMenu/ProfileMenu';
 import useAuth from '../../Hooks/useAuth';
+import { IoNotifications } from 'react-icons/io5';
 
 const Nav = () => {
   const [menu, setMenu] = useState(false);
@@ -37,7 +38,7 @@ const Nav = () => {
       }
     >
       <div className=" flex justify-between items-center w-11/12 mx-auto">
-        <button className="text-3xl font-bold">Logo</button>
+        <button className="text-3xl font-bold w-32 border ">Logo</button>
         <div className="hidden md:flex gap-5 items-center navigation">
           <NavLink
             className="py-2 px-5 rounded-md shadow-md shadow-slate-200 text-white font-medium hover:shadow-lg hover:shadow-slate-200 hover:scale-110 duration-300"
@@ -48,9 +49,9 @@ const Nav = () => {
           <NavLink
             className="py-2 px-5 rounded-md shadow-md shadow-slate-200 text-white font-medium  hover:shadow-lg hover:shadow-slate-200 hover:scale-110 duration-300"
             font-medium
-            to={'/today-menu'}
+            to={'/meals'}
           >
-            Today Menu
+            Meals
           </NavLink>
           {isAdmin ? (
             <NavLink
@@ -64,13 +65,23 @@ const Nav = () => {
             <NavLink
               className="py-2 px-5 rounded-md shadow-md shadow-slate-200 text-white font-medium  hover:shadow-lg hover:shadow-slate-200 hover:scale-110 duration-300"
               font-medium
-              to={'/my-orders'}
+              to={'/ upcoming-meals'}
             >
-              My Order
+              Upcoming Meals
             </NavLink>
           )}
         </div>
-        <div className="flex items-center gap-4 relative">
+        <div className="flex gap-2 sm:gap-4 relative">
+          <div className="flex items-center justify-center relative pr-2 sm:pr-0">
+            <button className="text-3xl hover:-translate-y-1 duration-300">
+              <IoNotifications />
+            </button>
+
+            <span className="absolute -top-2 sm:-top-3 -right-1.5 sm:-right-3 bg-pClr rounded-full px-1.5 font-semibold text-sm sm:text-base ">
+              10
+            </span>
+          </div>
+
           {isLoading ? (
             <div className="py-2 w-[60px] h-[60px] flex items-center justify-center text-5xl text-white">
               <ImSpinner9 className="animate-spin" />
@@ -79,12 +90,15 @@ const Nav = () => {
             <ProfileMenu />
           ) : (
             <NavLink to={'/login'}>
-              <button className="py-2 px-6 shadow-md shadow-slate-200 hover:shadow-slate-200 hover:shadow-lg hover:scale-110 duration-300 rounded ">
-                Log in
+              <button className="py-2 px-3 sm:px-6 shadow-md shadow-slate-200 hover:shadow-slate-200 hover:shadow-lg hover:scale-110 duration-300 rounded text-slate-100 font-bold">
+                Join Us
               </button>
             </NavLink>
           )}
-          <button onClick={() => setMenu(!menu)} className="text-4xl md:hidden">
+          <button
+            onClick={() => setMenu(!menu)}
+            className="text-3xl sm:text-4xl md:hidden"
+          >
             <CgMenuRightAlt />
           </button>
           {menu && (

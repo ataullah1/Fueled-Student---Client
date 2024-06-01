@@ -1,3 +1,40 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom Scroll add  */
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Banner arrow edit */
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  color: #fa983a;
+}
+@media screen and (max-width: 640px) {
+  .swiper-button-prev::after,
+  .swiper-button-next::after {
+    transform: scale(0.6);
+  }
+}
+.collapse-title::after {
+  color: #fa983a;
+}
