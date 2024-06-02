@@ -19,8 +19,14 @@ export default function Register() {
   const naviget = useNavigate();
 
   const { mutateAsync } = useMutation({
-    mutationFn: async ({ employeeDta }) => {
-      const { data } = await axioss.post('/employee', employeeDta);
+    mutationFn: async ({ userDta }) => {
+      const { data } = await axioss.post('/new-user', userDta);
+      console.log(data);
+    },
+  });
+  const { mutateAsync: mutateAsyncJwt } = useMutation({
+    mutationFn: async ({ userEmail }) => {
+      const { data } = await axioss.post('/jwt', userEmail);
       console.log(data);
     },
   });
@@ -78,17 +84,18 @@ export default function Register() {
         icon: 'success',
       });
 
-      const employeeName = user.displayName;
-      const employeeEmail = user.email;
-      const employeePhoto = user.photoURL;
-      const power = 'employee';
-      const employeeDta = {
-        employeeName,
-        employeeEmail,
-        employeePhoto,
+      const userName = user.displayName;
+      const userEmail = user.email;
+      const userPhoto = user.photoURL;
+      const power = 'user';
+      const userDta = {
+        userName,
+        userEmail,
+        userPhoto,
         power,
       };
-      await mutateAsync({ employeeDta });
+      await mutateAsync({ userDta });
+      await mutateAsyncJwt({ userEmail });
 
       reset();
       // naviget('/login');
@@ -112,18 +119,17 @@ export default function Register() {
       .then(async (result) => {
         const user = result.user;
 
-        const employeeName = user.displayName;
-        const employeeEmail = user.email;
-        const employeePhoto = user.photoURL;
-        const power = 'employee';
-        const employeeDta = {
-          employeeName,
-          employeeEmail,
-          employeePhoto,
+        const userName = user.displayName;
+        const userEmail = user.email;
+        const userPhoto = user.photoURL;
+        const power = 'user';
+        const userDta = {
+          userName,
+          userEmail,
+          userPhoto,
           power,
         };
-        // console.log(employeeDta);
-        await mutateAsync({ employeeDta });
+        await mutateAsync({ userDta });
 
         naviget(location?.state ? location.state : '/');
         console.log(user);

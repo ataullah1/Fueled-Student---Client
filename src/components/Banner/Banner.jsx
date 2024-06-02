@@ -1,9 +1,6 @@
-const slide1 =
-  'https://img.freepik.com/free-photo/top-view-table-full-delicious-food-composition_23-2149141352.jpg?t=st=1717227266~exp=1717230866~hmac=84538ed341e3d569c716a085f8f7ca83fc8e3695c738c311ab06c911a6cae778&w=900';
-const slide2 =
-  'https://img.freepik.com/premium-photo/vegetable-salad-with-spinach-tomatoes-paprika-pumpkin-seeds-plate-wooden-background-top-view-free-space-your-text-flat-lay_187166-57480.jpg?w=900';
-const slide3 =
-  'https://img.freepik.com/premium-photo/set-seafood-dishes-black-background-pasta-bulgur-rice-couscous-top-view-free-space-your-text_187166-18264.jpg?w=1060';
+const slide1 = 'https://i.ibb.co/QM9KrRX/aaaaaaaaa-min.png';
+const slide2 = 'https://i.ibb.co/YLWXYBX/rrrrrrrrrrrrr-min.png';
+const slide3 = 'https://i.ibb.co/NZdDC3T/eeeeeeeeeeeee-min.png';
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
