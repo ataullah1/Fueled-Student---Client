@@ -87,12 +87,12 @@ export default function Register() {
       const userName = user.displayName;
       const userEmail = user.email;
       const userPhoto = user.photoURL;
-      const power = 'user';
+      const role = 'user';
       const userDta = {
         userName,
         userEmail,
         userPhoto,
-        power,
+        role,
       };
       await mutateAsync({ userDta });
       await mutateAsyncJwt({ userEmail });
@@ -122,12 +122,12 @@ export default function Register() {
         const userName = user.displayName;
         const userEmail = user.email;
         const userPhoto = user.photoURL;
-        const power = 'user';
+        const role = 'user';
         const userDta = {
           userName,
           userEmail,
           userPhoto,
-          power,
+          role,
         };
         await mutateAsync({ userDta });
 

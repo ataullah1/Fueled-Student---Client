@@ -54,12 +54,12 @@ export default function Login() {
       const userName = user.displayName;
       const userEmail = user.email;
       const userPhoto = user.photoURL;
-      const power = 'user';
+      const role = 'user';
       const userDta = {
         userName,
         userEmail,
         userPhoto,
-        power,
+        role,
       };
       await mutateAsync({ userDta });
 
@@ -94,12 +94,12 @@ export default function Login() {
         const userName = user.displayName;
         const userEmail = user.email;
         const userPhoto = user.photoURL;
-        const power = 'user';
+        const role = 'user';
         const userDta = {
           userName,
           userEmail,
           userPhoto,
-          power,
+          role,
         };
         await mutateAsync({ userDta });
 
