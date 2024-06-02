@@ -15,8 +15,13 @@ span {
 h1,
 h2,
 h3,
-button,a {
+button,
+a {
   font-family: 'Nunito', sans-serif;
+}
+.react-tabs__tab--selected {
+  background-color: #ffffff;
+  color: #1e293b;
 }
 
 /* Custom Scroll add  */
