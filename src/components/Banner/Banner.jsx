@@ -14,8 +14,10 @@ import 'swiper/css/navigation';
 // import required modules
 import { Pagination, Navigation, Autoplay, Keyboard } from 'swiper/modules';
 import { IoIosSearch } from 'react-icons/io';
+import useAuth from '../../Hooks/useAuth';
 
 const Banner = () => {
+  const { userDta } = useAuth();
   return (
     <div className="h-[400px] md:min-h-screen">
       <Swiper
@@ -89,11 +91,10 @@ const Banner = () => {
         <h1 className="text-4xl sm:text-5xl font-bold text-center mx-auto">
           Welcome to University Hostel
         </h1>
-        <p className="text-base sm:text-lg text-slate-200">
-          Log in to view daily meal plans and share your reviews. Enhance your
-          dining experience with easy access to meal information and feedback
-          options.
-          {/* `Welcome! Explore today's meal options, share your feedback, and enjoy a smooth dining experience with easy access to meal details and reviews.` */}
+        <p className="text-base sm:text-lg text-slate-200 px-10">
+          {userDta
+            ? `Welcome! Explore today's meal options, share your feedback, and enjoy a smooth dining experience with easy access to meal details and reviews.`
+            : `Log in to view daily meal plans and share your reviews. Enhance your dining experience with easy access to meal information and feedback options.`}
         </p>
         <div className="relative w-full max-w-72 sm:max-w-96 sm:mt-7">
           <input

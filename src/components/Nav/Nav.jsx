@@ -71,15 +71,17 @@ const Nav = () => {
             </NavLink>
           )}
         </div>
-        <div className="flex gap-2 sm:gap-4 relative">
-          <div className="flex items-center justify-center relative pr-2 sm:pr-0">
-            <button className="text-3xl hover:-translate-y-1 duration-300">
-              <IoNotifications />
-            </button>
+        <div className="flex gap-2 sm:gap-4">
+          <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center relative pr-2 sm:pr-0 hover:-translate-y-1 duration-300">
+              <button className="text-3xl">
+                <IoNotifications />
+              </button>
 
-            <span className="absolute -top-2 -right-1.5 sm:-right-2.5 bg-pClr rounded-full px-1.5 font-semibold text-sm">
-              10
-            </span>
+              <span className="absolute -top-3 -right-1.5 sm:-right-2.5 bg-pClr rounded-full px-1.5 font-semibold text-sm">
+                10
+              </span>
+            </div>
           </div>
 
           {isLoading ? (
