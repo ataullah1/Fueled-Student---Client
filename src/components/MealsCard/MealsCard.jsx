@@ -8,13 +8,17 @@ const MealsCard = ({ data }) => {
       <div
         className="bg-cover bg-center h-60 rounded-md w-full bg-green-400 relative"
         style={{
-          backgroundImage: `url('https://i.ibb.co/PwXW3g8/sdfsaf.jpg')`,
+          backgroundImage: `url(${
+            data.mealImage
+              ? data.mealImage
+              : 'https://i.ibb.co/PwXW3g8/sdfsaf.jpg'
+          })`,
         }}
       >
-        <div className="bg-[#fa973ab3] text-white absolute top-3 right-3 rounded-full px-2 flex items-center gap-1">
+        <div className="bg-[#fa973ab3] text-slate-100 absolute top-3 right-3 rounded-full px-2 flex items-center gap-1">
           <FaRegStar /> {data?.rating}
         </div>
-        <h1 className="bg-[#00000060] text-white absolute top-2 left-2 rounded-full px-2 flex items-center gap-1 text-2xl font-bold">
+        <h1 className="bg-[#00000060] text-slate-100 absolute top-2 left-2 rounded-full px-2 flex items-center gap-1 text-2xl font-bold">
           <FaDollarSign />
           {data?.price < 10 ? `0${data?.price}` : data.price}
         </h1>

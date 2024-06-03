@@ -19,8 +19,8 @@ export default function Register() {
   const naviget = useNavigate();
 
   const { mutateAsync } = useMutation({
-    mutationFn: async ({ userDta }) => {
-      const { data } = await axioss.post('/new-user', userDta);
+    mutationFn: async ({ users }) => {
+      const { data } = await axioss.post('/new-user', users);
       console.log(data);
     },
   });
@@ -88,13 +88,13 @@ export default function Register() {
       const userEmail = user.email;
       const userPhoto = user.photoURL;
       const role = 'user';
-      const userDta = {
+      const users = {
         userName,
         userEmail,
         userPhoto,
         role,
       };
-      await mutateAsync({ userDta });
+      await mutateAsync({ users });
       await mutateAsyncJwt({ userEmail });
 
       reset();
@@ -123,13 +123,13 @@ export default function Register() {
         const userEmail = user.email;
         const userPhoto = user.photoURL;
         const role = 'user';
-        const userDta = {
+        const users = {
           userName,
           userEmail,
           userPhoto,
           role,
         };
-        await mutateAsync({ userDta });
+        await mutateAsync({ users });
 
         naviget(location?.state ? location.state : '/');
         console.log(user);

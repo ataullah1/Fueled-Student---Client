@@ -17,8 +17,8 @@ export default function Login() {
   const location = useLocation();
 
   const { mutateAsync } = useMutation({
-    mutationFn: async ({ userDta }) => {
-      const { data } = await axioss.post('/new-user', userDta);
+    mutationFn: async ({ users }) => {
+      const { data } = await axioss.post('/new-user', users);
       console.log(data);
     },
   });
@@ -55,13 +55,13 @@ export default function Login() {
       const userEmail = user.email;
       const userPhoto = user.photoURL;
       const role = 'user';
-      const userDta = {
+      const users = {
         userName,
         userEmail,
         userPhoto,
         role,
       };
-      await mutateAsync({ userDta });
+      await mutateAsync({ users });
 
       Swal.fire({
         title: 'Good job!',
@@ -95,13 +95,13 @@ export default function Login() {
         const userEmail = user.email;
         const userPhoto = user.photoURL;
         const role = 'user';
-        const userDta = {
+        const users = {
           userName,
           userEmail,
           userPhoto,
           role,
         };
-        await mutateAsync({ userDta });
+        await mutateAsync({ users });
 
         naviget(location?.state ? location.state : '/');
         console.log(user);
