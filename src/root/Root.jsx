@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import Nav from '../components/Nav/Nav';
 import Footer from '../components/Footer/Footer';
 import { IoMdArrowUp } from 'react-icons/io';
@@ -6,6 +6,11 @@ import { useEffect, useState } from 'react';
 
 const Root = () => {
   const [scrolled, setScrolled] = useState(false);
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [pathname]);
+
   useEffect(() => {
     const handleScrolled = () => {
       if (window.scrollY > 0) {
