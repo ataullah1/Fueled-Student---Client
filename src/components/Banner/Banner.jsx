@@ -93,9 +93,9 @@ const Banner = () => {
             ? `Welcome! Explore today's meal options, share your feedback, and enjoy a smooth dining experience with easy access to meal details and reviews.`
             : `Log in to view daily meal plans and share your reviews. Enhance your dining experience with easy access to meal information and feedback options.`}
         </p>
-        <div className="relative w-full max-w-72 sm:max-w-96 sm:mt-7">
+        <div className="relative w-full max-w-72 sm:max-w-[450px] sm:mt-7">
           <input
-            className="py-1.5 sm:py-2 w-full px-3 rounded bg-[#ffffff13] border placeholder-slate-300 outline-none"
+            className="py-1.5 sm:py-2 w-full px-5 pr-8 rounded-full bg-[#ffffff13] border placeholder-slate-300 outline-none"
             type="text"
             placeholder="Search Keyword"
           />

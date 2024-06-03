@@ -4,6 +4,7 @@ import About from '../pages/About/About';
 import Login from '../pages/Login/Login';
 import Register from '../pages/Register/Register';
 import Root from '../root/Root';
+import Details from '../pages/MealsDetails/Details';
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Home />,
+      },
+      {
+        path: '/meal/:id',
+        element: <Details />,
       },
       {
         path: '/about',

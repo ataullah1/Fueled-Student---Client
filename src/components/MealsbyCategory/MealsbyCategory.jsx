@@ -13,10 +13,10 @@ const MealsbyCategory = () => {
       return data;
     },
   });
-  const { data: breackfast = [] } = useQuery({
+  const { data: breakfast = [] } = useQuery({
     queryKey: ['breackfast'],
     queryFn: async () => {
-      const { data } = await axioss.get('/breackfast');
+      const { data } = await axioss.get('/breakfast');
       return data;
     },
   });
@@ -36,7 +36,7 @@ const MealsbyCategory = () => {
   });
 
   console.log(meals);
-  console.log('Breackfast:>', breackfast);
+  console.log('breakfast:>', breakfast);
   console.log('Dinner:>', dinner);
   console.log('lunch:>', lunch);
   return (
@@ -68,13 +68,25 @@ const MealsbyCategory = () => {
             </div>
           </TabPanel>
           <TabPanel>
-            <h2>Any content 2</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {breakfast.map((dta) => (
+                <MealsCard key={dta._id} data={dta} />
+              ))}
+            </div>
           </TabPanel>
           <TabPanel>
-            <h2>Any content 3</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {lunch.map((dta) => (
+                <MealsCard key={dta._id} data={dta} />
+              ))}
+            </div>
           </TabPanel>
           <TabPanel>
-            <h2>Any content 4</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {dinner.map((dta) => (
+                <MealsCard key={dta._id} data={dta} />
+              ))}
+            </div>
           </TabPanel>
         </Tabs>
       </div>
