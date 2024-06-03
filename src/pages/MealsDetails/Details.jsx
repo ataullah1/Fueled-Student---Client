@@ -5,8 +5,10 @@ import { IoMdTime } from 'react-icons/io';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { useState } from 'react';
 import useAxiosPub from '../../Hooks/useAxiosPub';
+import useAuth from '../../Hooks/useAuth';
 
 const Details = () => {
+  const { userDta } = useAuth();
   const [like, setLike] = useState(false);
   const axiosSec = useAxiosSec();
   const axiosPub = useAxiosPub();
@@ -24,7 +26,7 @@ const Details = () => {
 
   const { mutateAsync } = useMutation({
     mutationFn: async (countData) => {
-      const { data } = await axiosSec.patch('/like-count', countData);
+      const { data } = await axiosSec.put('/like-count', countData);
       console.log(data);
       return data;
     },
@@ -76,15 +78,18 @@ const Details = () => {
   const handleLike = async () => {
     setLike(!like);
     console.log(!like);
+    const email = userDta.email;
     if (!like) {
       const count = 1;
-      const countData = { id, count };
+      const countLike = 1;
+      const countData = { id, count, email, countLike };
       // console.log(countData);
       await mutateAsync(countData);
       console.log('Count barbeeeeeeeeee');
     } else {
       const count = -1;
-      const countData = { id, count };
+      const countLike = 0;
+      const countData = { id, count, email, countLike };
       // console.log(countData);
       await mutateAsync(countData);
       console.log('count Combeeeeeeeee');
