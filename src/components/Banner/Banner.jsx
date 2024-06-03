@@ -86,7 +86,7 @@ const Banner = () => {
       </Swiper>
       <div className="h-[400px] md:min-h-screen absolute top-0 left-1/2 -translate-x-1/2 z-10 w-full flex flex-col items-center justify-center max-w-[750px] mx-auto text-center gap-4 px-4 pt-10 sm:pt-0">
         <h1 className="text-4xl sm:text-5xl font-bold text-center mx-auto">
-          Welcome to University Hostel
+          Welcome to our University Hostel
         </h1>
         <p className="text-base sm:text-lg text-slate-200 px-10">
           {userDta

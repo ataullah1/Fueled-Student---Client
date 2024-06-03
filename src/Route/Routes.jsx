@@ -5,6 +5,7 @@ import Login from '../pages/Login/Login';
 import Register from '../pages/Register/Register';
 import Root from '../root/Root';
 import Details from '../pages/MealsDetails/Details';
+// import PrivetRoute from './PrivetRoute';
 
 const router = createBrowserRouter([
   {

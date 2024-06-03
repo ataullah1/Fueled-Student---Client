@@ -35,10 +35,10 @@ const MealsbyCategory = () => {
     },
   });
 
-  console.log(meals);
-  console.log('breakfast:>', breakfast);
-  console.log('Dinner:>', dinner);
-  console.log('lunch:>', lunch);
+  // console.log(meals);
+  // console.log('breakfast:>', breakfast);
+  // console.log('Dinner:>', dinner);
+  // console.log('lunch:>', lunch);
   return (
     <div className="text-center py-10">
       <h1 className="text-5xl font-bold"> Meals by Category</h1>
