@@ -7,6 +7,9 @@ import { IoMdClose } from 'react-icons/io';
 import { LuUploadCloud } from 'react-icons/lu';
 import Swal from 'sweetalert2';
 import useAxiosSec from '../../Hooks/useAxiosSec';
+import axios from 'axios';
+import useAuth from '../../Hooks/useAuth';
+import { PropType } from 'prop-types';
 
 export default function AddReview({ id }) {
   const axiosSec = useAxiosSec();
@@ -14,12 +17,24 @@ export default function AddReview({ id }) {
   const [showName, setShowName] = useState({});
   const [showImagePreview, setShowImagePreview] = useState({});
   const fileInputRef = useRef();
+  const [loding, setLoading] = useState();
+  const { userDta } = useAuth();
+  const reviewUserName = userDta?.displayName;
+  const reviewUserPhoto = userDta?.photoURL;
+  const reviewUserEmail = userDta?.email;
 
   // Post new review
   const { mutateAsync } = useMutation({
     mutationFn: async ({ review }) => {
       const { data } = await axiosSec.post('/post-review', review);
       console.log(data);
+    },
+    onSuccess: () => {
+      Swal.fire({
+        title: 'Thank You',
+        text: 'Your review has been successfully posted.',
+        icon: 'success',
+      });
     },
   });
 
@@ -36,7 +51,7 @@ export default function AddReview({ id }) {
     reset,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     if (rating < 1) {
       Swal.fire({
         title: 'Please give your rating',
@@ -45,15 +60,50 @@ export default function AddReview({ id }) {
       });
       return;
     }
-    console.log(data);
-    reset();
-    setRating(0);
+    const detail = data.YourOpinion;
+    // console.log(data);
+
+    try {
+      setLoading(true);
+      const imagess = new FormData();
+      imagess.append('image', showName);
+      const { data } = await axios.post(
+        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API}`,
+        imagess
+      );
+      const image1 = data.data.display_url;
+      const postId = id;
+      const review = {
+        rating,
+        detail,
+        image1,
+        postId,
+        reviewUserName,
+        reviewUserPhoto,
+        reviewUserEmail,
+      };
+      console.log(review);
+      await mutateAsync({ review });
+
+      setLoading(false);
+      reset();
+      setRating(0);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      Swal.fire({
+        title: 'Oops...!',
+        text: `Sorry, your review could not be Posted ! "${error.message}"`,
+        icon: 'error',
+      });
+    }
   };
-  console.log(errors);
+  console.log('From Error:', errors);
+  console.log('Loding Status: ', loding);
   return (
     <div>
       <h3 className="mb-2 font-semibold text-xl">
-        Add Photo{' '}
+        Add Photo
         <span className="text-slate-300 font-normal text-sm">
           (You can skip it if you want)
         </span>
@@ -83,7 +133,7 @@ export default function AddReview({ id }) {
             </div>
           ) : (
             <label
-              className=" mx-auto flex w-full flex-col items-center justify-center space-y-1 rounded-lg border-2 border-dashed border-gray-400 p-3 bg-transparent"
+              className=" mx-auto flex w-full flex-col items-center justify-center space-y-1 rounded-lg border-2 border-dashed border-gray-400 p-3 bg-transparent cursor-pointer"
               htmlFor="file5"
             >
               <span className="text-5xl">
@@ -149,3 +199,6 @@ export default function AddReview({ id }) {
     </div>
   );
 }
+AddReview.propTypes = {
+  id: PropType.string,
+};

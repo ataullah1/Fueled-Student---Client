@@ -111,7 +111,7 @@ export default function Register() {
     }
     // reset();
   };
-  console.log(errors);
+  // console.log(errors);
 
   // all Social Login
   const socialLogin = (socialLogin) => {
