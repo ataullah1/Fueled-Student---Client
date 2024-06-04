@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import useAxiosSec from '../../Hooks/useAxiosSec';
 import { IoMdTime } from 'react-icons/io';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useAxiosPub from '../../Hooks/useAxiosPub';
 import useAuth from '../../Hooks/useAuth';
 
@@ -22,7 +22,24 @@ const Details = () => {
       return data;
     },
   });
-  console.log(data);
+  // console.log(data);
+  const { data: likedCount = {}, refetch: counted } = useQuery({
+    queryKey: ['liked', id],
+    queryFn: async () => {
+      const { data } = await axiosPub.get(
+        `/liked-count?id=${id}&email=${userDta.email}`
+      );
+      return data;
+    },
+  });
+  // console.log(likedCount);
+  useEffect(() => {
+    if (likedCount) {
+      setLike(true);
+    } else {
+      setLike(false);
+    }
+  }, [likedCount]);
 
   const { mutateAsync } = useMutation({
     mutationFn: async (countData) => {
@@ -32,6 +49,7 @@ const Details = () => {
     },
     onSuccess: () => {
       refetch();
+      counted();
     },
   });
 
@@ -76,24 +94,17 @@ const Details = () => {
   let likeCount = likes;
 
   const handleLike = async () => {
-    setLike(!like);
-    console.log(!like);
+    const newLikeState = !like;
+    setLike(newLikeState);
+    console.log(newLikeState);
+
     const email = userDta.email;
-    if (!like) {
-      const count = 1;
-      const countLike = 1;
-      const countData = { id, count, email, countLike };
-      // console.log(countData);
-      await mutateAsync(countData);
-      console.log('Count barbeeeeeeeeee');
-    } else {
-      const count = -1;
-      const countLike = 0;
-      const countData = { id, count, email, countLike };
-      // console.log(countData);
-      await mutateAsync(countData);
-      console.log('count Combeeeeeeeee');
-    }
+    const count = newLikeState ? 1 : -1;
+    const liked = newLikeState ? 1 : 0;
+    const countData = { id, count, email, liked };
+
+    await mutateAsync(countData);
+    console.log(newLikeState ? 'Count barbeeeeeeeeee' : 'Count Combeeeeeeeee');
   };
   return (
     <div>
