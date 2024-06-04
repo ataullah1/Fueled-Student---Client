@@ -28,6 +28,16 @@ const Details = () => {
     },
   });
   // console.log(data);
+
+  const { data: reviews = [], refetch: reviewss } = useQuery({
+    queryKey: ['reviews', id],
+    queryFn: async () => {
+      const { data } = await axiosPub.get(`/read-review/${id}`);
+      return data;
+    },
+  });
+  console.log('reviews:==', reviews);
+
   const { data: likedCount = {}, refetch: counted } = useQuery({
     queryKey: ['liked', id],
     queryFn: async () => {
@@ -51,35 +61,39 @@ const Details = () => {
     },
   });
 
-  const timeAgo = (postDate, postTime) => {
-    const postDateTime = new Date(`${postDate}T${postTime}Z`);
-    const now = new Date();
+  function timeAgo(timestamp) {
+    const currentTime = new Date();
+    const parsedTime = new Date(timestamp);
+    const timeDifference = currentTime - parsedTime;
 
-    // Calculate the difference in milliseconds
-    const diffInMs = now - postDateTime;
+    const seconds = Math.floor(timeDifference / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    const months = Math.floor(days / 30);
+    const years = Math.floor(days / 365);
 
-    // Calculate the difference in hours and days
-    const diffInHours = diffInMs / (1000 * 60 * 60);
-    const diffInDays = diffInHours / 24;
-
-    // Determine the appropriate display message
-    if (diffInHours < 24) {
-      return `${
-        isNaN(Math.floor(diffInHours)) ? '0' : Math.floor(diffInHours)
-      } hours ago`;
+    if (years > 0) {
+      return `${years} years ago`;
+    } else if (months > 0) {
+      return `${months} months ago`;
+    } else if (days > 0) {
+      return `${days} days ago`;
+    } else if (hours > 0) {
+      return `${hours} hours ago`;
+    } else if (minutes > 0) {
+      return `${minutes} minutes ago`;
     } else {
-      return `${
-        isNaN(Math.floor(diffInDays)) ? '0' : Math.floor(diffInDays)
-      } days ago`;
+      return `${seconds} seconds ago`;
     }
-  };
+  }
 
   const {
     likes = '00',
     mealImage,
     mealType,
-    postDate,
-    postTime,
+    postDate = '0000-00-00',
+    postTime = '00:00:00',
     price = '00',
     rating,
     title,
@@ -87,7 +101,8 @@ const Details = () => {
     description,
     ingredients = [],
   } = data;
-  const time = timeAgo(postDate, postTime);
+  const time = timeAgo(`${postDate} ${postTime}`);
+  console.log(`${postDate} ${postTime}`);
   let likeCount = likes;
 
   const handleLike = async () => {
@@ -116,9 +131,8 @@ const Details = () => {
     const count = newLikeState ? 1 : -1;
     const liked = newLikeState ? 1 : 0;
     const countData = { id, count, email, liked };
-
     await mutateAsync(countData);
-    console.log(newLikeState ? 'Count barbeeeeeeeeee' : 'Count Combeeeeeeeee');
+    // console.log(newLikeState ? 'Count barbeeeeeeeeee' : 'Count Combeeeeeeeee');
   };
 
   useEffect(() => {
@@ -224,10 +238,9 @@ const Details = () => {
             </a>
           </div>
           <div className="flex flex-col gap-4">
-            <ReviewPost />
-            <ReviewPost />
-            <ReviewPost />
-            <ReviewPost />
+            {reviews.map((dta) => (
+              <ReviewPost key={dta._id} revireDta={dta} />
+            ))}
           </div>
 
           {/* Add review from */}
@@ -236,7 +249,7 @@ const Details = () => {
             id="add-review"
             className="p-3 border border-slate-500 rounded-md"
           >
-            <AddReview id={id} />
+            <AddReview id={id} reviewss={reviewss} />
           </div>
         </div>
       </div>

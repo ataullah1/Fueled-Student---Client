@@ -9,27 +9,50 @@ import Swal from 'sweetalert2';
 import useAxiosSec from '../../Hooks/useAxiosSec';
 import axios from 'axios';
 import useAuth from '../../Hooks/useAuth';
-import { PropType } from 'prop-types';
+import { ImSpinner9 } from 'react-icons/im';
+import PropTypes from 'prop-types';
 
-export default function AddReview({ id }) {
+export default function AddReview({ id, reviewss }) {
+  // console.log('id', id);
   const axiosSec = useAxiosSec();
   const [rating, setRating] = useState(0);
   const [showName, setShowName] = useState({});
   const [showImagePreview, setShowImagePreview] = useState({});
   const fileInputRef = useRef();
-  const [loding, setLoading] = useState();
+  const [loding, setLoading] = useState(false);
   const { userDta } = useAuth();
   const reviewUserName = userDta?.displayName;
   const reviewUserPhoto = userDta?.photoURL;
   const reviewUserEmail = userDta?.email;
+  // Now time
+  // Function to format the current date and time
+  function getCurrentDateTimeFormatted() {
+    // Create a Date object for the current date and time
+    let now = new Date();
+
+    // Get individual components
+    let year = now.getFullYear();
+    let month = (now.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-based
+    let day = now.getDate().toString().padStart(2, '0');
+    let hours = now.getHours().toString().padStart(2, '0');
+    let minutes = now.getMinutes().toString().padStart(2, '0');
+    let seconds = now.getSeconds().toString().padStart(2, '0');
+
+    // Return formatted string
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  }
+  // Output formatted current date and time
+  const time = getCurrentDateTimeFormatted();
+  // console.log(time);
 
   // Post new review
   const { mutateAsync } = useMutation({
-    mutationFn: async ({ review }) => {
+    mutationFn: async (review) => {
       const { data } = await axiosSec.post('/post-review', review);
       console.log(data);
     },
     onSuccess: () => {
+      reviewss();
       Swal.fire({
         title: 'Thank You',
         text: 'Your review has been successfully posted.',
@@ -44,7 +67,7 @@ export default function AddReview({ id }) {
     fileInputRef.current.value = '';
   };
 
-  console.log(showName);
+  // console.log(showName);
   const {
     register,
     handleSubmit,
@@ -65,13 +88,18 @@ export default function AddReview({ id }) {
 
     try {
       setLoading(true);
-      const imagess = new FormData();
-      imagess.append('image', showName);
-      const { data } = await axios.post(
-        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API}`,
-        imagess
-      );
-      const image1 = data.data.display_url;
+      let image1 = null;
+      if (showName.length > 0) {
+        const imagess = new FormData();
+        imagess.append('image', showName);
+        const { data } = await axios.post(
+          `https://api.imgbb.com/1/upload?key=${
+            import.meta.env.VITE_IMGBB_API
+          }`,
+          imagess
+        );
+        image1 = data.data.display_url;
+      }
       const postId = id;
       const review = {
         rating,
@@ -81,11 +109,15 @@ export default function AddReview({ id }) {
         reviewUserName,
         reviewUserPhoto,
         reviewUserEmail,
+        time,
       };
-      console.log(review);
-      await mutateAsync({ review });
+      console.log('Review Datas:=====', review);
+      await mutateAsync(review);
 
       setLoading(false);
+      setShowName('');
+      setShowImagePreview('');
+      fileInputRef.current.value = '';
       reset();
       setRating(0);
     } catch (error) {
@@ -98,8 +130,8 @@ export default function AddReview({ id }) {
       });
     }
   };
-  console.log('From Error:', errors);
-  console.log('Loding Status: ', loding);
+  // console.log('From Error:', errors);
+  // console.log('Loding Status: ', loding);
   return (
     <div>
       <h3 className="mb-2 font-semibold text-xl">
@@ -190,15 +222,22 @@ export default function AddReview({ id }) {
             Please Input Your Your Opinion Minimum 20 Character!
           </p>
         )}
-        <input
-          type="submit"
-          value={'Save Review'}
-          className="py-2 px-10 mx-auto block hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer rounded-md bg-pClr text-slate-100 font-semibold mt-3"
-        />
+        {loding ? (
+          <p className="py-2 w-44 mx-auto block duration-300 cursor-progress rounded-md bg-pClr text-slate-100 mt-3">
+            <ImSpinner9 className="animate-spin text-2xl mx-auto" />
+          </p>
+        ) : (
+          <input
+            type="submit"
+            value={'Save Review'}
+            className="py-2 w-44 mx-auto block hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer rounded-md bg-pClr text-slate-100 font-semibold mt-3"
+          />
+        )}
       </form>
     </div>
   );
 }
 AddReview.propTypes = {
-  id: PropType.string,
+  id: PropTypes.string,
+  reviewss: PropTypes.func,
 };
