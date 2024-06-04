@@ -15,6 +15,7 @@ export default function Login() {
   const [eye, setEye] = useState(false);
   const naviget = useNavigate();
   const location = useLocation();
+  console.log(location);
 
   const { mutateAsync } = useMutation({
     mutationFn: async ({ users }) => {
@@ -68,7 +69,9 @@ export default function Login() {
         text: 'Your account has been successfully Login.',
         icon: 'success',
       });
-      naviget(location?.state ? location.state : '/');
+      if (user) {
+        naviget(location?.state ? location.state : '/');
+      }
 
       reset();
       // naviget('/login');
@@ -102,9 +105,10 @@ export default function Login() {
           role,
         };
         await mutateAsync({ users });
-
-        naviget(location?.state ? location.state : '/');
         console.log(user);
+        if (user) {
+          naviget(location?.state ? location.state : '/');
+        }
         Swal.fire({
           title: 'Good job!',
           text: 'Your account has been successfully logged in.',

@@ -1,14 +1,19 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useAxiosSec from '../../Hooks/useAxiosSec';
 import { IoMdTime } from 'react-icons/io';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import useAxiosPub from '../../Hooks/useAxiosPub';
 import useAuth from '../../Hooks/useAuth';
+import Swal from 'sweetalert2';
+import { Rating } from '@smastrom/react-rating';
+import ReviewPost from '../../components/ReviewPost/ReviewPost';
+import AddReview from '../../components/AddReview/AddReview';
 
 const Details = () => {
   const { userDta } = useAuth();
+  const naviget = useNavigate();
   const [like, setLike] = useState(false);
   const axiosSec = useAxiosSec();
   const axiosPub = useAxiosPub();
@@ -27,19 +32,12 @@ const Details = () => {
     queryKey: ['liked', id],
     queryFn: async () => {
       const { data } = await axiosPub.get(
-        `/liked-count?id=${id}&email=${userDta.email}`
+        `/liked-count?id=${id}&email=${userDta?.email}`
       );
       return data;
     },
   });
   // console.log(likedCount);
-  useEffect(() => {
-    if (likedCount) {
-      setLike(true);
-    } else {
-      setLike(false);
-    }
-  }, [likedCount]);
 
   const { mutateAsync } = useMutation({
     mutationFn: async (countData) => {
@@ -84,7 +82,6 @@ const Details = () => {
     postTime,
     price = '00',
     rating,
-    _id,
     title,
     adminName,
     description,
@@ -94,11 +91,28 @@ const Details = () => {
   let likeCount = likes;
 
   const handleLike = async () => {
+    if (!userDta) {
+      Swal.fire({
+        title: 'You Are Not Login!',
+        text: 'You are not logged in, please ensure your account by logging in first.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'I want to login my account',
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          naviget('/login');
+        }
+      });
+      return;
+    }
+
     const newLikeState = !like;
     setLike(newLikeState);
     console.log(newLikeState);
 
-    const email = userDta.email;
+    const email = userDta?.email;
     const count = newLikeState ? 1 : -1;
     const liked = newLikeState ? 1 : 0;
     const countData = { id, count, email, liked };
@@ -106,6 +120,14 @@ const Details = () => {
     await mutateAsync(countData);
     console.log(newLikeState ? 'Count barbeeeeeeeeee' : 'Count Combeeeeeeeee');
   };
+
+  useEffect(() => {
+    if (likedCount) {
+      setLike(true);
+    } else {
+      setLike(false);
+    }
+  }, [likedCount]);
   return (
     <div>
       <div
@@ -141,7 +163,7 @@ const Details = () => {
                   }`}
                   onClick={handleLike}
                 >
-                  {like ? <FaHeart /> : <FaRegHeart />}
+                  {like && userDta ? <FaHeart /> : <FaRegHeart />}
                 </span>
               </div>
             </div>
@@ -180,14 +202,39 @@ const Details = () => {
             <h3 className="text-2xl py-2 font-semibold">Description:</h3>
             <p>{description}</p>
           </div>
-          <div>
-            <div></div>
-            <button></button>
+          <div className="flex items-center justify-between py-6">
+            <div className="flex items-center gap-1">
+              <Rating style={{ maxWidth: 180 }} value={rating} readOnly />
+              <h1 className="text-2xl">(234)</h1>
+            </div>
+            <button className="py-2 px-5 bg-pClr rounded-md text-slate-100 font-semibold hover:scale-110 duration-200">
+              Meal Request
+            </button>
           </div>
 
-          <div className="h-[1px] bg-slate-600 w-full my-8"></div>
+          <div className="h-[1px] bg-slate-600 w-full mb-20" />
           {/* Review Part */}
-          <h2 className="text-2xl font-semibold">Reviews:</h2>
+          <div className="flex items-center justify-between pb-3">
+            <h2 className="text-3xl font-semibold">Reviews:</h2>
+            <a
+              href="#add-review"
+              className="px-3 py-1 border rounded-md hover:-translate-y-2 duration-300"
+            >
+              Add Review
+            </a>
+          </div>
+          <div className="flex flex-col gap-4">
+            <ReviewPost />
+            <ReviewPost />
+            <ReviewPost />
+            <ReviewPost />
+          </div>
+
+          {/* Add review from */}
+          <div id="add-review" className="p-3 border rounded-md mt-10">
+            <h1 className="text-3xl font-semibold pb-3">Add Your Review</h1>
+            <AddReview />
+          </div>
         </div>
       </div>
     </div>

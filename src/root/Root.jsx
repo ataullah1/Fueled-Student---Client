@@ -3,6 +3,7 @@ import Nav from '../components/Nav/Nav';
 import Footer from '../components/Footer/Footer';
 import { IoMdArrowUp } from 'react-icons/io';
 import { useEffect, useState } from 'react';
+import '@smastrom/react-rating/style.css';
 
 const Root = () => {
   const [scrolled, setScrolled] = useState(false);
