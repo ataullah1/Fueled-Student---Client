@@ -4,6 +4,7 @@ import Footer from '../components/Footer/Footer';
 import { IoMdArrowUp } from 'react-icons/io';
 import { useEffect, useState } from 'react';
 import '@smastrom/react-rating/style.css';
+import { Toaster } from 'react-hot-toast';
 
 const Root = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -31,6 +32,7 @@ const Root = () => {
   };
   return (
     <div className="bg-slate-800 min-h-screen text-slate-100">
+      <Toaster />
       <div
         className={
           scrolled

@@ -231,8 +231,8 @@ const Details = () => {
           </div>
 
           {/* Add review from */}
-          <div id="add-review" className="p-3 border rounded-md mt-10">
-            <h1 className="text-3xl font-semibold pb-3">Add Your Review</h1>
+          <h1 className="text-3xl font-semibold pb-3 mt-10">Add Your Review</h1>
+          <div id="add-review" className="p-3 border border-slate-500 rounded-md">
             <AddReview />
           </div>
         </div>

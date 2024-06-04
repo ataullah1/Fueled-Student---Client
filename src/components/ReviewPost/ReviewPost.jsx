@@ -36,7 +36,7 @@ const ReviewPost = () => {
         </div>
       </div>
       <div className="p-3">
-        <p>
+        <p className='text-slate-300'>
           Rrem ipsum dolor sit, amet consectetur adipisicing elit. Rerum tenetur
           sapiente vitae numquam amet obcaecati quos rem inventore nemo odit!
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi, ea!
