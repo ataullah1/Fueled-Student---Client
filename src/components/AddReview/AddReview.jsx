@@ -1,17 +1,28 @@
 import { Rating } from '@smastrom/react-rating';
+import { useMutation } from '@tanstack/react-query';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { IoMdClose } from 'react-icons/io';
 import { LuUploadCloud } from 'react-icons/lu';
 import Swal from 'sweetalert2';
+import useAxiosSec from '../../Hooks/useAxiosSec';
 
-export default function AddReview() {
+export default function AddReview({ id }) {
+  const axiosSec = useAxiosSec();
   const [rating, setRating] = useState(0);
-
   const [showName, setShowName] = useState({});
   const [showImagePreview, setShowImagePreview] = useState({});
   const fileInputRef = useRef();
+
+  // Post new review
+  const { mutateAsync } = useMutation({
+    mutationFn: async ({ review }) => {
+      const { data } = await axiosSec.post('/post-review', review);
+      console.log(data);
+    },
+  });
+
   const handleClearFile = () => {
     setShowName('');
     setShowImagePreview('');
