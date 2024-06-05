@@ -142,12 +142,9 @@ const PricingSection = () => {
                 <span> laundry service, gym access</span>
               </li>
             </ul>
-            <a
-              href="#"
-              className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-700 hover:to-orange-700"
-            >
+            <button className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-700 hover:to-orange-700">
               Purchase Plan
-            </a>
+            </button>
           </div>
         </div>
       </div>

@@ -4,7 +4,7 @@ import MealsbyCategory from '../../components/MealsbyCategory/MealsbyCategory';
 import PricingSection from '../../components/PricingSection/PricingSection';
 const Home = () => {
   const isAdmin = useAdmin();
-  // console.log(isAdmin);
+  console.log(isAdmin);
   return (
     <div>
       <Banner />
