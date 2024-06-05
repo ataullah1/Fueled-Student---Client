@@ -6,7 +6,7 @@ const MealsCard = ({ data }) => {
   return (
     <div className="max-w-[500px] mx-auto w-full p-2 bg-slate-100 text-slate-800 rounded-md">
       <div
-        className="bg-cover bg-center h-60 rounded-md w-full bg-green-400 relative"
+      className="bg-cover bg-center h-60 rounded-md w-full bg-yellow-100 relative"
         style={{
           backgroundImage: `url(${
             data.mealImage

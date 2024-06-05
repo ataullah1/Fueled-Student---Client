@@ -158,7 +158,7 @@ const Details = () => {
           backgroundImage: `url('https://img.freepik.com/premium-photo/interior-luxury-restaurant-generative-ai_220873-20247.jpg?w=1060')`,
         }}
       ></div>
-      <div className="rounded-md max-w-[750px] mx-auto -mt-48 w-11/12 shadow-md shadow-slate-100">
+      <div className="rounded-md max-w-[750px] mx-auto -mt-48 w-11/12 xl:w-10/12 shadow-md shadow-slate-100">
         <div className="p-3 rounded-t-md pb-0 bg-slate-100">
           <div
             className="w-full h-60 sm:h-80 rounded-t-md  bg-cover bg-center"

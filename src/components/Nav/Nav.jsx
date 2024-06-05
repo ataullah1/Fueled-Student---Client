@@ -14,7 +14,7 @@ const Nav = () => {
   // console.log(isAdmin);
 
   return (
-    <div className=" flex justify-between items-center w-11/12 mx-auto">
+    <div className=" flex justify-between items-center w-11/12 xl:w-10/12 mx-auto">
       <button className="text-3xl font-bold w-32 border ">Logo</button>
       <div className="hidden md:flex gap-5 items-center navigation">
         <NavLink
