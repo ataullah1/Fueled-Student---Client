@@ -27,7 +27,16 @@ const Details = () => {
       return data;
     },
   });
-  // console.log(data);
+
+  const { data: ratingsAvg = {}, refetch: retingAvgRefetch } = useQuery({
+    queryKey: ['ratingAvg', id],
+    queryFn: async () => {
+      const { data } = await axiosPub.get(`/sum-of-rating/${id}`);
+      return data;
+    },
+  });
+
+  // console.log(ratingsAvg);
 
   const { data: reviews = [], refetch: reviewss } = useQuery({
     queryKey: ['reviews', id],
@@ -36,7 +45,7 @@ const Details = () => {
       return data;
     },
   });
-  console.log('reviews:==', reviews);
+  // console.log('reviews:==', reviews);
 
   const { data: likedCount = {}, refetch: counted } = useQuery({
     queryKey: ['liked', id],
@@ -95,14 +104,13 @@ const Details = () => {
     postDate = '0000-00-00',
     postTime = '00:00:00',
     price = '00',
-    rating,
     title,
     adminName,
     description,
     ingredients = [],
   } = data;
   const time = timeAgo(`${postDate} ${postTime}`);
-  console.log(`${postDate} ${postTime}`);
+  // console.log(`${postDate} ${postTime}`);
   let likeCount = likes;
 
   const handleLike = async () => {
@@ -218,8 +226,12 @@ const Details = () => {
           </div>
           <div className="flex items-center justify-between py-6">
             <div className="flex items-center gap-1">
-              <Rating style={{ maxWidth: 180 }} value={rating} readOnly />
-              <h1 className="text-2xl">(234)</h1>
+              <Rating
+                style={{ maxWidth: 180 }}
+                value={ratingsAvg?.averageRating || 0}
+                readOnly
+              />
+              <h1 className="text-2xl">({ratingsAvg?.totalCount || 0})</h1>
             </div>
             <button className="py-2 px-5 bg-pClr rounded-md text-slate-100 font-semibold hover:scale-110 duration-200">
               Meal Request
@@ -249,7 +261,11 @@ const Details = () => {
             id="add-review"
             className="p-3 border border-slate-500 rounded-md"
           >
-            <AddReview id={id} reviewss={reviewss} />
+            <AddReview
+              id={id}
+              reviewss={reviewss}
+              retingAvgRefetch={retingAvgRefetch}
+            />
           </div>
         </div>
       </div>

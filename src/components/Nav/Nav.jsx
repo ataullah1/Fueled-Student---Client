@@ -11,7 +11,7 @@ const Nav = () => {
   const { userDta, isLoading } = useAuth();
   // console.log(userDta);
   const isAdmin = false;
-  console.log(isAdmin);
+  // console.log(isAdmin);
 
   return (
     <div className=" flex justify-between items-center w-11/12 mx-auto">

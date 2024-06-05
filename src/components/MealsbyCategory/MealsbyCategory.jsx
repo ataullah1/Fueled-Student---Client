@@ -6,6 +6,15 @@ import MealsCard from '../MealsCard/MealsCard';
 
 const MealsbyCategory = () => {
   const axioss = useAxiosPub();
+  //   const { data: avgofRating = {}, refetch: avgofRatingRefetch } = useQuery({
+  //     queryKey: ['avg-of-rating', id],
+  //     queryFn: async () => {
+  //       const { data } = await axioss.get(`/avg-of-rating`);
+  //       return data;
+  //     },
+  //   });
+  // console.log();
+
   const { data: meals = [] } = useQuery({
     queryKey: ['meals-six'],
     queryFn: async () => {

@@ -12,7 +12,7 @@ import useAuth from '../../Hooks/useAuth';
 import { ImSpinner9 } from 'react-icons/im';
 import PropTypes from 'prop-types';
 
-export default function AddReview({ id, reviewss }) {
+export default function AddReview({ id, reviewss, retingAvgRefetch }) {
   // console.log('id', id);
   const axiosSec = useAxiosSec();
   const [rating, setRating] = useState(0);
@@ -24,7 +24,9 @@ export default function AddReview({ id, reviewss }) {
   const reviewUserName = userDta?.displayName;
   const reviewUserPhoto = userDta?.photoURL;
   const reviewUserEmail = userDta?.email;
-  // Now time
+
+  // console.log('Imagee==========', showName?.name);
+
   // Function to format the current date and time
   function getCurrentDateTimeFormatted() {
     // Create a Date object for the current date and time
@@ -53,6 +55,7 @@ export default function AddReview({ id, reviewss }) {
     },
     onSuccess: () => {
       reviewss();
+      retingAvgRefetch();
       Swal.fire({
         title: 'Thank You',
         text: 'Your review has been successfully posted.',
@@ -88,8 +91,8 @@ export default function AddReview({ id, reviewss }) {
 
     try {
       setLoading(true);
-      let image1 = null;
-      if (showName.length > 0) {
+      const postId = id;
+      if (showName?.name) {
         const imagess = new FormData();
         imagess.append('image', showName);
         const { data } = await axios.post(
@@ -98,28 +101,46 @@ export default function AddReview({ id, reviewss }) {
           }`,
           imagess
         );
-        image1 = data.data.display_url;
+        const image1 = data.data.display_url;
+        const review = {
+          rating,
+          detail,
+          image1,
+          postId,
+          reviewUserName,
+          reviewUserPhoto,
+          reviewUserEmail,
+          time,
+        };
+        // console.log('Review Datas:=====', review);
+        await mutateAsync(review);
+        setLoading(false);
+        setShowName('');
+        setShowImagePreview('');
+        fileInputRef.current.value = '';
+        reset();
+        setRating(0);
+      } else {
+        const image1 = null;
+        const review = {
+          rating,
+          detail,
+          image1,
+          postId,
+          reviewUserName,
+          reviewUserPhoto,
+          reviewUserEmail,
+          time,
+        };
+        // console.log('Review Datas:=====', review);
+        await mutateAsync(review);
+        setLoading(false);
+        setShowName('');
+        setShowImagePreview('');
+        fileInputRef.current.value = '';
+        reset();
+        setRating(0);
       }
-      const postId = id;
-      const review = {
-        rating,
-        detail,
-        image1,
-        postId,
-        reviewUserName,
-        reviewUserPhoto,
-        reviewUserEmail,
-        time,
-      };
-      console.log('Review Datas:=====', review);
-      await mutateAsync(review);
-
-      setLoading(false);
-      setShowName('');
-      setShowImagePreview('');
-      fileInputRef.current.value = '';
-      reset();
-      setRating(0);
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -240,4 +261,5 @@ export default function AddReview({ id, reviewss }) {
 AddReview.propTypes = {
   id: PropTypes.string,
   reviewss: PropTypes.func,
+  retingAvgRefetch: PropTypes.func,
 };
