@@ -53,12 +53,28 @@ const Meals = () => {
     setPage((prevPage) => prevPage + 1);
   };
 
+  const handleSearch = (e) => {
+    const text = e.target.value;
+    console.log(text);
+  };
+
   return (
     <div>
       <div className="h-60 bg-yellow-500"></div>
       <div className="w-11/12 xl:w-10/12 mx-auto">
-        <div className="py-5 bg-slate-500 mt-6 rounded-md px-3">
+        <div className="py-5 bg-slate-500 mt-6 rounded-md px-3 flex flex-col md:flex-row items-center justify-between gap-2">
           <FilterSearching />
+          <form onChange={handleSearch} className="w-full md:w-auto relative">
+            <input
+              type="text"
+              name="search"
+              placeholder="Search your meals"
+              className="rounded px-4 py-1.5 w-full md:w-80 max-w-full md:max-w-80 text-slate-600 focus:outline-none pr-20"
+            />
+            <button className="absolute top-1/2 -translate-y-1/2 right-2 rounded-md bg-pClr text-slate-100 px-2 text-sm">
+              Search
+            </button>
+          </form>
         </div>
         <div className="">
           <InfiniteScroll

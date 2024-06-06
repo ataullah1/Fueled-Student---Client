@@ -15,7 +15,7 @@ export default function FilterSearching() {
   const [selectedOption, setSelectedOption] = useState(null);
   console.log(selectedOption?.value);
   return (
-    <div className="w-80 max-w-full md:max-w-80">
+    <div className="w-full md:w-80 max-w-full md:max-w-80">
       <Select
         className="react-select-container"
         classNamePrefix="react-select"
