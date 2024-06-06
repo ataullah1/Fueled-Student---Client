@@ -4,6 +4,7 @@ import MealCard from './MealCard';
 import { useState, useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { CgSpinnerTwoAlt } from 'react-icons/cg';
+import FilterSearching from '../../utility/FilterSearching';
 
 const Meals = () => {
   const axiosPub = useAxiosPub();
@@ -56,8 +57,8 @@ const Meals = () => {
     <div>
       <div className="h-60 bg-yellow-500"></div>
       <div className="w-11/12 xl:w-10/12 mx-auto">
-        <div className="py-8 bg-slate-500 mt-6 rounded-t-md">
-          <h1 className="px-5 text-2xl">{meals?.length}</h1>
+        <div className="py-5 bg-slate-500 mt-6 rounded-md px-3">
+          <FilterSearching />
         </div>
         <div className="">
           <InfiniteScroll

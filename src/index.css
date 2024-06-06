@@ -63,6 +63,8 @@ a {
   color: #fa983a;
 }
 
-/* Button styles  */
-
-
+/* Dropdwon styles  */
+.css-1nmdiq5-menu {
+  background-color: red;
+  color: #1e293b;
+}

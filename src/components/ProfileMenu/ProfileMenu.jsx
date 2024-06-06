@@ -35,7 +35,7 @@ const ProfileMenu = () => {
       </div>
       <div className="invisible right-0 absolute z-50 flex min-w-48 flex-col bg-gray-500 shadow-4xl group-hover:visible text-center">
         <div>
-          <h1 className="py-2 text-2xl bg-slate-800 text-white px-3">
+          <h1 className="py-2 text-xl font-semibold bg-slate-800 text-white px-3">
             {userDta.displayName ? userDta.displayName : 'User Name'}
           </h1>
         </div>
