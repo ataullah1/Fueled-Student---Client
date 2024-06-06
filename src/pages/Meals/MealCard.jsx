@@ -2,6 +2,7 @@ import { Rating } from '@smastrom/react-rating';
 import { PropTypes } from 'prop-types';
 import { LuDot } from 'react-icons/lu';
 import timeAgo from '../../time';
+import { Link } from 'react-router-dom';
 
 const MealCard = ({ dta }) => {
   return (
@@ -39,7 +40,7 @@ const MealCard = ({ dta }) => {
         </div>
         <div className="w-1/4 min-w-32 sm:min-w-36 flex flex-col justify-between pl-2 sm:pl-3 border-l border-slate-500">
           <p className="text-right">
-            <p className="text-right inline-block text-slate-400 border-l border-b px-2 rounded-bl border-slate-400">
+            <p className="text-right inline-block text-slate-400 border-l border-b px-1 sm:px-2 rounded-bl border-slate-400">
               {timeAgo(dta.postDate)}
             </p>
           </p>
@@ -47,9 +48,12 @@ const MealCard = ({ dta }) => {
             <h1 className="text-3xl font-bold">${dta?.price}</h1>
           </div>
           <di className="flex flex-col gap-2">
-            <button className="py-1 px-1 w-full rounded-md text-sm sm:text-base font-bold bg-pClr text-slate-100  hover:scale-95 duration-200">
+            <Link
+              to={`/meal/${dta._id}`}
+              className="py-1 px-1 w-full text-center rounded-md text-sm sm:text-base font-bold bg-pClr text-slate-100  hover:scale-95 duration-200"
+            >
               DETAILS
-            </button>
+            </Link>
             <button className="py-1 px-1 w-full rounded-md text-sm sm:text-base font-bold border-2 border-pClr uppercase hover:scale-95 duration-200">
               ADD request
             </button>

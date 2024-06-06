@@ -7,7 +7,7 @@ const Meals = () => {
   const { data: meals = [] } = useQuery({
     queryKey: ['meals'],
     queryFn: async () => {
-      const { data } = await axiosPub.get('/meals');
+      const { data } = await axiosPub.get(`/meals`);
       return data;
     },
   });
