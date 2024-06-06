@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 
 const MealsCard = ({ data }) => {
   return (
-    <div className="max-w-[500px] mx-auto w-full p-2 bg-slate-100 text-slate-800 rounded-md">
+    <div className="max-w-[500px] mx-auto w-full p-2 bg-slate-700 text-slate-300 rounded-md">
       <div
-      className="bg-cover bg-center h-60 rounded-md w-full bg-yellow-100 relative"
+        className="bg-cover bg-center h-60 rounded-md w-full bg-yellow-100 relative"
         style={{
           backgroundImage: `url(${
             data.mealImage
@@ -31,7 +31,7 @@ const MealsCard = ({ data }) => {
         </div>
         <div className="w-full">
           <Link to={`/meal/${data._id}`}>
-            <button className="w-full py-2 bg-pClr text-slate-100 font-bold rounded-md active:scale-95 hover:-translate-y-1 duration-300">
+            <button className="w-full py-2 bg-[#e17a1a] hover:bg-pClr text-slate-100 font-bold rounded-md active:scale-95 hover:-translate-y-1 duration-300">
               Go to details
             </button>
           </Link>
