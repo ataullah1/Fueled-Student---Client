@@ -5,6 +5,7 @@ import PricingSection from '../../components/PricingSection/PricingSection';
 const Home = () => {
   const isAdmin = useAdmin();
   console.log(isAdmin);
+
   return (
     <div>
       <Banner />

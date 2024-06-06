@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { Rating } from '@smastrom/react-rating';
 import ReviewPost from '../../components/ReviewPost/ReviewPost';
 import AddReview from '../../components/AddReview/AddReview';
+import timeAgo from '../../time';
 
 const Details = () => {
   const { userDta } = useAuth();
@@ -70,47 +71,19 @@ const Details = () => {
     },
   });
 
-  function timeAgo(timestamp) {
-    const currentTime = new Date();
-    const parsedTime = new Date(timestamp);
-    const timeDifference = currentTime - parsedTime;
-
-    const seconds = Math.floor(timeDifference / 1000);
-    const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
-    const months = Math.floor(days / 30);
-    const years = Math.floor(days / 365);
-
-    if (years > 0) {
-      return `${years} years ago`;
-    } else if (months > 0) {
-      return `${months} months ago`;
-    } else if (days > 0) {
-      return `${days} days ago`;
-    } else if (hours > 0) {
-      return `${hours} hours ago`;
-    } else if (minutes > 0) {
-      return `${minutes} minutes ago`;
-    } else {
-      return `${seconds} seconds ago`;
-    }
-  }
-
   const {
     likes = '00',
     mealImage,
     mealType,
-    postDate = '0000-00-00',
-    postTime = '00:00:00',
+    postDate = '0000-00-00 00:00:00',
     price = '00',
     title,
     adminName,
     description,
     ingredients = [],
   } = data;
-  const time = timeAgo(`${postDate} ${postTime}`);
-  // console.log(`${postDate} ${postTime}`);
+  const time = timeAgo(postDate);
+  // console.log(postDate);
   let likeCount = likes;
 
   const handleLike = async () => {

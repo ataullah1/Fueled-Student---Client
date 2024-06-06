@@ -31,7 +31,7 @@ const MealsCard = ({ data }) => {
         </div>
         <div className="w-full">
           <Link to={`/meal/${data._id}`}>
-            <button className="w-full py-2 bg-[#e17a1a] hover:bg-pClr text-slate-100 font-bold rounded-md active:scale-95 hover:-translate-y-1 duration-300">
+            <button className="w-full py-2 bg-yellow-600 hover:bg-pClr text-slate-100 font-bold rounded-md active:scale-95 hover:-translate-y-1 duration-300">
               Go to details
             </button>
           </Link>

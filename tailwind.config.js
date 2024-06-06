@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        pClr: '#fa983a',
+        pClr: '#eab308',
       },
     },
   },
