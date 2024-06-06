@@ -16,7 +16,7 @@ const MealCard = ({ dta }) => {
         ></div>
       </div>
       <div className="w-full md:w-3/4 bg-slate-700 rounded-b-md md:rounded-bl-none md:rounded-r-md p-3 flex">
-        <div className="w-3/4 space-y-2">
+        <div className="w-3/4 space-y-2 pr-2">
           <h1 className="text-2xl sm:text-3xl font-bold">{dta?.title}</h1>
           <div className="flex items-center gap-2">
             <Rating
@@ -47,7 +47,7 @@ const MealCard = ({ dta }) => {
           <div className="flex justify-center items-center py-4">
             <h1 className="text-3xl font-bold">${dta?.price}</h1>
           </div>
-          <di className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2">
             <Link
               to={`/meal/${dta._id}`}
               className="py-1 px-1 w-full text-center rounded-md text-sm sm:text-base font-bold bg-pClr text-slate-100  hover:scale-95 duration-200"
@@ -57,7 +57,7 @@ const MealCard = ({ dta }) => {
             <button className="py-1 px-1 w-full rounded-md text-sm sm:text-base font-bold border-2 border-pClr uppercase hover:scale-95 duration-200">
               ADD request
             </button>
-          </di>
+          </div>
         </div>
       </div>
     </div>
