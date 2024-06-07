@@ -42,7 +42,7 @@ const Nav = () => {
           <NavLink
             className="py-2 px-5 rounded-md shadow-md shadow-slate-200 text-white font-medium  hover:shadow-lg hover:shadow-slate-200 hover:scale-110 duration-300"
             font-medium
-            to={'/ upcoming-meals'}
+            to={'/upcoming-meals'}
           >
             Upcoming Meals
           </NavLink>

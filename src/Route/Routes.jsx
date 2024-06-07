@@ -6,6 +6,7 @@ import Register from '../pages/Register/Register';
 import Root from '../root/Root';
 import Details from '../pages/MealsDetails/Details';
 import Meals from '../pages/Meals/Meals';
+import UpcomingMeals from '../pages/UpcomingMeals/UpcomingMeals';
 // import PrivetRoute from './PrivetRoute';
 
 const router = createBrowserRouter([
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: '/meals',
         element: <Meals />,
+      },
+      {
+        path: '/upcoming-meals',
+        element: <UpcomingMeals />,
       },
       {
         path: '/about',

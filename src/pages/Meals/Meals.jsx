@@ -31,7 +31,7 @@ const Meals = () => {
   const handleSearch = (e) => {
     const text = e.target.value;
     // console.log(text);
-    // setSearch(text);
+    setSearch(text);
   };
 
   return (
