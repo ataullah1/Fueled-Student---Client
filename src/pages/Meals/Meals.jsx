@@ -36,7 +36,7 @@ const Meals = () => {
           {filter && (
             <div className="hidden lg:block py-1 w-48 text-center border rounded-md px-2">
               <h1 className="text-xl font-medium">
-                Result: <span className="font-bold">({meals.length})</span>{' '}
+                Result: <span className="font-bold">({meals.length})</span>
                 Meals
               </h1>
             </div>
