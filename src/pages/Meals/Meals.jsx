@@ -7,24 +7,31 @@ import { useState } from 'react';
 const Meals = () => {
   const axiosPub = useAxiosPub();
   const [filter, handleFilter] = useState('');
-  console.log(filter);
+  const [search, setSearch] = useState('');
+  console.log(search);
+
   // Fetch meals for infinite scroll
   const { data: meals = [] } = useQuery({
-    queryKey: ['meals', filter],
+    queryKey: ['meals', filter, search],
     queryFn: async () => {
-      const { data } = await axiosPub.get(`/meals?filter=${filter}`);
+      const { data } = await axiosPub.get(
+        `/meals?filter=${filter}&search=${search}`
+      );
       return data;
     },
   });
+  console.log(meals);
 
-  // const handleFilter = (e) => {
-  //   console.log(e);
-  //   setFilter(e);
-  // };
-
+  const handleSearchClick = (e) => {
+    e.preventDefault();
+    const text = e.target.search.value;
+    // console.log(text);
+    setSearch(text);
+  };
   const handleSearch = (e) => {
     const text = e.target.value;
-    console.log(text);
+    // console.log(text);
+    // setSearch(text);
   };
 
   return (
@@ -41,14 +48,21 @@ const Meals = () => {
               </h1>
             </div>
           )}
-          <form onChange={handleSearch} className="w-full md:w-auto relative">
+          <form
+            onSubmit={handleSearchClick}
+            className="w-full md:w-auto relative"
+          >
             <input
+              onChange={handleSearch}
               type="text"
               name="search"
               placeholder="Search your meals"
               className="rounded px-4 py-[7px] w-full md:w-80 max-w-full md:max-w-80 text-slate-600 focus:outline-none pr-20"
             />
-            <button className="absolute top-1/2 -translate-y-1/2 right-2 rounded-md bg-pClr text-slate-50 px-2 font-semibold">
+            <button
+              type="submit"
+              className="absolute top-1/2 -translate-y-1/2 right-2 rounded-md bg-pClr text-slate-50 px-2 font-semibold"
+            >
               Search
             </button>
           </form>
