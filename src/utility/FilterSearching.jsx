@@ -1,3 +1,4 @@
+import { PropTypes } from 'prop-types';
 import { useState } from 'react';
 import Select from 'react-select';
 
@@ -11,9 +12,10 @@ const options = [
   { value: { str: 15, end: 20 }, label: '$15.00 - $20.00' },
 ];
 
-export default function FilterSearching() {
+export default function FilterSearching({ handleFilter }) {
   const [selectedOption, setSelectedOption] = useState(null);
-  console.log(selectedOption?.value);
+  // console.log(selectedOption?.value);
+  handleFilter(selectedOption?.value);
   return (
     <div className="w-full md:w-80 max-w-full md:max-w-80">
       <Select
@@ -27,3 +29,6 @@ export default function FilterSearching() {
     </div>
   );
 }
+FilterSearching.propTypes = {
+  handleFilter: PropTypes.func,
+};
