@@ -1,66 +1,26 @@
 import { useQuery } from '@tanstack/react-query';
 import useAxiosPub from '../../Hooks/useAxiosPub';
 import MealCard from './MealCard';
-import { useState, useEffect } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { CgSpinnerTwoAlt } from 'react-icons/cg';
 import FilterSearching from '../../utility/FilterSearching';
+import { useState } from 'react';
 
 const Meals = () => {
   const axiosPub = useAxiosPub();
-  const [page, setPage] = useState(1);
-  const [meals, setMeals] = useState([]);
-  // const [filter, setFilter] = useState('');
-  const filter = 'dinner';
-  const itemper = 3;
-
-  // Fetch total number of meals
-  const { data: mealLen = '' } = useQuery({
-    queryKey: ['mealLen', filter],
-    queryFn: async () => {
-      const { data } = await axiosPub.get(`/meals-len?filter=${filter}`);
-      return data.finalRes;
-    },
-  });
-
+  const [filter, handleFilter] = useState('');
+  console.log(filter);
   // Fetch meals for infinite scroll
-  const { data: newMeals = [] } = useQuery({
-    queryKey: ['meals', page, filter],
+  const { data: meals = [] } = useQuery({
+    queryKey: ['meals', filter],
     queryFn: async () => {
-      const { data } = await axiosPub.get(
-        `/meals?page=${page}&itemper=${itemper}&filter=${filter}`
-      );
+      const { data } = await axiosPub.get(`/meals?filter=${filter}`);
       return data;
     },
-    enabled: page > 1, // Only enable fetching when page > 1
   });
 
-  // Initial fetch of meals when component mounts
-  useEffect(() => {
-    const fetchInitialMeals = async () => {
-      const { data } = await axiosPub.get(
-        `/meals?page=1&itemper=2&filter=${filter}`
-      );
-      setMeals(data);
-    };
-    fetchInitialMeals();
-  }, [axiosPub, filter]);
-
-  // Append new meals to the existing list
-  useEffect(() => {
-    if (newMeals) {
-      setMeals((prevMeals) => [...prevMeals, ...newMeals]);
-    }
-  }, [newMeals]);
-
-  const fetchMoreData = () => {
-    setPage((prevPage) => prevPage + 1);
-  };
-
-  const handleFilter = (e) => {
-    // console.log(e);
-    // setFilter(e);
-  };
+  // const handleFilter = (e) => {
+  //   console.log(e);
+  //   setFilter(e);
+  // };
 
   const handleSearch = (e) => {
     const text = e.target.value;
@@ -73,6 +33,14 @@ const Meals = () => {
       <div className="w-11/12 xl:w-10/12 mx-auto">
         <div className="py-5 bg-slate-500 mt-6 rounded-md px-3 flex flex-col md:flex-row items-center justify-between gap-2">
           <FilterSearching handleFilter={handleFilter} />
+          {filter && (
+            <div className="hidden lg:block py-1 w-48 text-center border rounded-md px-2">
+              <h1 className="text-xl font-medium">
+                Result: <span className="font-bold">({meals.length})</span>{' '}
+                Meals
+              </h1>
+            </div>
+          )}
           <form onChange={handleSearch} className="w-full md:w-auto relative">
             <input
               type="text"
@@ -85,7 +53,12 @@ const Meals = () => {
             </button>
           </form>
         </div>
-        <div className="">
+        <div className="mb-16 mt-5 flex flex-col gap-6">
+          {meals.map((dta) => (
+            <MealCard key={dta._id} dta={dta} />
+          ))}
+        </div>
+        {/* <div className="">
           <InfiniteScroll
             dataLength={meals.length}
             next={fetchMoreData}
@@ -103,7 +76,7 @@ const Meals = () => {
               <MealCard key={dta._id} dta={dta} />
             ))}
           </InfiniteScroll>
-        </div>
+        </div> */}
       </div>
     </div>
   );
