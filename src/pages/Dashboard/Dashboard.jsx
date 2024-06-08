@@ -37,7 +37,7 @@ const Dashboard = () => {
     <div className="lg:flex lg:flex-row h-screen overflow-hidden relative">
       <Toaster />
       <aside
-        className={`h-screen lg:h-auto absolute left-0 top-0 lg:static w-full sm:w-72 lg:w-64 bg-gray-800 text-white lg:flex flex-col items-center p-4 md:h-full overflow-y-auto ${
+        className={`h-screen z-50 lg:h-auto absolute left-0 top-0 lg:static w-full sm:w-72 lg:w-64 bg-gray-800 text-white lg:flex flex-col items-center p-4 md:h-full overflow-y-auto ${
           isMnu ? 'translate-x-0' : '-translate-x-[700px] lg:translate-x-0'
         }`}
       >
@@ -206,7 +206,7 @@ const Dashboard = () => {
         id="dashboarMain"
         className="flex-grow h-full overflow-y-auto bg-gray-100 p-4"
       >
-        <div className="flex items-center justify-between pb-3">
+        <div className="flex items-center justify-between mb-3 bg-white px-2 py-1 rounded-md">
           <div className="flex items-center gap-2">
             <button onClick={() => setMenu(!isMnu)} className="text-3xl">
               <IoMenu />
