@@ -1,4 +1,4 @@
-export default function ProfileUSer() {
+export default function AdminProfile() {
   const svgArr = [
     {
       svg: (
@@ -212,13 +212,13 @@ export default function ProfileUSer() {
           height={110}
           className="h-[110px] w-[110px] rounded-full bg-slate-500 object-cover"
           src="https://source.unsplash.com/300x300/?profile"
-          alt="user profile"
+          alt="admin profile"
         />
         <span className="absolute bottom-3 right-0 h-5 w-5 rounded-full border-[3px] border-white bg-green-500 dark:border-[#18181B]"></span>
         <span className="absolute bottom-3 right-0 h-5 w-5 animate-ping rounded-full bg-green-500"></span>
       </div>
       <div className="space-y-1 text-center">
-        <h1 className="text-2xl text-gray-700 dark:text-white/90">Ami USEr</h1>
+        <h1 className="text-2xl text-gray-700 dark:text-white/90">Ami Admin</h1>
         <p className="text-sm text-gray-400">UI/UX Designer</p>
       </div>
       <div className="flex w-full justify-between py-2">

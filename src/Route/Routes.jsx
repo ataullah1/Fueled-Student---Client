@@ -14,6 +14,12 @@ import DashboardHome from '../pages/Dashboard/DashboardComponent/DashboardHome';
 import RequestedMeals from '../pages/Dashboard/DashboardComponent/RequestedMeals';
 import MyReviews from '../pages/Dashboard/DashboardComponent/MyReviews';
 import PaymentHistory from '../pages/Dashboard/DashboardComponent/PaymentHistory';
+import ManageUsers from '../pages/Dashboard/DashboardComponent/ManageUsers';
+import AllMeals from '../pages/Dashboard/DashboardComponent/AllMeals';
+import UpcomingMealsDsb from '../pages/Dashboard/DashboardComponent/UpcomingMealsDsb';
+import ServeMeals from '../pages/Dashboard/DashboardComponent/ServeMeals';
+import AllReviews from '../pages/Dashboard/DashboardComponent/AllReviews';
+import AddMeals from '../pages/Dashboard/DashboardComponent/AddMeals';
 // import PrivetRoute from './PrivetRoute';
 
 const router = createBrowserRouter([
@@ -57,8 +63,28 @@ const router = createBrowserRouter([
         element: <DashboardHome />,
       },
       {
-        path: '/dashboard/Requested-Meals',
-        element: <RequestedMeals />,
+        path: '/dashboard/Manage-Users',
+        element: <ManageUsers />,
+      },
+      {
+        path: '/dashboard/All-Meals',
+        element: <AllMeals />,
+      },
+      {
+        path: '/dashboard/Upcoming-Meals',
+        element: <UpcomingMealsDsb />,
+      },
+      {
+        path: '/dashboard/Serve-Meals',
+        element: <ServeMeals />,
+      },
+      {
+        path: '/dashboard/All-Reviews',
+        element: <AllReviews />,
+      },
+      {
+        path: '/dashboard/Add-Meal',
+        element: <AddMeals />,
       },
       {
         path: '/dashboard/My-Reviews',
