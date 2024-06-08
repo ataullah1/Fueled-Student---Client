@@ -2,25 +2,92 @@ import { useQuery } from '@tanstack/react-query';
 import useAxiosPub from '../../Hooks/useAxiosPub';
 import MealCard from './MealCard';
 import FilterSearching from '../../utility/FilterSearching';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { CgSpinnerTwoAlt } from 'react-icons/cg';
 
 const Meals = () => {
   const axiosPub = useAxiosPub();
   const [filter, handleFilter] = useState('');
   const [search, setSearch] = useState('');
-  console.log(search);
+  const [page, setPage] = useState(1);
+  const itemper = 2;
+  let meals = [];
+  // console.log(search);
 
+  // // Fetch total number of meals
+  // const { data: mealLen = 0 } = useQuery({
+  //   queryKey: ['mealLen'],
+  //   queryFn: async () => {
+  //     const { data } = await axiosPub.get('/meals-len');
+  //     return data.finalRes;
+  //   },
+  // });
+  // const fetchMoreData = () => {
+  //   setPage((prevPage) => prevPage + 1);
+  // };
   // Fetch meals for infinite scroll
-  const { data: meals = [] } = useQuery({
-    queryKey: ['meals', filter, search],
-    queryFn: async () => {
-      const { data } = await axiosPub.get(
-        `/meals?filter=${filter}&search=${search}`
-      );
-      return data;
-    },
-  });
-  console.log(meals);
+  if (!search || !filter) {
+    // Fetch meals for infinite scroll
+    // // eslint-disable-next-line react-hooks/rules-of-hooks
+    // const { data: newMeals } = useQuery({
+    //   queryKey: ['meals', page],
+    //   queryFn: async () => {
+    //     const { data } = await axiosPub.get(
+    //       `/meals?page=${page}&itemper=${itemper}`
+    //     );
+    //     return data;
+    //   },
+    //   enabled: page > 1, // Only enable fetching when page > 1
+    // });
+
+    // // Initial fetch of meals when component mounts
+    // // eslint-disable-next-line react-hooks/rules-of-hooks
+    // useEffect(() => {
+    //   const fetchInitialMeals = async () => {
+    //     const { data } = await axiosPub.get(`/meals?page=1&itemper=2`);
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    //     meals = data;
+    //   };
+    //   fetchInitialMeals();
+    // }, [axiosPub]);
+
+    // // Append new meals to the existing list
+    // // eslint-disable-next-line react-hooks/rules-of-hooks
+    // useEffect(() => {
+    //   if (newMeals) {
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    //     meals = (prevMeals) => [...prevMeals, ...newMeals];
+    //   }
+    // }, [newMeals]);
+
+    // =========================
+    const { data: meal = [] } = useQuery({
+      queryKey: ['meals', filter, search],
+      queryFn: async () => {
+        const { data } = await axiosPub.get(
+          `/meals?filter=${filter}&search=${search}`
+        );
+        return data;
+      },
+    });
+    meals = meal;
+
+    // =========================
+  } else {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const { data: meal = [] } = useQuery({
+      queryKey: ['meals', filter, search],
+      queryFn: async () => {
+        const { data } = await axiosPub.get(
+          `/meals?filter=${filter}&search=${search}`
+        );
+        return data;
+      },
+    });
+    meals = meal;
+    console.log(meals);
+  }
 
   const handleSearchClick = (e) => {
     e.preventDefault();
@@ -67,30 +134,33 @@ const Meals = () => {
             </button>
           </form>
         </div>
-        <div className="mb-16 mt-5 flex flex-col gap-6">
-          {meals.map((dta) => (
-            <MealCard key={dta._id} dta={dta} />
-          ))}
-        </div>
-        {/* <div className="">
-          <InfiniteScroll
-            dataLength={meals.length}
-            next={fetchMoreData}
-            hasMore={meals.length < mealLen}
-            loader={
-              <div className="overflow-hidden flex items-center gap-3 justify-center">
-                <CgSpinnerTwoAlt className="animate-spin text-4xl overflow-x-hidden" />
-                <CgSpinnerTwoAlt className="animate-spin text-4xl overflow-x-hidden" />
-                <CgSpinnerTwoAlt className="animate-spin text-4xl overflow-x-hidden" />
-              </div>
-            }
-            className="mb-16 mt-5 flex flex-col gap-6 overflow-x-hidden"
-          >
+        {/* {filter && search ? ( */}
+          <div className="mb-16 mt-5 flex flex-col gap-6">
             {meals.map((dta) => (
               <MealCard key={dta._id} dta={dta} />
             ))}
-          </InfiniteScroll>
-        </div> */}
+          </div>
+        {/* ) : (
+          <div className="">
+            <InfiniteScroll
+              dataLength={meals.length}
+              next={fetchMoreData}
+              hasMore={meals.length < mealLen}
+              loader={
+                <div className="overflow-hidden flex items-center gap-3 justify-center">
+                  <CgSpinnerTwoAlt className="animate-spin text-4xl overflow-x-hidden" />
+                  <CgSpinnerTwoAlt className="animate-spin text-4xl overflow-x-hidden" />
+                  <CgSpinnerTwoAlt className="animate-spin text-4xl overflow-x-hidden" />
+                </div>
+              }
+              className="mb-16 mt-5 flex flex-col gap-6 overflow-x-hidden"
+            >
+              {meals.map((dta) => (
+                <MealCard key={dta._id} dta={dta} />
+              ))}
+            </InfiniteScroll>
+          </div>
+        )} */}
       </div>
     </div>
   );
