@@ -87,6 +87,10 @@ const router = createBrowserRouter([
         element: <AddMeals />,
       },
       {
+        path: '/dashboard/Requested-Mealss',
+        element: <RequestedMeals />,
+      },
+      {
         path: '/dashboard/My-Reviews',
         element: <MyReviews />,
       },

@@ -18,11 +18,12 @@ import useAuth from '../../Hooks/useAuth';
 import useAdmin from '../../Hooks/useAdmin';
 import { useState } from 'react';
 import { IoMenu } from 'react-icons/io5';
+import { IoMdNotificationsOutline } from 'react-icons/io';
 
 const Dashboard = () => {
   const admin = useAdmin();
   const [isMnu, setMenu] = useState(false);
-  const { logOutAcc } = useAuth();
+  const { logOutAcc, userDta } = useAuth();
   const logout = () => {
     logOutAcc();
     Swal.fire({
@@ -45,7 +46,7 @@ const Dashboard = () => {
           {isMnu && (
             <button
               onClick={() => setMenu(false)}
-              className="text-2xl lg:hidden"
+              className="text-2xl lg:hidden bg-slate-600 p-2 rounded-full"
             >
               <FaArrowLeft />
             </button>
@@ -205,9 +206,41 @@ const Dashboard = () => {
         id="dashboarMain"
         className="flex-grow h-full overflow-y-auto bg-gray-100 p-4"
       >
-        <button onClick={() => setMenu(true)} className="text-3xl lg:hidden">
-          <IoMenu />
-        </button>
+        <div className="flex items-center justify-between pb-3">
+          <div className="flex items-center gap-2">
+            <button onClick={() => setMenu(!isMnu)} className="text-3xl">
+              <IoMenu />
+            </button>
+            {/* <button
+              onClick={() => setMenu(false)}
+              className="text-3xl hidden lg:block"
+            >
+              <IoMenu />
+            </button> */}
+            <input
+              type="text"
+              className="py-2 px-3 rounded-md border border-slate-400 outline-none focus:outline-none"
+              placeholder="Search"
+            />
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="text-xl rounded-full p-2 bg-slate-200">
+              <IoMdNotificationsOutline />
+            </span>
+            <div className="relative cursor-pointer">
+              <img
+                className="h-12 w-12 rounded-full"
+                src={
+                  userDta.photoURL
+                    ? userDta.photoURL
+                    : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+                }
+                alt=""
+              />
+              <div className="p-1 bg-green-500 absolute rounded-full bottom-0 right-0 border-2 border-slate-100"></div>
+            </div>
+          </div>
+        </div>
         <Outlet />
       </main>
     </div>

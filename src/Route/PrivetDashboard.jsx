@@ -1,5 +1,4 @@
 import { Navigate } from 'react-router-dom';
-
 import useAuth from '../Hooks/useAuth';
 import Loding from '../pages/Loding/Loding';
 import useAdmin from '../Hooks/useAdmin';
