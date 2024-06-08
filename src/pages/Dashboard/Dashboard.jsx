@@ -5,11 +5,15 @@ import {
   FaSitemap,
   FaUsersCog,
 } from 'react-icons/fa';
-import { LuLogOut } from 'react-icons/lu';
+import { LuGalleryHorizontalEnd, LuLogOut } from 'react-icons/lu';
 import {
   MdAddChart,
+  MdAdminPanelSettings,
   MdDashboardCustomize,
   MdOutlineMenuBook,
+  MdPayments,
+  MdReviews,
+  MdUpcoming,
 } from 'react-icons/md';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -19,6 +23,9 @@ import useAdmin from '../../Hooks/useAdmin';
 import { useState } from 'react';
 import { IoMenu } from 'react-icons/io5';
 import { IoMdNotificationsOutline } from 'react-icons/io';
+import { RiFunctionAddFill } from 'react-icons/ri';
+import { BiSolidDonateHeart } from 'react-icons/bi';
+import { GiHotMeal } from 'react-icons/gi';
 
 const Dashboard = () => {
   const admin = useAdmin();
@@ -62,7 +69,7 @@ const Dashboard = () => {
                     end
                     className="w-full px-4 py-2 hover:bg-gray-700 flex items-center gap-2"
                   >
-                    <FaUsersCog />
+                    <MdAdminPanelSettings />
                     Admin Profile
                   </NavLink>
                 </li>
@@ -80,7 +87,7 @@ const Dashboard = () => {
                     to={'/dashboard/Add-Meal'}
                     className="w-full px-4 py-2 hover:bg-gray-700 flex items-center gap-2"
                   >
-                    <FaUsersCog />
+                    <RiFunctionAddFill />
                     Add Meal
                   </NavLink>
                 </li>
@@ -89,7 +96,7 @@ const Dashboard = () => {
                     to={'/dashboard/All-Meals'}
                     className="w-full px-4 py-2 hover:bg-gray-700 flex items-center gap-2"
                   >
-                    <FaUsersCog />
+                    <LuGalleryHorizontalEnd />
                     All Meals
                   </NavLink>
                 </li>
@@ -98,7 +105,7 @@ const Dashboard = () => {
                     to={'/dashboard/All-Reviews'}
                     className="w-full px-4 py-2 hover:bg-gray-700 flex items-center gap-2"
                   >
-                    <FaUsersCog />
+                    <MdReviews />
                     All Reviews
                   </NavLink>
                 </li>
@@ -107,7 +114,7 @@ const Dashboard = () => {
                     to={'/dashboard/Serve-Meals'}
                     className="w-full px-4 py-2 hover:bg-gray-700 flex items-center gap-2"
                   >
-                    <FaUsersCog />
+                    <BiSolidDonateHeart />
                     Serve Meals
                   </NavLink>
                 </li>
@@ -116,7 +123,7 @@ const Dashboard = () => {
                     to={'/dashboard/Upcoming-Meals'}
                     className="w-full px-4 py-2 hover:bg-gray-700 flex items-center gap-2"
                   >
-                    <FaUsersCog />
+                    <MdUpcoming />
                     Upcoming Meals
                   </NavLink>
                 </li>
@@ -156,7 +163,7 @@ const Dashboard = () => {
                     to={'/dashboard/Payment-History'}
                     className="w-full px-4 py-2 hover:bg-gray-700 flex items-center gap-2"
                   >
-                    <FaSitemap />
+                    <MdPayments />
                     Payment History
                   </NavLink>
                 </li>
@@ -177,7 +184,7 @@ const Dashboard = () => {
                 to={'/meals'}
                 className="w-full px-4 py-2 hover:bg-gray-700 flex items-center gap-2"
               >
-                <MdOutlineMenuBook />
+                <GiHotMeal />
                 Meals
               </Link>
             </li>
@@ -186,7 +193,7 @@ const Dashboard = () => {
                 to={'/upcoming-meals'}
                 className="w-full px-4 py-2 hover:bg-gray-700 flex items-center gap-2"
               >
-                <MdOutlineMenuBook />
+                <MdUpcoming />
                 Upcoming Meals
               </Link>
             </li>
