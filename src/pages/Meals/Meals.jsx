@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import useAxiosPub from '../../Hooks/useAxiosPub';
 import MealCard from './MealCard';
 import FilterSearching from '../../utility/FilterSearching';
@@ -10,57 +10,27 @@ const Meals = () => {
   const axiosPub = useAxiosPub();
   const [filter, handleFilter] = useState('');
   const [search, setSearch] = useState('');
-  const [page, setPage] = useState(1);
-  const itemper = 2;
   let meals = [];
-  // console.log(search);
 
-  // // Fetch total number of meals
-  // const { data: mealLen = 0 } = useQuery({
-  //   queryKey: ['mealLen'],
-  //   queryFn: async () => {
-  //     const { data } = await axiosPub.get('/meals-len');
-  //     return data.finalRes;
-  //   },
-  // });
-  // const fetchMoreData = () => {
-  //   setPage((prevPage) => prevPage + 1);
-  // };
-  // Fetch meals for infinite scroll
   if (!search || !filter) {
-    // Fetch meals for infinite scroll
-    // // eslint-disable-next-line react-hooks/rules-of-hooks
-    // const { data: newMeals } = useQuery({
-    //   queryKey: ['meals', page],
-    //   queryFn: async () => {
-    //     const { data } = await axiosPub.get(
-    //       `/meals?page=${page}&itemper=${itemper}`
-    //     );
-    //     return data;
+    // const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
+    //   queryKey: ['articles'],
+    //   queryFn: async ({ pageParam = 0 }) => {
+    //     const { data } = await axiosPub(`meals?limit=10&offset=${pageParam}`);
+    //     return { ...data, prevOffset: pageParam };
     //   },
-    //   enabled: page > 1, // Only enable fetching when page > 1
+    //   getNextPageParam: (lastPage) => {
+    //     if (lastPage.prevOffset + 10 > lastPage.articlesCount) {
+    //       return false;
+    //     }
+    //     return lastPage.prevOffset + 10;
+    //   },
     // });
 
-    // // Initial fetch of meals when component mounts
-    // // eslint-disable-next-line react-hooks/rules-of-hooks
-    // useEffect(() => {
-    //   const fetchInitialMeals = async () => {
-    //     const { data } = await axiosPub.get(`/meals?page=1&itemper=2`);
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    //     meals = data;
-    //   };
-    //   fetchInitialMeals();
-    // }, [axiosPub]);
-
-    // // Append new meals to the existing list
-    // // eslint-disable-next-line react-hooks/rules-of-hooks
-    // useEffect(() => {
-    //   if (newMeals) {
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    //     meals = (prevMeals) => [...prevMeals, ...newMeals];
-    //   }
-    // }, [newMeals]);
-
+    // const articles = data?.pages.reduce((acc, page) => {
+    //   return [...acc, ...page.articles];
+    // }, []);
+    // meals = articles;
     // =========================
     const { data: meal = [] } = useQuery({
       queryKey: ['meals', filter, search],
@@ -135,21 +105,19 @@ const Meals = () => {
           </form>
         </div>
         {/* {filter && search ? ( */}
-          <div className="mb-16 mt-5 flex flex-col gap-6">
-            {meals.map((dta) => (
-              <MealCard key={dta._id} dta={dta} />
-            ))}
-          </div>
+        <div className="mb-16 mt-5 flex flex-col gap-6">
+          {meals.map((dta) => (
+            <MealCard key={dta._id} dta={dta} />
+          ))}
+        </div>
         {/* ) : (
           <div className="">
             <InfiniteScroll
               dataLength={meals.length}
-              next={fetchMoreData}
-              hasMore={meals.length < mealLen}
+              next={() => fetchNextPage()}
+              hasMore={() => hasNextPage()}
               loader={
                 <div className="overflow-hidden flex items-center gap-3 justify-center">
-                  <CgSpinnerTwoAlt className="animate-spin text-4xl overflow-x-hidden" />
-                  <CgSpinnerTwoAlt className="animate-spin text-4xl overflow-x-hidden" />
                   <CgSpinnerTwoAlt className="animate-spin text-4xl overflow-x-hidden" />
                 </div>
               }
