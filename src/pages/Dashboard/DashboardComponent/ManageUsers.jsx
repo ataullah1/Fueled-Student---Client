@@ -5,6 +5,8 @@ import Swal from 'sweetalert2';
 import { ImSpinner3 } from 'react-icons/im';
 import toast from 'react-hot-toast';
 import useAxiosSec from '../../../Hooks/useAxiosSec';
+import { BsThreeDotsVertical } from 'react-icons/bs';
+import { IoClose } from 'react-icons/io5';
 
 const ManageUsers = () => {
   const [viewBtn, setViewBtn] = useState(null);
@@ -76,7 +78,7 @@ const ManageUsers = () => {
       confirmButtonText: 'Yes, Remove Admin!',
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await mutateAsync(['employee', id]);
+        await mutateAsync(['user', id]);
         toast.success('Successfully Remove Admin');
         toggle(id);
       }
@@ -91,7 +93,7 @@ const ManageUsers = () => {
 
   return (
     <div className="p-5">
-      <h1 className="pt-3 pb-5 text-3xl text-slate-700">All Employee</h1>
+      <h1 className="text-3xl text-slate-800 font-bold pb-4 pt-3">All Users</h1>
       <div className="flex flex-col">
         <div className="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
           <div className="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
@@ -116,9 +118,15 @@ const ManageUsers = () => {
               </thead>
 
               {isLoading ? (
-                <div className="m-14 text-center w-[60px] h-[60px] flex items-center justify-center text-8xl text-white">
-                  <ImSpinner3 className="animate-spin" />
-                </div>
+                <tbody>
+                  <tr>
+                    <td colSpan={5} className="">
+                      <div className="text-slate-800 m-14 text-center w-[60px] h-[60px] flex items-center justify-center text-8xl mx-auto">
+                        <ImSpinner3 className="animate-spin" />
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
               ) : (
                 <tbody className="bg-white">
                   {users.map((dta) => (
@@ -134,7 +142,7 @@ const ManageUsers = () => {
                           </div>
 
                           <div className="ml-4">
-                            <div className="text-sm font-medium leading-5 text-gray-900">
+                            <div className="text-sm font-medium leading-5 text-gray-900 min-w-32">
                               {dta?.userName}
                             </div>
                           </div>
@@ -159,32 +167,39 @@ const ManageUsers = () => {
                         </span>
                       </td>
 
-                      <td className="px-6 relative py-4 text-sm font-medium leading-5 text-right whitespace-no-wrap border-b border-gray-200">
+                      <td className="px-2 pr-7 relative py-4 text-sm font-medium leading-5 text-right whitespace-no-wrap border-b border-gray-200">
                         <button
                           disabled={dta.superPower}
                           onClick={() => toggle(dta._id)}
                           className={
                             dta.superPower
                               ? 'text-slate-300'
-                              : `text-indigo-600 hover:text-indigo-900`
+                              : `text-indigo-600 hover:text-indigo-900 text-xl`
                           }
                         >
-                          Edit
+                          <BsThreeDotsVertical />
                         </button>
 
                         {viewBtn === dta._id && (
-                          <div className="absolute z-20 top-10 right-12">
-                            {dta.power === 'admin' ? (
+                          <div className="absolute z-20 top-1/2 -translate-y-1/2 right-12 b border rounded-md border-slate-300 p-1 flex items-center gap-2">
+                            <div
+                              className="p-1 text-lg cursor-pointer rounded-full text-red-500 border-2 border-slate-500 bg-white"
+                              onClick={() => toggle(dta._id)}
+                            >
+                              <IoClose />
+                            </div>
+
+                            {dta.role === 'admin' ? (
                               <button
                                 onClick={() => handleRemoveAdmin(dta._id)}
-                                className="py-2  w-36 bg-white shadow-md shadow-slate-400 hover:shadow-slate-600 rounded-md"
+                                className="font-bold py-2  w-36 bg-white shadow-md shadow-slate-400 hover:shadow-slate-600 rounded-md"
                               >
                                 Remove Admin
                               </button>
                             ) : (
                               <button
                                 onClick={() => handleAddAdmin(dta._id)}
-                                className="py-2 w-28 bg-white shadow-md shadow-slate-400 hover:shadow-slate-600 rounded-md"
+                                className="font-bold py-2 w-28 bg-white shadow-md shadow-slate-400 hover:shadow-slate-600 rounded-md"
                               >
                                 Add Admin
                               </button>
