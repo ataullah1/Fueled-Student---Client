@@ -61,6 +61,9 @@ const AdminProfile = () => {
             </button>
           </div>
         </div>
+        <div className='border py-9 mt-5 rounded-md'>
+
+        </div>
       </div>
     </div>
   );

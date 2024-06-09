@@ -1,16 +1,9 @@
-import {
-  FaArrowLeft,
-  FaFirstOrder,
-  FaHome,
-  FaSitemap,
-  FaUsersCog,
-} from 'react-icons/fa';
+import { FaArrowLeft, FaFirstOrder, FaHome, FaUsersCog } from 'react-icons/fa';
 import { LuGalleryHorizontalEnd, LuLogOut } from 'react-icons/lu';
 import {
   MdAddChart,
   MdAdminPanelSettings,
   MdDashboardCustomize,
-  MdOutlineMenuBook,
   MdPayments,
   MdReviews,
   MdUpcoming,

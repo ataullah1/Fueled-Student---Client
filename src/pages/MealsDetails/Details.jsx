@@ -84,7 +84,7 @@ const Details = () => {
   } = data;
   const time = timeAgo(postDate);
   // console.log(postDate);
-  
+
   let likeCount = likes;
   const handleLike = async () => {
     if (!userDta) {
@@ -115,7 +115,6 @@ const Details = () => {
     await mutateAsync(countData);
     // console.log(newLikeState ? 'Count barbeeeeeeeeee' : 'Count Combeeeeeeeee');
   };
-
   useEffect(() => {
     if (likedCount) {
       setLike(true);
