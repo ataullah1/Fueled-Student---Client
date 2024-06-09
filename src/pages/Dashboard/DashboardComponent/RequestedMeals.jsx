@@ -127,7 +127,7 @@ const RequestedMeals = () => {
                       <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200 min-w-40 max-w-72">
                         <div className="text-sm leading-5 ">
                           <p>
-                            {dta?.ingredients.map((d, i) => (
+                            {dta?.ingredients?.map((d, i) => (
                               <span key={i}>{d}, </span>
                             ))}
                           </p>
