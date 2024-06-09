@@ -38,7 +38,9 @@ const Dashboard = () => {
       <Toaster />
       <aside
         className={`h-screen z-50 lg:h-auto absolute left-0 top-0 lg:static w-full sm:w-72 lg:w-64 bg-gray-800 text-white lg:flex flex-col items-center p-4 md:h-full overflow-y-auto ${
-          isMnu ? 'translate-x-0' : '-translate-x-[700px] lg:translate-x-0'
+          isMnu
+            ? 'translate-x-0 duration-700'
+            : '-translate-x-[700px] lg:translate-x-0 duration-300'
         }`}
       >
         <div className="mb-10 flex items-center justify-between">
