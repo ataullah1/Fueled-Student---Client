@@ -190,6 +190,7 @@ export default function Register() {
                   id="img"
                   className="w-full bg-transparent shadow-md shadow-slate-500 px-3 py-2 border rounded pl-9"
                   type="file"
+                  accept="image/*"
                   placeholder="Name"
                   {...register('photo', { required: true })}
                 />

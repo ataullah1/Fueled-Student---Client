@@ -1,8 +1,25 @@
+import { useQuery } from '@tanstack/react-query';
+import useAxiosSec from '../../../Hooks/useAxiosSec';
+import useAuth from '../../../Hooks/useAuth';
+import { ImSpinner3 } from 'react-icons/im';
+import { FaTrashAlt } from 'react-icons/fa';
+
 const RequestedMeals = () => {
+  const { userDta } = useAuth();
+  const axiosSec = useAxiosSec();
+  const { data = [], isLoading } = useQuery({
+    queryKey: ['request-meals'],
+    queryFn: async () => {
+      const { data } = await axiosSec.get(`/request-meals/${userDta.email}`);
+      console.log(data);
+      return data;
+    },
+  });
+  console.log(data);
   return (
     <div>
       {/* table part */}
-      <div className="w-11/12 mx-auto">
+      <div className="w-11/12 mx-auto ">
         {/* Table Part */}
         <div className="w-full mx-auto pt-10">
           <div className="overflow-x-auto rounded-md">
@@ -37,9 +54,9 @@ const RequestedMeals = () => {
                   <ImSpinner3 className="animate-spin" />
                 </div>
               ) : (
-                <tbody className="text-white">
-                  {my_order.map((dta) => (
-                    <tr>
+                <tbody className="text-slate-700">
+                  {data.map((dta) => (
+                    <tr key={dta._id}>
                       <td className="px-4 py-4 whitespace-no-wrap border-b border-gray-200">
                         <div className="flex items-center">
                           <div className="flex-shrink-0 w-24 h-20">
@@ -61,8 +78,8 @@ const RequestedMeals = () => {
                       <td className="px-4 py-4 whitespace-no-wrap border-b border-gray-200">
                         <div className="text-sm leading-5 ">
                           <p>
-                            {dta?.food_description.slice(0, 32)}
-                            {dta?.food_description.length > 32 && '...'}
+                            {dta?.food_description?.slice(0, 32)}
+                            {dta?.food_description?.length > 32 && '...'}
                           </p>
                         </div>
                       </td>
@@ -73,10 +90,10 @@ const RequestedMeals = () => {
                       </td>
 
                       <td className="px-4 py-4 text-sm leading-5  whitespace-no-wrap border-b border-gray-200">
-                        <div className="flex items-center justify-center gap-2">
+                        <div className="flex items-center justify-center gap-2 capitalize">
                           <div
                             className={
-                              dta.status === 'panding'
+                              dta.status === 'pending'
                                 ? 'h-3 w-3 rounded-full bg-[#F97316]'
                                 : dta.status === 'processing'
                                 ? 'h-3 w-3 rounded-full bg-yellow-400'

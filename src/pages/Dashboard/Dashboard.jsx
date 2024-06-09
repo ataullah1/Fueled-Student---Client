@@ -53,7 +53,7 @@ const Dashboard = () => {
           )}
         </div>
         <nav className="w-full">
-          <ul className="list-none p-0">
+          <ul className="list-none p-0 dashboardNav">
             {admin ? (
               <>
                 <li className="w-full mb-2">

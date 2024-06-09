@@ -11,6 +11,7 @@ import { Rating } from '@smastrom/react-rating';
 import ReviewPost from '../../components/ReviewPost/ReviewPost';
 import AddReview from '../../components/AddReview/AddReview';
 import timeAgo from '../../time';
+import toast from 'react-hot-toast';
 
 const Details = () => {
   const { userDta } = useAuth();
@@ -72,6 +73,7 @@ const Details = () => {
   });
 
   const {
+    _id,
     likes = '00',
     mealImage,
     mealType,
@@ -122,6 +124,33 @@ const Details = () => {
       setLike(false);
     }
   }, [likedCount]);
+
+  const { mutateAsync: requstMutate } = useMutation({
+    mutationFn: async (request) => {
+      const { data } = await axiosSec.post('/meals-request', request);
+      // console.log(data);
+      return data;
+    },
+    onSuccess: (dta) => {
+      // console.log(dta);
+      if (dta.insertedId) {
+        toast.success('Request Sended!');
+      } else {
+        toast.error('Request Already Sended!');
+      }
+    },
+  });
+  // Handle request func
+  const handleRequest = async () => {
+    const recDta = {
+      recMealId: _id,
+      recEmail: userDta.email,
+      recName: userDta.displayName,
+      status: 'pending',
+    };
+    // console.log(recDta);
+    await requstMutate(recDta);
+  };
   return (
     <div>
       <div
@@ -205,7 +234,10 @@ const Details = () => {
               />
               <h1 className="text-2xl">({ratingsAvg?.totalCount || 0})</h1>
             </div>
-            <button className="py-2 px-5 bg-pClr rounded-md text-slate-100 font-semibold hover:scale-110 duration-200">
+            <button
+              onClick={handleRequest}
+              className="py-2 px-5 font-bold bg-pClr rounded-md text-black hover:scale-110 duration-200"
+            >
               Meal Request
             </button>
           </div>

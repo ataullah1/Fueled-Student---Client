@@ -73,5 +73,6 @@ a {
   border: 1.5px solid rgb(5, 189, 103);
 }
 .dashboardNav > li > a.active {
-  background-color: #374151;
+  background-color: #424c5c;
+  border-radius: 6px;
 }
