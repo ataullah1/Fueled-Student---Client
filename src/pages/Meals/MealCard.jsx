@@ -11,7 +11,10 @@ const MealCard = ({ dta }) => {
         <div
           className="w-full h-full bg-cover bg-center rounded-t-md md:rounded-tr-none md:rounded-l-md bg-yellow-200"
           style={{
-            backgroundImage: `url('https://i.ibb.co/bsVvWDG/bowl-menudo-served-with-side-sliced-avocado-974629-221980.jpg')`,
+            backgroundImage: `url(${
+              dta.mealImage ||
+              'https://i.ibb.co/bsVvWDG/bowl-menudo-served-with-side-sliced-avocado-974629-221980.jpg'
+            })`,
           }}
         ></div>
       </div>

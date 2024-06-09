@@ -23,8 +23,11 @@ const AddMeals = () => {
   const adminEmail = userDta?.email;
   const [ingredient, setIngredient] = useState('');
   const [ingredientsList, setIngredientsList] = useState([]);
-
+  const [ingrErr, setIngrErr] = useState(false);
+  const [imgErr, setImgErr] = useState(false);
+  // console.log(showName);
   const handleAddIngredient = () => {
+    setIngrErr(false);
     if (ingredient.trim() !== '') {
       setIngredientsList([...ingredientsList, ingredient]);
       setIngredient('');
@@ -62,7 +65,7 @@ const AddMeals = () => {
     onSuccess: () => {
       Swal.fire({
         title: 'Thank You',
-        text: 'Your review has been successfully posted.',
+        text: 'Your meal has been successfully posted.',
         icon: 'success',
       });
     },
@@ -82,14 +85,28 @@ const AddMeals = () => {
     formState: { errors },
   } = useForm();
   const onSubmit = async (data) => {
-    const description = data.description;
+    if (ingredientsList.length < 1) {
+      setIngrErr(true);
+      return;
+    } else {
+      setIngrErr(false);
+    }
+    if (!showName.name) {
+      setImgErr(true);
+      return;
+    } else {
+      setImgErr(false);
+    }
+
     const title = data.title;
     const mealType = data.mealType;
+    const description = data.description;
+    const price = data.price;
+    const ingredients = ingredientsList;
     // console.log(data);
 
     try {
       setLoading(true);
-
       const imagess = new FormData();
       imagess.append('image', showName);
       const { data } = await axios.post(
@@ -105,17 +122,21 @@ const AddMeals = () => {
         title,
         likes,
         mealType,
+        price,
         mealImage,
         adminName,
         adminEmail,
+        ingredients,
         postDate,
       };
-      // console.log('Review Datas:=====', review);
+      // console.log('Meal Datas:=====', meal);
+      // return;
       await mutateAsync(meal);
       setLoading(false);
       setShowName('');
       setShowImagePreview('');
       fileInputRef.current.value = '';
+      setIngredientsList([]);
       reset();
     } catch (error) {
       console.log(error);
@@ -137,154 +158,240 @@ const AddMeals = () => {
       <div className="w-full border border-slate-300 rounded-md p-4">
         <div>
           <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-            {/* Meal Title */}
-            <input
-              type="text"
-              placeholder="Enter Meal Title"
-              {...register('title', { required: true, minLength: 10 })}
-            />
-            {errors.title?.type === 'required' && (
-              <p className="text-red-500 py-2">Please Input Meal Title!</p>
-            )}
-            {errors.title?.type === 'minLength' && (
-              <p className="text-red-500 py-2">
-                Please Input Meal Title Minimum 10 Character!
-              </p>
-            )}
+            <div className="flex flex-col md:flex-row gap-3 lg:gap-5">
+              <div className="flex flex-col w-full md:w-1/2">
+                {/* Meal Title */}
+                <input
+                  className="px-3 py-2 rounded-md w-full border border-slate-400 outline-none bg-transparent"
+                  type="text"
+                  placeholder="Enter Meal Title"
+                  {...register('title', { required: true, minLength: 10 })}
+                />
+                {errors.title?.type === 'required' && (
+                  <p className="text-red-500 pt-1">Please Input Meal Title!</p>
+                )}
+                {errors.title?.type === 'minLength' && (
+                  <p className="text-red-500 pt-1">
+                    Please Input Meal Title Minimum 10 Character!
+                  </p>
+                )}
+              </div>
 
-            {/* Select meals type */}
-            <select {...register('mealType', { required: true })}>
-              <option value="breakfast">breakfast</option>
-              <option value="lunch">lunch</option>
-              <option value="dinner">dinner</option>
-            </select>
-            {errors.mealType?.type === 'required' && (
-              <p className="text-red-500 py-2">Please Select Meal Type!</p>
-            )}
+              <div className="flex flex-col sm:flex-row w-full gap-3 lg:gap-5 md:w-1/2">
+                {/* Select meals type */}
+                <div className="flex flex-col w-full sm:w-1/2">
+                  <select
+                    id="selectmethod"
+                    defaultValue=""
+                    name="mealType"
+                    {...register('mealType', { required: true })}
+                    className="custom-select py-2 px-3 rounded-md border border-slate-400 outline-none bg-transparent"
+                  >
+                    <option value="" disabled>
+                      Select Meal Type
+                    </option>
+                    <option value="breakfast">Breakfast</option>
+                    <option value="lunch">Lunch</option>
+                    <option value="dinner">Dinner</option>
+                  </select>
+                  {errors.mealType && (
+                    <p className="text-red-500 pt-1">
+                      Please Select Meal Type!
+                    </p>
+                  )}
 
-            {/* Price */}
-            <input
-              type="number"
-              placeholder="Enter Meal Price"
-              {...register('price', { required: true, minLength: 1 })}
-            />
-            {(errors.price?.type === 'required' ||
-              errors.price?.type === 'minLength') && (
-              <p className="text-red-500 py-2">Please Input Meal Price!</p>
-            )}
-            {/*  Ingrediat */}
-            <div>
-              <input
-                type="text"
-                value={ingredient}
-                onChange={(e) => setIngredient(e.target.value)}
-                placeholder="Enter ingredient"
-              />
-              <button onClick={handleAddIngredient}>Add Ingredient</button>
-              <ul>
-                {ingredientsList.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
+                  {/* <select
+                    className="custom-select"
+                    id="selectmethod"
+                    defaultValue=""
+                    name="exampleRequired"
+                    {...register('exampleRequired', { required: true })}
+                  >
+                    <option value="" disabled>
+                      Select Option
+                    </option>
+                    <option value="1">Blue</option>
+                    <option value="2">Red</option>
+                  </select> */}
+                  {errors.exampleRequired && (
+                    <span className="formError errorMssg">
+                      This field is required
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex flex-col w-full sm:w-1/2">
+                  {/* Price */}
+                  <input
+                    className="py-2 px-3 rounded-md border border-slate-400 outline-none bg-transparent"
+                    type="number"
+                    placeholder="Enter Meal Price"
+                    {...register('price', { required: true, minLength: 1 })}
+                  />
+                  {(errors.price?.type === 'required' ||
+                    errors.price?.type === 'minLength') && (
+                    <p className="text-red-500 pt-1">
+                      Please Input Meal Price!
+                    </p>
+                  )}
+                </div>
+              </div>
             </div>
+
+            {/*  ingredient */}
+            {ingredientsList?.length > 0 && (
+              <div className="w-full px-3 py-1 rounded-md bg-slate-50 border border-slate-400 mt-3 md:mt-5 flex flex-col items-start">
+                <div className="flex gap-5">
+                  <h3 className="font-bold bg-slate-200 inline-block px-3 rounded mb-2">
+                    Preview Ingredient
+                  </h3>
+                  <h3 className="font-semibold bg-slate-200 px-3 rounded mb-2 flex gap-1">
+                    <span className="hidden sm:block font-medium">Added </span>{' '}
+                    Ingredient ({ingredientsList?.length})
+                  </h3>
+                </div>
+                <div>
+                  {ingredientsList.map((item, index) => (
+                    <span key={index}>{item}, </span>
+                  ))}
+                </div>
+                <div className="text-right w-full">
+                  <span
+                    className="px-3 bg-red-500 text-white rounded-md cursor-pointer"
+                    onClick={() => setIngredientsList([])}
+                  >
+                    Clear
+                  </span>
+                </div>
+              </div>
+            )}
+            <div className=" my-3 md:my-5">
+              <div className="flex">
+                <input
+                  type="text"
+                  className="py-2 px-3 bg-transparent border border-r-0 border-slate-400 rounded-l-md outline-none w-9/12"
+                  value={ingredient}
+                  onChange={(e) => setIngredient(e.target.value)}
+                  placeholder="Enter ingredients"
+                />
+                <div
+                  onClick={handleAddIngredient}
+                  className="py-2 px-4 rounded-r-md bg-pClr text-white font-semibold border border-pClr cursor-pointer select-none w-1/4 text-center"
+                >
+                  Add
+                </div>
+              </div>
+              {ingrErr && (
+                <p className="text-red-500 pt-1">
+                  Please add the meal ingredients!
+                </p>
+              )}
+            </div>
+
             {/* Description meals */}
-            <textarea
-              className={`w-full bg-transparent border rounded-md p-3 min-h-40 shadow-md shadow-slate-400 border-slate-500`}
-              placeholder="Enter Meal Details..."
-              {...register('description', { required: true, minLength: 40 })}
-            />
-            {errors.description?.type === 'required' && (
-              <p className="text-red-500 py-2">
-                Please Input Meal Description!
-              </p>
-            )}
-            {errors.description?.type === 'minLength' && (
-              <p className="text-red-500 py-2">
-                Please Input Meal Description Minimum 40 Character!
-              </p>
-            )}
+            <div>
+              <textarea
+                className={`w-full bg-transparent rounded-md p-3 min-h-32 border border-slate-400 outline-none`}
+                placeholder="Enter Meal Details..."
+                {...register('description', { required: true, minLength: 40 })}
+              />
+              {errors.description?.type === 'required' && (
+                <p className="text-red-500 pt-1">
+                  Please Input Meal Description!
+                </p>
+              )}
+              {errors.description?.type === 'minLength' && (
+                <p className="text-red-500 pt-1">
+                  Please Input Meal Description Minimum 40 Character!
+                </p>
+              )}
+            </div>
+
+            {/* Upload image */}
+            <div
+              className={`${
+                imgErr ? 'text-red-500' : 'text-slate-700'
+              } py-2 md:py-3`}
+            >
+              <div>
+                {showName?.name ? (
+                  <div className=" mx-auto flex w-full items-center gap-x-6  rounded-lg border-2 border-dashed border-gray-400 p-5 bg-transparent">
+                    <img
+                      className="size-[100px] h-[100px] w-full max-w-[150px] rounded-lg object-cover"
+                      src={showImagePreview}
+                      alt={showName?.name}
+                    />
+                    <div className="flex-1 space-y-1.5 overflow-hidden">
+                      <h5 className=" text-xl font-medium tracking-tight truncate">
+                        {showName?.name}
+                      </h5>
+                      <p className=" text-gray-500">
+                        {(showName.size / 1024).toFixed(1)} KB
+                      </p>
+                    </div>
+                    <div onClick={handleClearFile}>
+                      <span className="text-3xl">
+                        <IoMdClose />
+                      </span>
+                    </div>
+                  </div>
+                ) : (
+                  <label
+                    className=" mx-auto flex w-full flex-col items-center justify-center space-y-1 rounded-lg border-2 border-dashed border-gray-400 p-3 bg-transparent cursor-pointer"
+                    htmlFor="file5"
+                  >
+                    <span className="text-5xl">
+                      <LuUploadCloud />
+                    </span>
+                    <div className="space-y-1.5 text-center">
+                      <h5 className="whitespace-nowrap text-lg font-medium tracking-tight ">
+                        Upload Meal Photo
+                      </h5>
+                      <p className="text-sm">
+                        File Should be in PNG, JPEG or JPG formate
+                      </p>
+                    </div>
+                  </label>
+                )}
+
+                <input
+                  ref={fileInputRef}
+                  onChange={(e) => {
+                    if (
+                      e.target.files &&
+                      e.target.files[0].type.startsWith('image/') &&
+                      e.target.files[0]
+                    ) {
+                      setImgErr(false);
+                      const imageFile = e.target.files[0];
+                      setShowName(imageFile);
+                      setShowImagePreview(URL.createObjectURL(imageFile));
+                    } else {
+                      toast.error('Only images can be uploaded!');
+                    }
+                  }}
+                  className="hidden"
+                  accept="image/*"
+                  id="file5"
+                  type="file"
+                />
+              </div>
+              {imgErr && (
+                <p className="text-red-500 pt-1">Please Input Meal Photo!</p>
+              )}
+            </div>
             {loding ? (
-              <p className="py-2 w-44 mx-auto block duration-300 cursor-progress rounded-md bg-pClr text-slate-100 mt-3">
+              <p className="py-2 w-full sm:w-60 md:w-96 mx-auto block duration-300 cursor-progress rounded-md bg-pClr text-slate-100 mt-3">
                 <ImSpinner9 className="animate-spin text-2xl mx-auto" />
               </p>
             ) : (
               <input
                 type="submit"
-                value={'Save Review'}
-                className="py-2 w-44 mx-auto block hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer rounded-md bg-pClr text-slate-100 font-semibold mt-3"
+                value={'Add New Meal'}
+                className="py-2 w-full sm:w-60 md:w-96 mx-auto block hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer rounded-md bg-pClr text-slate-100 font-semibold mt-3"
               />
             )}
           </form>
-          <h3 className="mb-2 font-semibold text-xl">
-            Add Photo
-            <span className="text-slate-300 font-normal text-sm">
-              (You can skip it if you want)
-            </span>
-          </h3>
-          <div>
-            <div className="text-slate-700">
-              {showName?.name ? (
-                <div className=" mx-auto flex w-full items-center gap-x-6  rounded-lg border-2 border-dashed border-gray-400 p-5 bg-transparent">
-                  <img
-                    className="size-[100px] h-[100px] w-full max-w-[150px] rounded-lg object-cover"
-                    src={showImagePreview}
-                    alt={showName?.name}
-                  />
-                  <div className="flex-1 space-y-1.5 overflow-hidden">
-                    <h5 className=" text-xl font-medium tracking-tight truncate">
-                      {showName?.name}
-                    </h5>
-                    <p className=" text-gray-500">
-                      {(showName.size / 1024).toFixed(1)} KB
-                    </p>
-                  </div>
-                  <div onClick={handleClearFile}>
-                    <span className="text-3xl">
-                      <IoMdClose />
-                    </span>
-                  </div>
-                </div>
-              ) : (
-                <label
-                  className=" mx-auto flex w-full flex-col items-center justify-center space-y-1 rounded-lg border-2 border-dashed border-gray-400 p-3 bg-transparent cursor-pointer"
-                  htmlFor="file5"
-                >
-                  <span className="text-5xl">
-                    <LuUploadCloud />
-                  </span>
-                  <div className="space-y-1.5 text-center">
-                    <h5 className="whitespace-nowrap text-lg font-medium tracking-tight ">
-                      Upload your file
-                    </h5>
-                    <p className="text-sm text-gray-500">
-                      File Should be in PNG, JPEG or JPG formate
-                    </p>
-                  </div>
-                </label>
-              )}
-
-              <input
-                ref={fileInputRef}
-                onChange={(e) => {
-                  if (
-                    e.target.files &&
-                    e.target.files[0].type.startsWith('image/') &&
-                    e.target.files[0]
-                  ) {
-                    const imageFile = e.target.files[0];
-                    setShowName(imageFile);
-                    setShowImagePreview(URL.createObjectURL(imageFile));
-                  } else {
-                    toast.error('Only images can be uploaded!');
-                  }
-                }}
-                className="hidden"
-                accept="image/*"
-                id="file5"
-                type="file"
-              />
-            </div>
-          </div>
         </div>
       </div>
     </div>
