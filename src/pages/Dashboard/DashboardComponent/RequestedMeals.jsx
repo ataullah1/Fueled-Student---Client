@@ -17,7 +17,7 @@ const RequestedMeals = () => {
     queryKey: ['request-meals'],
     queryFn: async () => {
       const { data } = await axiosSec.get(`/request-meals/${userDta.email}`);
-      // console.log(data);
+      console.log(data);
       return data;
     },
   });
@@ -97,6 +97,16 @@ const RequestedMeals = () => {
                     <td colSpan={6} className="">
                       <div className="text-slate-800 m-14 text-center w-[60px] h-[60px] flex items-center justify-center text-8xl mx-auto">
                         <ImSpinner3 className="animate-spin" />
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              ) : data?.length < 1 ? (
+                <tbody>
+                  <tr>
+                    <td colSpan={6} className="">
+                      <div className="text-slate-800 m-14 text-center border border-red-500 rounded-md p-5 max-w-[700px] text-3xl md:text-5xl mx-auto">
+                        <h1>You have not requested any meals yet!</h1>
                       </div>
                     </td>
                   </tr>

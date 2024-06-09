@@ -7,7 +7,6 @@ import { LuUploadCloud } from 'react-icons/lu';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import { ImSpinner9 } from 'react-icons/im';
-import PropTypes from 'prop-types';
 import useAxiosSec from '../../../Hooks/useAxiosSec';
 import useAuth from '../../../Hooks/useAuth';
 
@@ -116,6 +115,7 @@ const AddMeals = () => {
       const mealImage = data.data.display_url;
       const rating = 0;
       const likes = 0;
+      const review = 0;
       const meal = {
         rating,
         description,
@@ -123,6 +123,7 @@ const AddMeals = () => {
         likes,
         mealType,
         price,
+        review,
         mealImage,
         adminName,
         adminEmail,

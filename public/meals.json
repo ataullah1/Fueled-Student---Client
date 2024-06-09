@@ -16,7 +16,9 @@
     "likes": 321,
     "mealType": "dinner",
     "title": "Cheesy Lasagna with Meat Sauce",
-    "price": 15.99
+    "price": 15.99,
+    "review": 0,
+    "adminEmail": "ataullahm100@gmail.com"
   },
   {
     "mealImage": null,
@@ -35,7 +37,9 @@
     "likes": 210,
     "mealType": "dinner",
     "title": "Grilled Chicken with Quinoa",
-    "price": 12.5
+    "price": 12.5,
+    "review": 0,
+    "adminEmail": "ataullahm100@gmail.com"
   },
   {
     "mealImage": null,
@@ -47,7 +51,9 @@
     "likes": 275,
     "mealType": "lunch",
     "title": "Authentic Mexican Beef Tacos",
-    "price": 10
+    "price": 10,
+    "review": 0,
+    "adminEmail": "ataullahm100@gmail.com"
   },
   {
     "mealImage": null,
@@ -66,7 +72,9 @@
     "likes": 350,
     "mealType": "dinner",
     "title": "Flavorful Ramen with Pork Belly",
-    "price": 14.99
+    "price": 14.99,
+    "review": 0,
+    "adminEmail": "ataullahm100@gmail.com"
   },
   {
     "mealImage": null,
@@ -85,7 +93,9 @@
     "likes": 240,
     "mealType": "lunch",
     "title": "Hearty Chicken and Bean Burrito",
-    "price": 9.75
+    "price": 9.75,
+    "review": 0,
+    "adminEmail": "ataullahm100@gmail.com"
   },
   {
     "mealImage": null,
@@ -104,7 +114,9 @@
     "likes": 250,
     "mealType": "breakfast",
     "title": "Fluffy Pancakes with Maple Syrup",
-    "price": 8.5
+    "price": 8.5,
+    "review": 0,
+    "adminEmail": "ataullahm100@gmail.com"
   },
   {
     "mealImage": null,
@@ -123,7 +135,9 @@
     "likes": 122,
     "mealType": "dinner",
     "title": "Classic Spaghetti Bolognese",
-    "price": 11.99
+    "price": 11.99,
+    "review": 0,
+    "adminEmail": "ataullahm100@gmail.com"
   },
   {
     "mealImage": null,
@@ -142,7 +156,9 @@
     "likes": 200,
     "mealType": "lunch",
     "title": "Healthy Veggie Burger with Fries",
-    "price": 9
+    "price": 9,
+    "review": 0,
+    "adminEmail": "ataullahm100@gmail.com"
   },
   {
     "mealImage": null,
@@ -161,7 +177,9 @@
     "likes": 181,
     "mealType": "dinner",
     "title": "Spicy Chicken Curry with Rice",
-    "price": 13.5
+    "price": 13.5,
+    "review": 0,
+    "adminEmail": "ataullahm100@gmail.com"
   },
   {
     "mealImage": null,
@@ -179,7 +197,9 @@
     "likes": 301,
     "mealType": "lunch",
     "title": "Crisp Caesar Salad with Chicken",
-    "price": 10.5
+    "price": 10.5,
+    "review": 0,
+    "adminEmail": "ataullahm100@gmail.com"
   },
   {
     "mealImage": null,
@@ -198,7 +218,9 @@
     "likes": 202,
     "mealType": "breakfast",
     "title": "Healthy Oatmeal with Fruits",
-    "price": 7.5
+    "price": 7.5,
+    "review": 0,
+    "adminEmail": "ataullahm100@gmail.com"
   },
   {
     "mealImage": null,
@@ -217,6 +239,8 @@
     "likes": 206,
     "mealType": "breakfast",
     "title": "Avocado Toast with Poached Egg",
-    "price": 9.25
+    "price": 9.25,
+    "review": 0,
+    "adminEmail": "ataullahm100@gmail.com"
   }
 ]
