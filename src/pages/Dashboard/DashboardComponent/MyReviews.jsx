@@ -46,7 +46,7 @@ const MyReviews = () => {
     const filterUpdate = data.find((dta) => dta._id === id);
     setDtaFilter(filterUpdate);
     setModal(true);
-    console.log(filterUpdate);
+    // console.log(filterUpdate);
   };
 
   // Delete review
@@ -80,11 +80,15 @@ const MyReviews = () => {
   };
 
   return (
-    <div className="relative min-h-[calc(100vh-100px)]">
+    <div className="relative min-h-[500px] h-[calc(100vh-100px)]">
       {modal && (
-        <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[600px] min-h-48 bg-slate-100 rounded-md z-30 p-6">
+        <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-full md:w-[600px] min-h-48 bg-slate-100 rounded-md z-30 p-3 md:p-6">
           <div className="mx-auto overflow-auto">
-            <ReviewUpdate dtaFilter={dtaFilter} />
+            <ReviewUpdate
+              dtaFilter={dtaFilter}
+              refetch={refetch}
+              modal={setModal}
+            />
           </div>
         </div>
       )}

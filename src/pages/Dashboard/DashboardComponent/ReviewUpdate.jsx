@@ -12,10 +12,10 @@ import PropTypes from 'prop-types';
 import useAxiosSec from '../../../Hooks/useAxiosSec';
 import useAuth from '../../../Hooks/useAuth';
 
-export default function ReviewUpdate({ dtaFilter }) {
-  console.log('dtaFilter++++++', dtaFilter);
+export default function ReviewUpdate({ dtaFilter, refetch, modal }) {
+  //   console.log('dtaFilter++++++', dtaFilter);
   const axiosSec = useAxiosSec();
-  const [rating, setRating] = useState(0);
+  const [ratings, setRating] = useState(null);
   const [showName, setShowName] = useState({});
   const [showImagePreview, setShowImagePreview] = useState({});
   const fileInputRef = useRef();
@@ -26,17 +26,23 @@ export default function ReviewUpdate({ dtaFilter }) {
   const reviewUserEmail = userDta?.email;
 
   // console.log('Imagee==========', showName?.name);
-
   // Post new review
   const { mutateAsync } = useMutation({
     mutationFn: async (review) => {
-      const { data } = await axiosSec.post('/post-review', review);
+      const { data } = await axiosSec.put(
+        `/review-update/${dtaFilter._id}`,
+        review
+      );
       console.log(data);
     },
     onSuccess: () => {
+      setLoading(false);
+      refetch();
+      modal(false);
       Swal.fire({
-        title: 'Thank You',
-        text: 'Your review has been successfully posted.',
+        title: 'Updated Review',
+        timer: 1200,
+        text: 'Your review has been successfully Updated.',
         icon: 'success',
       });
     },
@@ -52,18 +58,9 @@ export default function ReviewUpdate({ dtaFilter }) {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm();
   const onSubmit = async (data) => {
-    if (rating < 1) {
-      Swal.fire({
-        title: 'Please give your rating',
-        icon: 'warning',
-        timer: 1500,
-      });
-      return;
-    }
     const detail = data.YourOpinion;
     // console.log(data);
 
@@ -79,40 +76,31 @@ export default function ReviewUpdate({ dtaFilter }) {
           imagess
         );
         const image1 = data.data.display_url;
+
         const review = {
-          rating,
+          rating: ratings || dtaFilter.rating,
           detail,
           image1,
           reviewUserName,
           reviewUserPhoto,
           reviewUserEmail,
         };
-        // console.log('Review Datas:=====', review);
+        console.log('Review Datas:=====', review);
+        // return;
         await mutateAsync(review);
-        setLoading(false);
-        setShowName('');
-        setShowImagePreview('');
-        fileInputRef.current.value = '';
-        reset();
-        setRating(0);
       } else {
-        const image1 = null;
+        const image1 = dtaFilter.image1;
         const review = {
-          rating,
+          rating: ratings || dtaFilter.rating,
           detail,
           image1,
           reviewUserName,
           reviewUserPhoto,
           reviewUserEmail,
         };
-        // console.log('Review Datas:=====', review);
+        console.log('Review Datas:=====', review);
+        // return;
         await mutateAsync(review);
-        setLoading(false);
-        setShowName('');
-        setShowImagePreview('');
-        fileInputRef.current.value = '';
-        reset();
-        setRating(0);
       }
     } catch (error) {
       console.log(error);
@@ -129,13 +117,13 @@ export default function ReviewUpdate({ dtaFilter }) {
   return (
     <div>
       <h3 className="mb-2 font-semibold text-xl">
-        Add Photo
-        <span className="text-slate-300 font-normal text-sm">
+        Add Photo &nbsp;
+        <span className="text-slate-400 font-normal text-sm">
           (You can skip it if you want)
         </span>
       </h3>
       <div>
-        <div className="text-slate-100">
+        <div className="text-slate-700">
           {showName?.name ? (
             <div className=" mx-auto flex w-full items-center gap-x-6  rounded-lg border-2 border-dashed border-gray-400 p-5 bg-transparent">
               <img
@@ -199,12 +187,17 @@ export default function ReviewUpdate({ dtaFilter }) {
         </div>
       </div>
       <div className="py-6 flex justify-center items-center gap-3">
-        <Rating style={{ maxWidth: 250 }} value={rating} onChange={setRating} />
-        <span className="text-2xl">({rating ? rating : 0}/5)</span>
+        <Rating
+          style={{ maxWidth: 250 }}
+          value={ratings || dtaFilter?.rating}
+          onChange={setRating}
+        />
+        <span className="text-2xl">({ratings || dtaFilter.rating}/5)</span>
       </div>
       <form onSubmit={handleSubmit(onSubmit)} className="w-full">
         <textarea
-          className={`w-full bg-transparent border rounded-md p-3 min-h-40 shadow-md shadow-slate-400 border-slate-500`}
+          defaultValue={dtaFilter?.detail}
+          className={`w-full bg-transparent border rounded-md p-3 min-h-40 shadow-md shadow-slate-400 border-slate-500 outline-none`}
           placeholder="Enter Your Opinion..."
           {...register('YourOpinion', { required: true, minLength: 30 })}
         />
@@ -223,7 +216,7 @@ export default function ReviewUpdate({ dtaFilter }) {
         ) : (
           <input
             type="submit"
-            value={'Save Review'}
+            value={'Update Review'}
             className="py-2 w-44 mx-auto block hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer rounded-md bg-pClr text-slate-100 font-semibold mt-3"
           />
         )}
@@ -233,4 +226,6 @@ export default function ReviewUpdate({ dtaFilter }) {
 }
 ReviewUpdate.propTypes = {
   dtaFilter: PropTypes.object,
+  refetch: PropTypes.func,
+  modal: PropTypes.boolean,
 };
