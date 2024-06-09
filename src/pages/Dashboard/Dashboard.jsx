@@ -58,7 +58,7 @@ const Dashboard = () => {
           <ul className="list-none p-0 dashboardNav">
             {admin ? (
               <>
-                <li className="w-full mb-2">
+                <li className="w-full mb-2" onClick={() => setMenu(false)}>
                   <NavLink
                     to={'/dashboard'}
                     end
@@ -68,7 +68,7 @@ const Dashboard = () => {
                     Admin Profile
                   </NavLink>
                 </li>
-                <li className="w-full mb-2">
+                <li className="w-full mb-2" onClick={() => setMenu(false)}>
                   <NavLink
                     to={'/dashboard/Manage-Users'}
                     className="w-full px-4 py-2 hover:bg-gray-700 flex items-center gap-2"
@@ -77,7 +77,7 @@ const Dashboard = () => {
                     Manage Users
                   </NavLink>
                 </li>
-                <li className="w-full mb-2">
+                <li className="w-full mb-2" onClick={() => setMenu(false)}>
                   <NavLink
                     to={'/dashboard/Add-Meal'}
                     className="w-full px-4 py-2 hover:bg-gray-700 flex items-center gap-2"
@@ -86,7 +86,7 @@ const Dashboard = () => {
                     Add Meal
                   </NavLink>
                 </li>
-                <li className="w-full mb-2">
+                <li className="w-full mb-2" onClick={() => setMenu(false)}>
                   <NavLink
                     to={'/dashboard/All-Meals'}
                     className="w-full px-4 py-2 hover:bg-gray-700 flex items-center gap-2"
@@ -95,7 +95,7 @@ const Dashboard = () => {
                     All Meals
                   </NavLink>
                 </li>
-                <li className="w-full mb-2">
+                <li className="w-full mb-2" onClick={() => setMenu(false)}>
                   <NavLink
                     to={'/dashboard/All-Reviews'}
                     className="w-full px-4 py-2 hover:bg-gray-700 flex items-center gap-2"
@@ -104,7 +104,7 @@ const Dashboard = () => {
                     All Reviews
                   </NavLink>
                 </li>
-                <li className="w-full mb-2">
+                <li className="w-full mb-2" onClick={() => setMenu(false)}>
                   <NavLink
                     to={'/dashboard/Serve-Meals'}
                     className="w-full px-4 py-2 hover:bg-gray-700 flex items-center gap-2"
@@ -113,7 +113,7 @@ const Dashboard = () => {
                     Serve Meals
                   </NavLink>
                 </li>
-                <li className="w-full mb-2">
+                <li className="w-full mb-2" onClick={() => setMenu(false)}>
                   <NavLink
                     to={'/dashboard/Upcoming-Meals'}
                     className="w-full px-4 py-2 hover:bg-gray-700 flex items-center gap-2"
@@ -125,7 +125,7 @@ const Dashboard = () => {
               </>
             ) : (
               <>
-                <li className="w-full mb-2">
+                <li className="w-full mb-2" onClick={() => setMenu(false)}>
                   <NavLink
                     end
                     to={'/dashboard'}
@@ -135,7 +135,7 @@ const Dashboard = () => {
                     My Profile
                   </NavLink>
                 </li>
-                <li className="w-full mb-2">
+                <li className="w-full mb-2" onClick={() => setMenu(false)}>
                   <NavLink
                     to={'/dashboard/Requested-Mealss'}
                     className="w-full px-4 py-2 hover:bg-gray-700 flex items-center gap-2"
@@ -144,7 +144,7 @@ const Dashboard = () => {
                     Requested Meals
                   </NavLink>
                 </li>
-                <li className="w-full mb-2">
+                <li className="w-full mb-2" onClick={() => setMenu(false)}>
                   <NavLink
                     to={'/dashboard/My-Reviews'}
                     className="w-full px-4 py-2 hover:bg-gray-700 flex items-center gap-2"
@@ -153,7 +153,7 @@ const Dashboard = () => {
                     My Reviews
                   </NavLink>
                 </li>
-                <li className="w-full mb-2">
+                <li className="w-full mb-2" onClick={() => setMenu(false)}>
                   <NavLink
                     to={'/dashboard/Payment-History'}
                     className="w-full px-4 py-2 hover:bg-gray-700 flex items-center gap-2"
@@ -165,7 +165,7 @@ const Dashboard = () => {
               </>
             )}
             <hr className="my-3" />
-            <li className="w-full mb-2">
+            <li className="w-full mb-2" onClick={() => setMenu(false)}>
               <Link
                 to={'/'}
                 className="w-full px-4 py-2 hover:bg-gray-700 flex items-center gap-2"
@@ -174,7 +174,7 @@ const Dashboard = () => {
                 Home
               </Link>
             </li>
-            <li className="w-full mb-2">
+            <li className="w-full mb-2" onClick={() => setMenu(false)}>
               <Link
                 to={'/meals'}
                 className="w-full px-4 py-2 hover:bg-gray-700 flex items-center gap-2"
@@ -183,7 +183,7 @@ const Dashboard = () => {
                 Meals
               </Link>
             </li>
-            <li className="w-full mb-2">
+            <li className="w-full mb-2" onClick={() => setMenu(false)}>
               <Link
                 to={'/upcoming-meals'}
                 className="w-full px-4 py-2 hover:bg-gray-700 flex items-center gap-2"
@@ -192,7 +192,7 @@ const Dashboard = () => {
                 Upcoming Meals
               </Link>
             </li>
-            <li className="w-full mb-2">
+            <li className="w-full mb-2" onClick={() => setMenu(false)}>
               <button
                 onClick={logout}
                 className="w-full px-4 py-2 hover:bg-gray-700 flex items-center gap-2"

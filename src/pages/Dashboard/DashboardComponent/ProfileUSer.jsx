@@ -28,30 +28,13 @@ const ProfileUSer = () => {
               </h3>
             </div>
           </div>
-          <div className="flex flex-row items-center gap-2 md:gap-4">
-            <div className="flex items-center">
-              <div
-                className="flex flex-col items-center border-r-2
-              pr-2 md:pr-4"
-              >
-                <h1 className="text-xl md:text-3xl font-bold text-slate-800">
-                  43
-                </h1>
-                <span className="text-slate-400 text-sm md:text-base">
-                  Meals Added
-                </span>
-              </div>
-              <div
-                className="hidden sm:flex flex-col items-center border-r-2
-               px-2 md:px-4"
-              >
-                <h1 className="text-xl md:text-3xl font-bold text-slate-800">
-                  243
-                </h1>
-                <span className="text-slate-400 text-sm md:text-base">
-                  Views
-                </span>
-              </div>
+          <div className="flex flex-row items-center gap-4 md:gap-4 h-full">
+            <div className="border-2 shadow shadow-yellow-500 rounded-md p-1 h-5/6">
+              <img
+                className="max-h-full"
+                src="https://i.ibb.co/4YBQMrT/bronze-badge.png"
+                alt=""
+              />
             </div>
             <button className="hidden sm:block py-1.5 px-3 md:px-5 rounded-md bg-pClr text-white font-bold">
               Edit Profile
