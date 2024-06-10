@@ -12,7 +12,16 @@ import useAuth from '../../Hooks/useAuth';
 import { ImSpinner9 } from 'react-icons/im';
 import PropTypes from 'prop-types';
 
-export default function AddReview({ id, reviewss, retingAvgRefetch }) {
+export default function AddReview({
+  id,
+  reviewss,
+  retingAvgRefetch,
+  postTitle,
+  postRating,
+  postReviewCount,
+  postLike,
+  postImg,
+}) {
   // console.log('id', id);
   const axiosSec = useAxiosSec();
   const [rating, setRating] = useState(0);
@@ -107,6 +116,11 @@ export default function AddReview({ id, reviewss, retingAvgRefetch }) {
           detail,
           image1,
           postId,
+          postTitle,
+          postRating,
+          postReviewCount,
+          postLike,
+          postImg,
           reviewUserName,
           reviewUserPhoto,
           reviewUserEmail,
@@ -127,6 +141,11 @@ export default function AddReview({ id, reviewss, retingAvgRefetch }) {
           detail,
           image1,
           postId,
+          postTitle,
+          postRating,
+          postReviewCount,
+          postLike,
+          postImg,
           reviewUserName,
           reviewUserPhoto,
           reviewUserEmail,
@@ -262,4 +281,9 @@ AddReview.propTypes = {
   id: PropTypes.string,
   reviewss: PropTypes.func,
   retingAvgRefetch: PropTypes.func,
+  postTitle: PropTypes.string,
+  postRating: PropTypes.string,
+  postReviewCount: PropTypes.string,
+  postLike: PropTypes.string,
+  postImg: PropTypes.string,
 };

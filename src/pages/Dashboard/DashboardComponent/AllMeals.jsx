@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { IoClose } from 'react-icons/io5';
 import Swal from 'sweetalert2';
 import toast from 'react-hot-toast';
-import ReviewUpdate from './ReviewUpdate';
+import UpdateMeal from './UpdateMeal';
 
 const AllMeals = () => {
   const axiosSec = useAxiosSec();
@@ -78,11 +78,11 @@ const AllMeals = () => {
   };
 
   return (
-    <div className="relative min-h-[500px] h-[calc(100vh-100px)]">
+    <div className="relative min-h-[500px] h-[800px]">
       {modal && (
-        <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-full md:w-[600px] min-h-48 bg-slate-100 rounded-md z-30 p-3 md:p-6">
+        <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-full h-full bg-slate-100 rounded-md z-30 p-3 md:p-6">
           <div className="mx-auto overflow-auto">
-            <ReviewUpdate
+            <UpdateMeal
               dtaFilter={dtaFilter}
               refetch={refetch}
               modal={setModal}
@@ -96,9 +96,10 @@ const AllMeals = () => {
           className="w-full h-full absolute bg-[#0000003b] rounded-md"
         ></div>
       )}
+
       <div>
         <h1 className="text-3xl text-slate-800 font-bold pb-4 pt-3">
-          My Reviews
+          All Meals
         </h1>
         {/* table part */}
         <div className="w-full mx-auto ">

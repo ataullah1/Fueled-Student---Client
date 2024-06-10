@@ -3,8 +3,43 @@ import { PropTypes } from 'prop-types';
 import { LuDot } from 'react-icons/lu';
 import timeAgo from '../../time';
 import { Link } from 'react-router-dom';
+import useAuth from '../../Hooks/useAuth';
+import { useMutation } from '@tanstack/react-query';
+import useAxiosSec from '../../Hooks/useAxiosSec';
+import toast from 'react-hot-toast';
 
 const MealCard = ({ dta }) => {
+  const { userDta } = useAuth();
+  const axiosSec = useAxiosSec();
+  // meals Request
+  const { mutateAsync: requstMutate } = useMutation({
+    mutationFn: async (request) => {
+      const { data } = await axiosSec.post('/meals-request', request);
+      // console.log(data);
+      return data;
+    },
+    onSuccess: (dta) => {
+      // console.log(dta);
+      if (dta.insertedId) {
+        toast.success('Request Sended!');
+      } else {
+        toast.error('Request Already Sended!');
+      }
+    },
+  });
+  // Handle request func
+  const handleRequest = async () => {
+    const recDta = {
+      recMealImg: dta?.mealImage,
+      recMealTitle: dta?.title,
+      recMealId: dta?._id,
+      recEmail: userDta.email,
+      recName: userDta.displayName,
+      status: 'pending',
+    };
+    // console.log(recDta);
+    await requstMutate(recDta);
+  };
   return (
     <div className="flex flex-col md:flex-row rounded-md p-3 bg-slate-200 gap-1">
       <div className="w-full md:w-1/4 h-52 sm:h-64 md:h-auto rounded-md">
@@ -57,7 +92,10 @@ const MealCard = ({ dta }) => {
             >
               DETAILS
             </Link>
-            <button className="py-1 px-1 w-full rounded-md text-sm sm:text-base font-bold border-2 border-pClr uppercase hover:scale-95 duration-200">
+            <button
+              onClick={handleRequest}
+              className="py-1 px-1 w-full rounded-md text-sm sm:text-base font-bold border-2 border-pClr uppercase hover:scale-95 duration-200"
+            >
               ADD request
             </button>
           </div>

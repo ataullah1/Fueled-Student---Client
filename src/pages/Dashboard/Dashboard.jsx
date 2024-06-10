@@ -83,7 +83,7 @@ const Dashboard = () => {
                     className="w-full px-4 py-2 hover:bg-gray-700 flex items-center gap-2"
                   >
                     <RiFunctionAddFill />
-                    Add Meal
+                    Add New Meal
                   </NavLink>
                 </li>
                 <li className="w-full mb-2" onClick={() => setMenu(false)}>

@@ -9,8 +9,9 @@ import axios from 'axios';
 import { ImSpinner9 } from 'react-icons/im';
 import useAxiosSec from '../../../Hooks/useAxiosSec';
 import useAuth from '../../../Hooks/useAuth';
+import PropTypes from 'prop-types';
 
-const AddMeals = () => {
+const UpdateMeal = ({ dtaFilter, refetch, modal }) => {
   // console.log('id', id);
   const axiosSec = useAxiosSec();
   const [showName, setShowName] = useState({});
@@ -21,7 +22,9 @@ const AddMeals = () => {
   const adminName = userDta?.displayName;
   const adminEmail = userDta?.email;
   const [ingredient, setIngredient] = useState('');
-  const [ingredientsList, setIngredientsList] = useState([]);
+  const [ingredientsList, setIngredientsList] = useState(
+    dtaFilter?.ingredients
+  );
   const [ingrErr, setIngrErr] = useState(false);
   const [imgErr, setImgErr] = useState(false);
   // console.log(showName);
@@ -58,13 +61,19 @@ const AddMeals = () => {
   // Post new review
   const { mutateAsync } = useMutation({
     mutationFn: async (meal) => {
-      const { data } = await axiosSec.post('/upcomig-meal', meal);
+      const { data } = await axiosSec.put(
+        `/meal-update/${dtaFilter?._id}`,
+        meal
+      );
       console.log(data);
     },
     onSuccess: () => {
+      refetch();
+      modal(false);
       Swal.fire({
-        title: 'Thank You',
-        text: 'Your meal has been successfully posted.',
+        title: 'Good Job!',
+        timer: 1000,
+        text: 'Your meal has been successfully Updated.',
         icon: 'success',
       });
     },
@@ -90,12 +99,6 @@ const AddMeals = () => {
     } else {
       setIngrErr(false);
     }
-    if (!showName.name) {
-      setImgErr(true);
-      return;
-    } else {
-      setImgErr(false);
-    }
 
     const title = data.title;
     const mealType = data.mealType;
@@ -106,39 +109,71 @@ const AddMeals = () => {
 
     try {
       setLoading(true);
-      const imagess = new FormData();
-      imagess.append('image', showName);
-      const { data } = await axios.post(
-        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API}`,
-        imagess
-      );
-      const mealImage = data.data.display_url;
-      const rating = 0;
-      const likes = 0;
-      const review = 0;
-      const meal = {
-        rating,
-        description,
-        title,
-        likes,
-        mealType,
-        price,
-        review,
-        mealImage,
-        adminName,
-        adminEmail,
-        ingredients,
-        postDate,
-      };
-      // console.log('Meal Datas:=====', meal);
-      // return;
-      await mutateAsync(meal);
-      setLoading(false);
-      setShowName('');
-      setShowImagePreview('');
-      fileInputRef.current.value = '';
-      setIngredientsList([]);
-      reset();
+      if (showName?.name) {
+        const imagess = new FormData();
+        imagess.append('image', showName);
+        const { data } = await axios.post(
+          `https://api.imgbb.com/1/upload?key=${
+            import.meta.env.VITE_IMGBB_API
+          }`,
+          imagess
+        );
+        const mealImage = data.data.display_url;
+        const rating = dtaFilter?.rating || 0;
+        const likes = dtaFilter?.likes || 0;
+        const review = dtaFilter?.review || 0;
+        const meal = {
+          rating,
+          description,
+          title,
+          likes,
+          mealType,
+          price,
+          review,
+          mealImage,
+          adminName,
+          adminEmail,
+          ingredients,
+          postDate,
+        };
+        // console.log('Meal Datas:=====', meal);
+        // return;
+        await mutateAsync(meal);
+        setLoading(false);
+        setShowName('');
+        setShowImagePreview('');
+        fileInputRef.current.value = '';
+        setIngredientsList([]);
+        reset();
+      } else {
+        const mealImage = dtaFilter?.mealImage;
+        const rating = dtaFilter?.rating || 0;
+        const likes = dtaFilter?.likes || 0;
+        const review = dtaFilter?.review || 0;
+        const meal = {
+          rating,
+          description,
+          title,
+          likes,
+          mealType,
+          price,
+          review,
+          mealImage,
+          adminName,
+          adminEmail,
+          ingredients,
+          postDate,
+        };
+        // console.log('Meal Datas:=====', meal);
+        // return;
+        await mutateAsync(meal);
+        setLoading(false);
+        setShowName('');
+        setShowImagePreview('');
+        fileInputRef.current.value = '';
+        setIngredientsList([]);
+        reset();
+      }
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -152,10 +187,18 @@ const AddMeals = () => {
   // console.log('From Error:', errors);
   // console.log('Loding Status: ', loding);
   return (
-    <div>
-      <h1 className="text-3xl text-slate-800 font-bold pb-4 pt-3">
-        Add New Meal
-      </h1>
+    <div className="min-h-[]">
+      <div className="flex items-center justify-between">
+        <h1 className="text-3xl text-slate-800 font-bold pb-4 pt-3">
+          Update Meal
+        </h1>
+        <button
+          onClick={() => modal(false)}
+          className="py-2 px-6 bg-red-500 text-white font-semibold rounded-md"
+        >
+          Close
+        </button>
+      </div>
       <div className="w-full border border-slate-300 rounded-md p-4">
         <div>
           <form onSubmit={handleSubmit(onSubmit)} className="w-full">
@@ -163,6 +206,7 @@ const AddMeals = () => {
               <div className="flex flex-col w-full md:w-1/2">
                 {/* Meal Title */}
                 <input
+                  defaultValue={dtaFilter?.title}
                   className="px-3 py-2 rounded-md w-full border border-slate-400 outline-none bg-transparent"
                   type="text"
                   placeholder="Enter Meal Title"
@@ -191,25 +235,36 @@ const AddMeals = () => {
                     <option value="" disabled>
                       Select Meal Type
                     </option>
-                    <option value="breakfast">Breakfast</option>
-                    <option value="lunch">Lunch</option>
-                    <option value="dinner">Dinner</option>
+                    <option
+                      selected={dtaFilter?.mealType === 'breakfast'}
+                      value="breakfast"
+                    >
+                      Breakfast
+                    </option>
+                    <option
+                      selected={dtaFilter?.mealType === 'lunch'}
+                      value="lunch"
+                    >
+                      Lunch
+                    </option>
+                    <option
+                      selected={dtaFilter?.mealType === 'dinner'}
+                      value="dinner"
+                    >
+                      Dinner
+                    </option>
                   </select>
                   {errors.mealType && (
                     <p className="text-red-500 pt-1">
                       Please Select Meal Type!
                     </p>
                   )}
-                  {errors.exampleRequired && (
-                    <span className="formError errorMssg">
-                      This field is required
-                    </span>
-                  )}
                 </div>
 
                 <div className="flex flex-col w-full sm:w-1/2">
                   {/* Price */}
                   <input
+                    defaultValue={dtaFilter?.price}
                     className="py-2 px-3 rounded-md border border-slate-400 outline-none bg-transparent"
                     type="text"
                     placeholder="Enter Meal Price"
@@ -278,6 +333,7 @@ const AddMeals = () => {
             {/* Description meals */}
             <div>
               <textarea
+                defaultValue={dtaFilter?.description}
                 className={`w-full bg-transparent rounded-md p-3 min-h-32 border border-slate-400 outline-none`}
                 placeholder="Enter Meal Details..."
                 {...register('description', { required: true, minLength: 40 })}
@@ -301,6 +357,9 @@ const AddMeals = () => {
               } py-2 md:py-3`}
             >
               <div>
+                <h1 className="text-slate-700 text-2xl font-semibold">
+                  Upload if want to update image else skip.
+                </h1>
                 {showName?.name ? (
                   <div className=" mx-auto flex w-full items-center gap-x-6  rounded-lg border-2 border-dashed border-gray-400 p-5 bg-transparent">
                     <img
@@ -374,7 +433,7 @@ const AddMeals = () => {
             ) : (
               <input
                 type="submit"
-                value={'Add New Meal'}
+                value={'Update Meal'}
                 className="py-2 w-full sm:w-60 md:w-96 mx-auto block hover:-translate-y-1 hover:scale-105 duration-300 cursor-pointer rounded-md bg-pClr text-slate-100 font-semibold mt-3"
               />
             )}
@@ -385,4 +444,9 @@ const AddMeals = () => {
   );
 };
 
-export default AddMeals;
+UpdateMeal.propTypes = {
+  dtaFilter: PropTypes.object,
+  refetch: PropTypes.func,
+  modal: PropTypes.boolean,
+};
+export default UpdateMeal;

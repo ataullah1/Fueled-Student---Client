@@ -81,6 +81,8 @@ const Details = () => {
     price = '00',
     title,
     adminName,
+    review,
+    rating,
     description,
     ingredients = [],
   } = data;
@@ -143,6 +145,8 @@ const Details = () => {
   // Handle request func
   const handleRequest = async () => {
     const recDta = {
+      recMealImg: mealImage,
+      recMealTitle: title,
       recMealId: _id,
       recEmail: userDta.email,
       recName: userDta.displayName,
@@ -269,6 +273,11 @@ const Details = () => {
               id={id}
               reviewss={reviewss}
               retingAvgRefetch={retingAvgRefetch}
+              postTitle={title}
+              postRating={rating}
+              postReviewCount={review}
+              postLike={likes}
+              postImg={mealImage}
             />
           </div>
         </div>

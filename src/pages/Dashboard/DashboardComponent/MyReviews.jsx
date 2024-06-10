@@ -169,14 +169,14 @@ const MyReviews = () => {
 
                             <div className="ml-4 min-w-48">
                               <div className="text-sm font-medium leading-5 w-full">
-                                {dta?.title}
+                                {dta?.postTitle}
                               </div>
                             </div>
                           </div>
                         </td>
                         <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
                           <div className="text-sm leading-5 ">
-                            <p>{dta?.likes}</p>
+                            <p>{dta?.postLike}</p>
                           </div>
                         </td>
                         <td className="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
@@ -191,7 +191,7 @@ const MyReviews = () => {
 
                         <td className="px-2 py-4 text-sm leading-5 max-w-56 whitespace-no-wrap border-b border-gray-200">
                           <div className="flex items-center justify-center gap-2 capitalize">
-                            <p>{dta?.detail.slice(0, 80)}.....</p>
+                            <p>{dta?.detail?.slice(0, 80)}.....</p>
                           </div>
                         </td>
 
