@@ -24,7 +24,7 @@ const Payment = () => {
         </h1>
         <div className="max-w-[550px] mx-auto pt-10 px-3 rounded-md border-slate-400 border-2 mb-10">
           <Elements stripe={stripePromise} className="">
-            <ChecoutFrom price={price} />
+            <ChecoutFrom price={price} badge={id} />
           </Elements>
         </div>
       </div>

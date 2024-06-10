@@ -1,10 +1,7 @@
-import { useState } from 'react';
 import { MdDone } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
 const PricingSection = () => {
-  const [price, setPrice] = useState(null);
-  console.log(price);
   return (
     <section
       className="py-12"
