@@ -1,11 +1,23 @@
 import { FaRegEdit } from 'react-icons/fa';
 import useAuth from '../../../Hooks/useAuth';
+import { useQuery } from '@tanstack/react-query';
+import useAxiosSec from '../../../Hooks/useAxiosSec';
 
 const ProfileUSer = () => {
   const { userDta } = useAuth();
+  const axiosSec = useAxiosSec();
+  const { data: ddaata = [] } = useQuery({
+    queryKey: ['payment', userDta.email],
+    queryFn: async () => {
+      const { data } = await axiosSec.get(`/paymentss/${userDta.email}`);
+      // console.log(data);
+      return data;
+    },
+  });
+  const badgeName = ddaata[0]?.badge || 'Not Pay';
   return (
     <div>
-      <div className="bg-white w-full rounded-md h-64 md:h-72 mt-6">
+      <div className="bg-white w-full rounded-md h-64 md:h-72 mt-6 min-w-[800px] overflow-x-auto">
         <div
           className="rounded-t-md h-4/6 bg-cover bg-center"
           style={{
@@ -27,6 +39,9 @@ const ProfileUSer = () => {
                 {userDta?.email}
               </h3>
             </div>
+          </div>
+          <div className="bg-yellow-400 px-3 rounded-full">
+            {badgeName} User
           </div>
           <div className="flex flex-row items-center gap-4 md:gap-4 h-full">
             <div className="border-2 shadow shadow-yellow-500 rounded-md p-1 h-5/6">

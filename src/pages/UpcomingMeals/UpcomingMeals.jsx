@@ -1,27 +1,75 @@
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSec from '../../Hooks/useAxiosSec';
 import { RiHeart2Line } from 'react-icons/ri';
 import { TbShare } from 'react-icons/tb';
 import { BiMessageRoundedDots } from 'react-icons/bi';
+import Swal from 'sweetalert2';
+import useAuth from '../../Hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
+import usePayment from '../../Hooks/usePayment';
 
 const UpcomingMeals = () => {
+  const { userDta } = useAuth();
+  const naviget = useNavigate();
   const axiosSec = useAxiosSec();
-  const {
-    data = [],
-    isLoading,
-    refetch,
-  } = useQuery({
+  const isPay = usePayment();
+  const { data = [] } = useQuery({
     queryKey: ['upcoming-meals'],
     queryFn: async () => {
       const { data } = await axiosSec.get(`/upcoming-meals`);
-      // console.log(data);
       return data;
     },
   });
-  console.log(data);
 
-  const handleLike = () => {
-    console.log('Like');
+  // console.log(isPay, '+++++++++');
+  const [likes, setLikes] = useState(() => {
+    // Initialize likes state based on the data fetched
+    const initialLikes = {};
+    data.forEach((meal) => {
+      initialLikes[meal._id] = meal.likes || 0;
+    });
+    return initialLikes;
+  });
+
+  const handleLike = (id) => {
+    if (!userDta) {
+      Swal.fire({
+        title: 'You Are Not Login!',
+        text: 'You are not logged in, please ensure your account by logging in first.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'I want to login my account',
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          naviget('/login');
+        }
+      });
+      return;
+    }
+    if (!isPay) {
+      Swal.fire({
+        title: 'You have not subscription!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'I want to subscription',
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          naviget('/');
+        }
+      });
+      return;
+    }
+
+    setLikes((prevLikes) => {
+      const newLikes = { ...prevLikes };
+      newLikes[id] = newLikes[id] === 0 ? 1 : 0;
+      return newLikes;
+    });
   };
 
   return (
@@ -60,14 +108,14 @@ const UpcomingMeals = () => {
               {/* icons */}
               <div className="mt-4 flex justify-between px-4 pb-4">
                 <div
-                  onClick={handleLike}
+                  onClick={() => handleLike(dta._id)}
                   className="flex items-center gap-2 cursor-pointer select-none"
                 >
                   <span className="text-2xl">
                     <RiHeart2Line />
                   </span>
                   <h2 className="text-lg font-semibold text-slate-800 dark:text-white/90">
-                    {dta?.likes}
+                    {likes[dta._id]}
                   </h2>
                 </div>
                 <div className="flex items-center gap-2 cursor-pointer">

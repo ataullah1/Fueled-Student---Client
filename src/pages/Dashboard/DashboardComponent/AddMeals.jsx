@@ -63,13 +63,13 @@ const AddMeals = ({ refetch, modal }) => {
       console.log(data);
     },
     onSuccess: () => {
-      refetch();
-      modal(false);
+      modal && modal(false);
       Swal.fire({
         title: 'Good Job!',
         text: 'Your meal has been successfully posted in Upcoming page.',
         icon: 'success',
       });
+      refetch && refetch();
     },
   });
 

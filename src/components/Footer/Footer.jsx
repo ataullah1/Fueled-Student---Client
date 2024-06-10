@@ -12,7 +12,7 @@ const Footer = () => {
           <div className="flex flex-col justify-between md:flex-row">
             <div className="md:w-[316px]">
               <p className="text-[18px] font-medium text-white">
-                <img className='h-20' src="fueled-studentLgo.png" alt="" />
+                <img className="h-20" src="fueled-studentLgo.png" alt="" />
               </p>
               <p className="mt-[18px] text-[15px] font-normal text-white/[80%] pb-8">
                 Order your favorite meals online and enjoy convenient campus
@@ -153,7 +153,7 @@ const Footer = () => {
                       to={'/meals'}
                       className="text-deutziawhite hover:text-deutziawhite/80 font-inter text-[15px] font-normal hover:font-semibold"
                     >
-                      Meals
+                      All Meals
                     </Link>
                   </li>
                   <li className="mt-[15px]">

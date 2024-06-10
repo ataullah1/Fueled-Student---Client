@@ -53,8 +53,8 @@ const Provider = ({ children }) => {
   };
 
   // Logout account
-  const logOutAcc = () => {
-    // axios(`${import.meta.env.VITE_API_URL}/logout`, {
+  const logOutAcc = async () => {
+    // const { data } = await axios(`${import.meta.env.VITE_API_URL}/logout`, {
     //   withCredentials: true,
     // });
     // console.log('JWT logout Token,', data);

@@ -1,63 +1,25 @@
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import useAxiosPub from '../../Hooks/useAxiosPub';
 import MealCard from './MealCard';
 import FilterSearching from '../../utility/FilterSearching';
-import { useEffect, useState } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { CgSpinnerTwoAlt } from 'react-icons/cg';
+import { useState } from 'react';
+// import InfiniteScroll from 'react-infinite-scroll-component';
+// import { CgSpinnerTwoAlt } from 'react-icons/cg';
 
 const Meals = () => {
   const axiosPub = useAxiosPub();
-  const [filter, handleFilter] = useState('');
-  const [search, setSearch] = useState('');
-  let meals = [];
+  const [filter, handleFilter] = useState(null);
+  const [search, setSearch] = useState(null);
 
-  if (!search || !filter) {
-    // const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
-    //   queryKey: ['articles'],
-    //   queryFn: async ({ pageParam = 0 }) => {
-    //     const { data } = await axiosPub(`meals?limit=10&offset=${pageParam}`);
-    //     return { ...data, prevOffset: pageParam };
-    //   },
-    //   getNextPageParam: (lastPage) => {
-    //     if (lastPage.prevOffset + 10 > lastPage.articlesCount) {
-    //       return false;
-    //     }
-    //     return lastPage.prevOffset + 10;
-    //   },
-    // });
-
-    // const articles = data?.pages.reduce((acc, page) => {
-    //   return [...acc, ...page.articles];
-    // }, []);
-    // meals = articles;
-    // =========================
-    const { data: meal = [] } = useQuery({
-      queryKey: ['meals', filter, search],
-      queryFn: async () => {
-        const { data } = await axiosPub.get(
-          `/meals?filter=${filter}&search=${search}`
-        );
-        return data;
-      },
-    });
-    meals = meal;
-
-    // =========================
-  } else {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const { data: meal = [] } = useQuery({
-      queryKey: ['meals', filter, search],
-      queryFn: async () => {
-        const { data } = await axiosPub.get(
-          `/meals?filter=${filter}&search=${search}`
-        );
-        return data;
-      },
-    });
-    meals = meal;
-    console.log(meals);
-  }
+  const { data: meals = [] } = useQuery({
+    queryKey: ['meals', filter, search],
+    queryFn: async () => {
+      const { data } = await axiosPub.get(
+        `/meals?filter=${filter}&search=${search}`
+      );
+      return data;
+    },
+  });
 
   const handleSearchClick = (e) => {
     e.preventDefault();

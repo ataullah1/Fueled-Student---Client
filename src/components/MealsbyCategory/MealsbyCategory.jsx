@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import useAxiosPub from '../../Hooks/useAxiosPub';
 import MealsCard from '../MealsCard/MealsCard';
+import { CgSpinnerTwoAlt } from 'react-icons/cg';
 // import 'react-tabs/style/react-tabs.css';
 
 const MealsbyCategory = () => {
@@ -15,7 +16,7 @@ const MealsbyCategory = () => {
   //   });
   // console.log();
 
-  const { data: meals = [] } = useQuery({
+  const { data: meals = [], isLoading } = useQuery({
     queryKey: ['meals-six'],
     queryFn: async () => {
       const { data } = await axioss.get('/meals-six');
@@ -48,6 +49,13 @@ const MealsbyCategory = () => {
   // console.log('breakfast:>', breakfast);
   // console.log('Dinner:>', dinner);
   // console.log('lunch:>', lunch);
+  if (isLoading) {
+    return (
+      <div className="text-slate-100 h-screen text-center w-[60px] flex items-center justify-center text-9xl scale-125 mx-auto">
+        <CgSpinnerTwoAlt className="animate-spin" />
+      </div>
+    );
+  }
   return (
     <div className="text-center py-10">
       <h1 className="text-5xl font-bold"> Meals by Category</h1>

@@ -1,7 +1,15 @@
 import { MdDone } from 'react-icons/md';
 import { Link } from 'react-router-dom';
+import usePayment from '../../Hooks/usePayment';
 
 const PricingSection = () => {
+  const isPay = usePayment();
+
+  const handlePay = () => {
+    if (isPay) {
+      console.log('ase');
+    }
+  };
   return (
     <section
       className="py-12"
@@ -56,6 +64,7 @@ const PricingSection = () => {
               </li>
             </ul>
             <Link
+              onClick={handlePay}
               to={'/checkout/Silver'}
               className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700"
             >
@@ -100,6 +109,7 @@ const PricingSection = () => {
               </li>
             </ul>
             <Link
+              onClick={handlePay}
               to={'/checkout/Gold'}
               className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700"
             >
@@ -150,6 +160,7 @@ const PricingSection = () => {
               </li>
             </ul>
             <Link
+              onClick={handlePay}
               to={'/checkout/Platinum'}
               className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-700 hover:to-orange-700"
             >

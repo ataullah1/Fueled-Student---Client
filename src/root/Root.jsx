@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import '@smastrom/react-rating/style.css';
 import { Toaster } from 'react-hot-toast';
 import useAuth from '../Hooks/useAuth';
+import { ImSpinner3 } from 'react-icons/im';
 
 const Root = () => {
   const { isLoading } = useAuth();
@@ -34,7 +35,13 @@ const Root = () => {
   };
 
   if (isLoading) {
-    
+    return (
+      <div className="h-screen flex items-center justify-center w-full">
+        <div className="text-slate-800 m-14 text-center w-[60px] h-[60px] flex items-center justify-center text-8xl mx-auto">
+          <ImSpinner3 className="animate-spin" />
+        </div>
+      </div>
+    );
   }
   return (
     <div className="bg-slate-800 min-h-screen text-slate-100">
