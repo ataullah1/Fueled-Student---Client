@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import { MdDone } from 'react-icons/md';
 
 const PricingSection = () => {
+  const [price, setPrice] = useState(null);
+  console.log(price);
   return (
     <section
       className="py-12"
@@ -54,7 +57,10 @@ const PricingSection = () => {
                 <span>Basic customer support</span>
               </li>
             </ul>
-            <button className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700">
+            <button
+              onClick={() => setPrice(49)}
+              className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700"
+            >
               Purchase Plan
             </button>
           </div>
@@ -95,7 +101,10 @@ const PricingSection = () => {
                 <span>Priority customer support</span>
               </li>
             </ul>
-            <button className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700">
+            <button
+              onClick={() => setPrice(199)}
+              className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700"
+            >
               Purchase Plan
             </button>
           </div>
@@ -142,7 +151,10 @@ const PricingSection = () => {
                 <span> laundry service, gym access</span>
               </li>
             </ul>
-            <button className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-700 hover:to-orange-700">
+            <button
+              onClick={() => setPrice(399)}
+              className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-700 hover:to-orange-700"
+            >
               Purchase Plan
             </button>
           </div>
