@@ -95,17 +95,17 @@ const Nav = () => {
               onClick={() => setMenu(!menu)}
               className="py-2 w-full text-center rounded-md shadow-md shadow-slate-200 text-white font-medium  hover:shadow-lg hover:shadow-slate-200 hover:scale-110 duration-300"
               font-medium
-              to={'/today-menu'}
+              to={'/meals'}
             >
-              Today Menu
+              Meals
             </NavLink>
             <NavLink
               onClick={() => setMenu(!menu)}
               className="py-2 w-full text-center rounded-md shadow-md shadow-slate-200 text-white font-medium  hover:shadow-lg hover:shadow-slate-200 hover:scale-110 duration-300"
               font-medium
-              to={'/my-orders'}
+              to={'/upcoming-meals'}
             >
-              My Order
+              Upcoming Meals
             </NavLink>
           </div>
         )}

@@ -195,7 +195,7 @@ const Footer = () => {
                 <p className="text-deutziawhite font-inter text-[18px] font-medium">
                   Download the app
                 </p>
-                <div className="flex gap-4 sm:flex-col">
+                <div className="flex gap-4 flex-col">
                   <a
                     target="_blank"
                     href="#"

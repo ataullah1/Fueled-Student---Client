@@ -81,7 +81,9 @@ const Provider = ({ children }) => {
       }
       setLoading(false);
     });
+
     return () => {
+      // setLoading(false);
       unSubscribe();
     };
   }, []);
