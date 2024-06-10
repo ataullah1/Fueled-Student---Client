@@ -20,6 +20,7 @@ import UpcomingMealsDsb from '../pages/Dashboard/DashboardComponent/UpcomingMeal
 import ServeMeals from '../pages/Dashboard/DashboardComponent/ServeMeals';
 import AllReviews from '../pages/Dashboard/DashboardComponent/AllReviews';
 import AddMeals from '../pages/Dashboard/DashboardComponent/AddMeals';
+import Payment from '../pages/Payment/Payment';
 // import PrivetRoute from './PrivetRoute';
 
 const router = createBrowserRouter([
@@ -31,6 +32,14 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Home />,
+      },
+      {
+        path: '/checkout/:id',
+        element: (
+          <PrivetRoute>
+            <Payment />
+          </PrivetRoute>
+        ),
       },
       {
         path: '/meal/:id',

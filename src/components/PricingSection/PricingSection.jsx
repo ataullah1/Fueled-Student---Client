@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { MdDone } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 
 const PricingSection = () => {
   const [price, setPrice] = useState(null);
@@ -57,12 +58,12 @@ const PricingSection = () => {
                 <span>Basic customer support</span>
               </li>
             </ul>
-            <button
-              onClick={() => setPrice(49)}
+            <Link
+              to={'/checkout/Silver'}
               className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700"
             >
               Purchase Plan
-            </button>
+            </Link>
           </div>
 
           {/* Pro Plan */}
@@ -101,12 +102,12 @@ const PricingSection = () => {
                 <span>Priority customer support</span>
               </li>
             </ul>
-            <button
-              onClick={() => setPrice(199)}
+            <Link
+              to={'/checkout/Gold'}
               className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700"
             >
               Purchase Plan
-            </button>
+            </Link>
           </div>
 
           {/* Enterprise Plan */}
@@ -151,12 +152,12 @@ const PricingSection = () => {
                 <span> laundry service, gym access</span>
               </li>
             </ul>
-            <button
-              onClick={() => setPrice(399)}
+            <Link
+              to={'/checkout/Platinum'}
               className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-700 hover:to-orange-700"
             >
               Purchase Plan
-            </button>
+            </Link>
           </div>
         </div>
       </div>
