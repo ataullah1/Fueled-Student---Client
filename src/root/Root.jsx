@@ -5,8 +5,10 @@ import { IoMdArrowUp } from 'react-icons/io';
 import { useEffect, useState } from 'react';
 import '@smastrom/react-rating/style.css';
 import { Toaster } from 'react-hot-toast';
+import useAuth from '../Hooks/useAuth';
 
 const Root = () => {
+  const { isLoading } = useAuth();
   const [scrolled, setScrolled] = useState(false);
   const { pathname } = useLocation();
   useEffect(() => {
@@ -30,6 +32,10 @@ const Root = () => {
   const handleScrollTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  if (isLoading) {
+    
+  }
   return (
     <div className="bg-slate-800 min-h-screen text-slate-100">
       <Toaster />

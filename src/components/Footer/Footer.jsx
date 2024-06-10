@@ -1,3 +1,9 @@
+import { BsInstagram, BsLinkedin, BsTwitterX } from 'react-icons/bs';
+import { FaFacebook } from 'react-icons/fa';
+import { GrAppleAppStore } from 'react-icons/gr';
+import { IoLogoGooglePlaystore } from 'react-icons/io5';
+import { Link } from 'react-router-dom';
+
 const Footer = () => {
   return (
     <footer className="bg-neutral-900 text-white">
@@ -6,75 +12,42 @@ const Footer = () => {
           <div className="flex flex-col justify-between md:flex-row">
             <div className="md:w-[316px]">
               <p className="text-[18px] font-medium text-white">
-                <h1 className="text-white font-extrabold">
-                  <span className="text-rose-600">YOUR</span>LOGO
-                </h1>
+                <img className='h-20' src="fueled-studentLgo.png" alt="" />
               </p>
-              <p className="mt-[18px] text-[15px] font-normal text-white/[80%]">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos,
-                fugit non. Incidunt dolorum adipisci, tempore asperiores nemo
-                odio facere officiis enim animi placeat eaque nesciunt alias
-                beatae id, at dicta.
+              <p className="mt-[18px] text-[15px] font-normal text-white/[80%] pb-8">
+                Order your favorite meals online and enjoy convenient campus
+                delivery. Fresh, delicious, and hassle-free dining for all
+                university students!
               </p>
-              <div className="mt-[18px] flex gap-4">
-                <a className="hover:scale-110" target="_blank" href="#">
-                  <img
-                    alt="facebook icon"
-                    loading="lazy"
-                    width="36"
-                    height="36"
-                    decoding="async"
-                    data-nimg="1"
-                    src="https://www.englishyaari.com/img/facebook.svg"
-                  />
-                </a>
-                <a className="hover:scale-110" target="_blank" href="/">
-                  <img
-                    alt="linkdin icon"
-                    loading="lazy"
-                    width="36"
-                    height="36"
-                    decoding="async"
-                    data-nimg="1"
-                    src="https://www.englishyaari.com/img/linkdin.svg"
-                  />
-                </a>
-                <a className="hover:scale-110" target="_blank" href="/">
-                  <img
-                    alt="instagram icon"
-                    loading="lazy"
-                    width="36"
-                    height="36"
-                    decoding="async"
-                    data-nimg="1"
-                    src="https://www.englishyaari.com/img/instagram1.svg"
-                  />
-                </a>
-                <a className="hover:scale-110" target="_blank" href="">
-                  <img
-                    alt="twitter icon"
-                    loading="lazy"
-                    width="36"
-                    height="36"
-                    decoding="async"
-                    data-nimg="1"
-                    src="https://www.englishyaari.com/img/twitter.svg"
-                  />
+              <div className="flex flex-row items-center gap-4 text-3xl justify-start">
+                <a
+                  href="https://www.facebook.com/ataullah0"
+                  target="_blank"
+                  className="hover:scale-125 rounded-full p-1 hover:text-white duration-150 text-4xl"
+                >
+                  <FaFacebook />
                 </a>
                 <a
-                  className="hover:scale-110"
+                  href="https://twitter.com/dev_ataullah"
                   target="_blank"
-                  href="https://www.youtube.com/"
+                  className="hover:scale-125 rounded-full p-1 hover:text-white duration-150"
                 >
-                  <img
-                    alt="youtube icon"
-                    loading="lazy"
-                    width="36"
-                    height="36"
-                    decoding="async"
-                    data-nimg="1"
-                    src="https://www.englishyaari.com/img/youtube.svg"
-                  />
+                  <BsTwitterX />
+                </a>
+
+                <a
+                  href="https://www.linkedin.com/in/md-ataullah/"
+                  target="_blank"
+                  className="hover:scale-125 rounded-full p-1 hover:text-white duration-150"
+                >
+                  <BsLinkedin />
+                </a>
+                <a
+                  href="https://www.instagram.com/ataullah.info/"
+                  target="_blank"
+                  className="hover:scale-125 rounded-full p-1 hover:text-white duration-150"
+                >
+                  <BsInstagram />
                 </a>
               </div>
             </div>
@@ -168,44 +141,45 @@ const Footer = () => {
                 </p>
                 <ul>
                   <li className="mt-[15px]">
-                    <a
+                    <Link
+                      to={'/'}
                       className="text-deutziawhite hover:text-deutziawhite/80 font-inter text-[15px] font-normal hover:font-semibold"
-                      href="/"
                     >
                       Home
-                    </a>
+                    </Link>
                   </li>
                   <li className="mt-[15px]">
-                    <a
+                    <Link
+                      to={'/meals'}
                       className="text-deutziawhite hover:text-deutziawhite/80 font-inter text-[15px] font-normal hover:font-semibold"
-                      href="/our-tutors"
                     >
-                      News
-                    </a>
+                      Meals
+                    </Link>
                   </li>
                   <li className="mt-[15px]">
-                    <a
+                    <Link
+                      to={'/upcoming-meals'}
                       className="text-deutziawhite hover:text-deutziawhite/80 font-inter text-[15px] font-normal hover:font-semibold"
                       href="/become-a-tutor"
                     >
-                      Contact
-                    </a>
+                      Upcoming Meals
+                    </Link>
                   </li>
                   <li className="mt-[15px]">
-                    <a
+                    <Link
                       className="text-deutziawhite hover:text-deutziawhite/80 font-inter text-[15px] font-normal hover:font-semibold"
                       href="/plans-and-pricing"
                     >
                       Plans and pricing
-                    </a>
+                    </Link>
                   </li>
                   <li className="mt-[15px]">
-                    <a
+                    <Link
                       className="text-deutziawhite hover:text-deutziawhite/80 font-inter text-[15px] font-normal hover:font-semibold"
                       href="/terms-and-conditions"
                     >
                       Terms and conditions
-                    </a>
+                    </Link>
                   </li>
                   <li className="mt-[15px]">
                     <a
@@ -222,38 +196,32 @@ const Footer = () => {
                   Download the app
                 </p>
                 <div className="flex gap-4 sm:flex-col">
-                  <a target="_blank" href="#">
-                    <img
-                      alt="facebook icon"
-                      loading="lazy"
-                      width="168"
-                      height="50"
-                      decoding="async"
-                      data-nimg="1"
-                      src="https://www.englishyaari.com/img/google-store.svg"
-                    />
+                  <a
+                    target="_blank"
+                    href="#"
+                    className="text-4xl flex items-center gap-2"
+                  >
+                    <GrAppleAppStore />
+                    <p className="text-xl"> AppleAppStore</p>
                   </a>
-                  <a target="_blank" href="#">
-                    <img
-                      alt="facebook icon"
-                      loading="lazy"
-                      width="168"
-                      height="50"
-                      decoding="async"
-                      data-nimg="1"
-                      src="https://www.englishyaari.com/img/apple-store.svg"
-                    />
+                  <a
+                    target="_blank"
+                    href="#"
+                    className="text-4xl flex items-center gap-2"
+                  >
+                    <IoLogoGooglePlaystore />
+                    <p className="text-xl"> GooglePlaystore</p>
                   </a>
                 </div>
               </div>
             </div>
           </div>
-          <hr className="mt-[30px] text-white" />
+          <hr className="mt-[30px]" />
           <div className="flex items-center justify-center pb-8 pt-[9px] md:py-8">
             <p>
               Copyright © 2024 - All right reserved by{' '}
               <a
-                href="https://www.facebook.com/ataullah0"
+                href="https://www.linkedin.com/in/md-ataullah/"
                 className="text-pink-500 italic font-semibold tracking-wide"
               >
                 Md Ataullah

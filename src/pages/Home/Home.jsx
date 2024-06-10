@@ -1,5 +1,6 @@
 import useAdmin from '../../Hooks/useAdmin';
 import Banner from '../../components/Banner/Banner';
+import MealsGallery from '../../components/MealsGallery/MealsGallery';
 import MealsbyCategory from '../../components/MealsbyCategory/MealsbyCategory';
 import PricingSection from '../../components/PricingSection/PricingSection';
 const Home = () => {
@@ -11,6 +12,7 @@ const Home = () => {
       <Banner />
       <div className="w-11/12 xl:w-10/12 mx-auto max-w-[1700px]">
         <MealsbyCategory />
+        <MealsGallery />
       </div>
       <PricingSection />
     </div>

@@ -11,6 +11,8 @@ import axios from 'axios';
 import useAuth from '../../Hooks/useAuth';
 import { ImSpinner9 } from 'react-icons/im';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
+// import timeAgo from '../../time';
 
 export default function AddReview({
   id,
@@ -24,6 +26,7 @@ export default function AddReview({
 }) {
   // console.log('id', id);
   const axiosSec = useAxiosSec();
+  const naviget = useNavigate();
   const [rating, setRating] = useState(0);
   const [showName, setShowName] = useState({});
   const [showImagePreview, setShowImagePreview] = useState({});
@@ -54,7 +57,7 @@ export default function AddReview({
   }
   // Output formatted current date and time
   const time = getCurrentDateTimeFormatted();
-  // console.log(time);
+  // console.log(timeAgo(time, '>>>>>>>'));
 
   // Post new review
   const { mutateAsync } = useMutation({
@@ -87,6 +90,23 @@ export default function AddReview({
     formState: { errors },
   } = useForm();
   const onSubmit = async (data) => {
+    if (!userDta) {
+      Swal.fire({
+        title: 'You Are Not Login!',
+        text: 'You are not logged in, please ensure your account by logging in first.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'I want to login my account',
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          naviget('/login');
+        }
+      });
+      return;
+    }
+
     if (rating < 1) {
       Swal.fire({
         title: 'Please give your rating',

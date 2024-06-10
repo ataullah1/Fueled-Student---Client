@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { CgMenuRightAlt } from 'react-icons/cg';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { ImSpinner9 } from 'react-icons/im';
 import ProfileMenu from '../ProfileMenu/ProfileMenu';
 import useAuth from '../../Hooks/useAuth';
@@ -15,7 +15,9 @@ const Nav = () => {
 
   return (
     <div className=" flex justify-between items-center w-11/12 xl:w-10/12 mx-auto">
-      <button className="text-3xl font-bold w-32 border ">Logo</button>
+      <Link to={'/'} className="text-3xl font-bold w-32 ">
+        <img className="max-h-full" src="fueled-studentLgo.png" alt="" />
+      </Link>
       <div className="hidden md:flex gap-5 items-center navigation">
         <NavLink
           className="py-2 px-5 rounded-md shadow-md shadow-slate-200 text-white font-medium hover:shadow-lg hover:shadow-slate-200 hover:scale-110 duration-300"
