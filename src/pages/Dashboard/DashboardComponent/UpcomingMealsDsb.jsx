@@ -7,10 +7,12 @@ import Swal from 'sweetalert2';
 import toast from 'react-hot-toast';
 import { TbEdit } from 'react-icons/tb';
 import UpcomingMealUpdate from './UpcomingMealUpdate';
+import AddMeals from './AddMeals';
 
 const UpcomingMealsDsb = () => {
   const axiosSec = useAxiosSec();
   const [modal, setModal] = useState(false);
+  const [addModal, setAddModal] = useState(false);
   const [dtaFilter, setDtaFilter] = useState(null);
 
   const {
@@ -33,6 +35,11 @@ const UpcomingMealsDsb = () => {
     const filterUpdate = data.find((dta) => dta._id === id);
     setDtaFilter(filterUpdate);
     setModal(true);
+    // console.log(filterUpdate);
+  };
+  const handleUpcomingAdd = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setAddModal(true);
     // console.log(filterUpdate);
   };
 
@@ -66,10 +73,31 @@ const UpcomingMealsDsb = () => {
     });
   };
 
+  // Post new review
+  const { mutateAsync: publishAsync } = useMutation({
+    mutationFn: async (datas) => {
+      const { data } = await axiosSec.post('/post-meal', datas);
+      console.log('==============>', data);
+    },
+    onSuccess: () => {
+      Swal.fire({
+        title: 'Good Job!',
+        text: 'Your meal has been successfully Published!',
+        icon: 'success',
+      });
+    },
+  });
 
-const handlePublish =()=>{
-  
-}
+  const handlePublish = async (dta) => {
+    const id = dta._id;
+    const datas = dta;
+    delete datas._id;
+
+    await publishAsync(datas);
+    await mutateAsync(id);
+    // console.log(datas);
+    // console.log(id);
+  };
 
   return (
     <div className="relative min-h-[500px] h-[800px]">
@@ -90,11 +118,32 @@ const handlePublish =()=>{
           className="w-full h-full absolute bg-[#0000003b] rounded-md"
         ></div>
       )}
+      {addModal && (
+        <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-full h-full bg-slate-100 rounded-md z-30 p-3 md:p-6">
+          <div className="mx-auto overflow-auto">
+            <AddMeals refetch={refetch} modal={setAddModal} />
+          </div>
+        </div>
+      )}
+      {addModal && (
+        <div
+          onClick={() => setAddModal(false)}
+          className="w-full h-full absolute bg-[#0000003b] rounded-md"
+        ></div>
+      )}
 
       <div>
-        <h1 className="text-3xl text-slate-800 font-bold pb-4 pt-3">
-          Upcoming Meals
-        </h1>
+        <div className="w-full flex items-center justify-between">
+          <h1 className="text-3xl text-slate-800 font-bold pb-4 pt-3">
+            Upcoming Meals
+          </h1>
+          <button
+            onClick={handleUpcomingAdd}
+            className="py-2 px-4 rounded-md bg-pClr text-white font-bold"
+          >
+            Add Upcoming Meal
+          </button>
+        </div>
         {/* table part */}
         <div className="w-full mx-auto ">
           {/* Table Part */}
@@ -142,7 +191,9 @@ const handlePublish =()=>{
                     <tr>
                       <td colSpan={6} className="">
                         <div className="text-slate-800 m-14 text-center border border-red-500 rounded-md p-5 max-w-[700px] text-3xl md:text-5xl mx-auto">
-                          <h1>You have not review any meals yet!</h1>
+                          <h1 className="font-bold">
+                            You have not added any upcomig meals yet!
+                          </h1>
                         </div>
                       </td>
                     </tr>
@@ -190,7 +241,7 @@ const handlePublish =()=>{
                         <td className="px-2 py-4 text-sm leading-5 max-w-56 whitespace-no-wrap border-b border-gray-200">
                           <div className="flex items-center justify-center gap-2 capitalize">
                             <button
-                              onClick={handlePublish}
+                              onClick={() => handlePublish(dta)}
                               className="py-2 px-5 rounded-md bg-green-500 text-white outline-none font-bold hover:scale-110 duration-300 active:scale-95"
                             >
                               Publish

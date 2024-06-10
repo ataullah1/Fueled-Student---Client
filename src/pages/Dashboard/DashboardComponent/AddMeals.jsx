@@ -9,8 +9,9 @@ import axios from 'axios';
 import { ImSpinner9 } from 'react-icons/im';
 import useAxiosSec from '../../../Hooks/useAxiosSec';
 import useAuth from '../../../Hooks/useAuth';
+import PropTypes from 'prop-types';
 
-const AddMeals = () => {
+const AddMeals = ({ refetch, modal }) => {
   // console.log('id', id);
   const axiosSec = useAxiosSec();
   const [showName, setShowName] = useState({});
@@ -62,9 +63,11 @@ const AddMeals = () => {
       console.log(data);
     },
     onSuccess: () => {
+      refetch();
+      modal(false);
       Swal.fire({
-        title: 'Thank You',
-        text: 'Your meal has been successfully posted.',
+        title: 'Good Job!',
+        text: 'Your meal has been successfully posted in Upcoming page.',
         icon: 'success',
       });
     },
@@ -153,9 +156,19 @@ const AddMeals = () => {
   // console.log('Loding Status: ', loding);
   return (
     <div>
-      <h1 className="text-3xl text-slate-800 font-bold pb-4 pt-3">
-        Add New Meal
-      </h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-3xl text-slate-800 font-bold pb-4 pt-3">
+          Add New Meal
+        </h1>
+        {modal && (
+          <button
+            onClick={() => modal(false)}
+            className="py-2 px-6 bg-red-500 text-white font-semibold rounded-md"
+          >
+            Close
+          </button>
+        )}
+      </div>
       <div className="w-full border border-slate-300 rounded-md p-4">
         <div>
           <form onSubmit={handleSubmit(onSubmit)} className="w-full">
@@ -384,5 +397,8 @@ const AddMeals = () => {
     </div>
   );
 };
-
+AddMeals.propTypes = {
+  refetch: PropTypes.func,
+  modal: PropTypes.boolean,
+};
 export default AddMeals;
