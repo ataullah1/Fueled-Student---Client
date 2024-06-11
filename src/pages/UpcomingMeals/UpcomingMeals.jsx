@@ -20,7 +20,7 @@ const UpcomingMeals = () => {
 
   const isPay = usePayment();
   const { data = [], isLoading } = useQuery({
-    queryKey: ['upcoming-meals'],
+    queryKey: ['upcoming-meals', search, filter],
     queryFn: async () => {
       const { data } = await axiosSec.get(
         `/upcoming-meals?filter=${filter}&search=${search}`
@@ -39,6 +39,7 @@ const UpcomingMeals = () => {
     return initialLikes;
   });
 
+  
   const handleLike = (id) => {
     if (!userDta) {
       Swal.fire({
@@ -78,6 +79,9 @@ const UpcomingMeals = () => {
       return newLikes;
     });
   };
+
+
+
 
   const handleSearchClick = (e) => {
     e.preventDefault();
@@ -135,66 +139,73 @@ const UpcomingMeals = () => {
           </div>
         ) : (
           <div className="mx-auto grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 2xl:grid-cols-4 gap-5 mb-16 mt-5">
-            {data.map((dta) => (
-              <div
-                key={dta._id}
-                className=" mx-auto max-w-[390px] w-full rounded-lg bg-white font-sans shadow-lg dark:bg-[#18181B]"
-              >
-                {/* Post Image */}
-                <div className="flex flex-col gap-1">
-                  <div
-                    className="w-full bg-cover h-52 bg-center rounded-t-md"
-                    style={{
-                      backgroundImage: `url(${
-                        dta?.mealImage || 'https://i.ibb.co/t8j2kD5/sdfsaf.jpg'
-                      })`,
-                    }}
-                  ></div>
-                </div>
-                {/* Post content */}
-                <div className="mt-3 space-y-2 px-4">
-                  <h2 className="text-xl font-semibold text-slate-800 dark:text-white/90">
-                    {dta?.title}
-                  </h2>
-                  <h2 className="text-sm text-gray-500 dark:text-white/50">
-                    {dta?.description.slice(0, 110)}...{' '}
-                    <span className="cursor-pointer text-[#3e96d4]">
-                      See more
-                    </span>
-                  </h2>
-                </div>
-                {/* icons */}
-                <div className="mt-4 flex justify-between px-4 pb-4">
-                  <div
-                    onClick={() => handleLike(dta._id)}
-                    className="flex items-center gap-2 cursor-pointer select-none"
-                  >
-                    <span className="text-2xl">
-                      <RiHeart2Line />
-                    </span>
-                    <h2 className="text-lg font-semibold text-slate-800 dark:text-white/90">
-                      {likes[dta._id]}
-                    </h2>
-                  </div>
-                  <div className="flex items-center gap-2 cursor-pointer">
-                    <span className="text-2xl">
-                      <TbShare />
-                    </span>
-                    <h2 className="text-lg font-semibold text-slate-800 dark:text-white/90">
-                      34
-                    </h2>
-                  </div>
-                  <div className="flex items-center gap-2 cursor-pointer">
-                    <span className="text-[27px]">
-                      <BiMessageRoundedDots />
-                    </span>
-                    <h2 className="text-lg font-semibold text-slate-800 dark:text-white/90">
-                      40
-                    </h2>
-                  </div>
-                </div>
+            {data.length < 1 ? (
+              <div className="text-slate-100 m-14 text-center border border-red-500 rounded-md p-5 max-w-[700px] text-3xl md:text-5xl mx-auto col-span-4">
+                <h1 className="font-bold">No results found !</h1>
               </div>
-            ))}
+            ) : (
+              data.map((dta) => (
+                <div
+                  key={dta._id}
+                  className=" mx-auto max-w-[390px] w-full rounded-lg bg-white font-sans shadow-lg dark:bg-[#18181B]"
+                >
+                  {/* Post Image */}
+                  <div className="flex flex-col gap-1">
+                    <div
+                      className="w-full bg-cover h-52 bg-center rounded-t-md"
+                      style={{
+                        backgroundImage: `url(${
+                          dta?.mealImage ||
+                          'https://i.ibb.co/t8j2kD5/sdfsaf.jpg'
+                        })`,
+                      }}
+                    ></div>
+                  </div>
+                  {/* Post content */}
+                  <div className="mt-3 space-y-2 px-4 min-h-24">
+                    <h2 className="text-xl font-semibold text-slate-800 dark:text-white/90">
+                      {dta?.title}
+                    </h2>
+                    <h2 className="text-sm text-gray-500 dark:text-white/50">
+                      {dta?.description.slice(0, 110)}...{' '}
+                      <span className="cursor-pointer text-[#3e96d4]">
+                        See more
+                      </span>
+                    </h2>
+                  </div>
+                  {/* icons */}
+                  <div className="mt-4 flex justify-between px-4 pb-4">
+                    <div
+                      onClick={() => handleLike(dta._id)}
+                      className="flex items-center gap-2 cursor-pointer select-none"
+                    >
+                      <span className="text-2xl">
+                        <RiHeart2Line />
+                      </span>
+                      <h2 className="text-lg font-semibold text-slate-800 dark:text-white/90">
+                        {likes[dta._id]}
+                      </h2>
+                    </div>
+                    <div className="flex items-center gap-2 cursor-pointer">
+                      <span className="text-2xl">
+                        <TbShare />
+                      </span>
+                      <h2 className="text-lg font-semibold text-slate-800 dark:text-white/90">
+                        34
+                      </h2>
+                    </div>
+                    <div className="flex items-center gap-2 cursor-pointer">
+                      <span className="text-[27px]">
+                        <BiMessageRoundedDots />
+                      </span>
+                      <h2 className="text-lg font-semibold text-slate-800 dark:text-white/90">
+                        40
+                      </h2>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         )}
       </div>

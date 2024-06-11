@@ -11,6 +11,7 @@ const options = [
   { value: [5, 10], label: '$05.00 - $10.00' },
   { value: [10, 15], label: '$10.00 - $15.00' },
   { value: [15, 20], label: '$15.00 - $20.00' },
+  { value: [20], label: '$20 - Above' },
 ];
 
 export default function FilterSearching({ handleFilter }) {
