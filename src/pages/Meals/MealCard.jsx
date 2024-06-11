@@ -62,7 +62,7 @@ const MealCard = ({ dta }) => {
               value={dta?.rating || 0}
               readOnly
             />
-            <span className="text-base">(43)</span>
+            <span className="text-base">({dta?.rating || 0})</span>
           </div>
           <div className="flex items-center flex-wrap text-slate-400">
             {dta?.ingredients.map((ing, i) => (

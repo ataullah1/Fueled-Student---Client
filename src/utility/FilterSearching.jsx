@@ -17,7 +17,7 @@ const options = [
 export default function FilterSearching({ handleFilter }) {
   const [selectedOption, setSelectedOption] = useState(null);
   // console.log(selectedOption?.value);
-  handleFilter(selectedOption?.value);
+  handleFilter(selectedOption?.value || '');
   return (
     <div className="w-full md:w-80 max-w-full md:max-w-80">
       <Select

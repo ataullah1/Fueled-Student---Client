@@ -26,8 +26,8 @@ const PaymentHistory = () => {
   }
   return (
     <div>
-      <div className="border border-slate-400 rounded-md min-h-8 mt-11">
-        <table>
+      <div className="overflow-x-auto rounded-md">
+        <table className="border border-slate-400 rounded-md min-h-8 mt-11 min-w-[700px] w-full ">
           <tr>
             <td className="min-w-80 py-4 px-4">Payment Name: </td>
             <td className="min-w-80 py-4 px-4">{data?.name}</td>

@@ -30,7 +30,7 @@ const AllMeals = () => {
   } = useQuery({
     queryKey: ['meals'],
     queryFn: async () => {
-      const { data } = await axiosSec.get(`/meals`);
+      const { data } = await axiosSec.get(`/all-meals`);
       // console.log(data);
       return data;
     },

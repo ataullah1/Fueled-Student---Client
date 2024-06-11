@@ -1,36 +1,50 @@
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import useAxiosPub from '../../Hooks/useAxiosPub';
 import MealCard from './MealCard';
 import FilterSearching from '../../utility/FilterSearching';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import InfinityScroll from 'react-infinite-scroll-component';
 import MealsSkeleton from '../../components/Skeleton/MealsSkeleton';
-// import InfiniteScroll from 'react-infinite-scroll-component';
-// import { CgSpinnerTwoAlt } from 'react-icons/cg';
+import { BsEmojiDizzy } from 'react-icons/bs';
 
 const Meals = () => {
   const axiosPub = useAxiosPub();
   const [filter, handleFilter] = useState('');
   const [search, setSearch] = useState('');
-
-  const { data: meals = [], isLoading } = useQuery({
+  // console.log(filter);
+  const {
+    data: meals,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+  } = useInfiniteQuery({
     queryKey: ['meals', filter, search],
-    queryFn: async () => {
+    queryFn: async ({ pageParam = 0 }) => {
       const { data } = await axiosPub.get(
-        `/meals?filter=${filter}&search=${search}`
+        `/meals?filter=${filter}&search=${search}&page=${pageParam}`
       );
       return data;
     },
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage.length === 0 ? null : allPages.length;
+    },
   });
+
+  const fetchMoreData = () => {
+    if (!isFetchingNextPage && hasNextPage) {
+      fetchNextPage();
+    }
+  };
 
   const handleSearchClick = (e) => {
     e.preventDefault();
     const text = e.target.search.value;
-    // console.log(text);
     setSearch(text);
   };
+
   const handleSearch = (e) => {
     const text = e.target.value;
-    // console.log(text);
     setSearch(text);
   };
 
@@ -48,7 +62,7 @@ const Meals = () => {
           {filter && (
             <div className="hidden lg:block py-1 w-48 text-center border rounded-md px-2">
               <h1 className="text-xl font-medium">
-                Result: <span className="font-bold">({meals.length})</span>
+                Result: <span className="font-bold">({meals?.length})</span>
                 Meals
               </h1>
             </div>
@@ -73,47 +87,43 @@ const Meals = () => {
           </form>
         </div>
 
-        {/* {filter && search ? ( */}
-        {isLoading ? (
-          <div className="mb-16 mt-5 flex flex-col gap-6">
-            <MealsSkeleton />
-            <MealsSkeleton />
-            <MealsSkeleton />
-            <MealsSkeleton />
-            <MealsSkeleton />
-            <MealsSkeleton />
-            <MealsSkeleton />
-          </div>
-        ) : (
-          <div className="mb-16 mt-5 flex flex-col gap-6">
-            {meals.length < 1 ? (
-              <div className="text-slate-100 m-14 text-center border border-red-500 rounded-md p-5 max-w-[700px] text-3xl md:text-5xl mx-auto">
-                <h1 className="font-bold">No results found !</h1>
-              </div>
-            ) : (
-              meals.map((dta) => <MealCard key={dta._id} dta={dta} />)
-            )}
-          </div>
-        )}
-        {/* ) : (
-          <div className="">
-            <InfiniteScroll
-              dataLength={meals.length}
-              next={() => fetchNextPage()}
-              hasMore={() => hasNextPage()}
-              loader={
-                <div className="overflow-hidden flex items-center gap-3 justify-center">
-                  <CgSpinnerTwoAlt className="animate-spin text-4xl overflow-x-hidden" />
-                </div>
-              }
-              className="mb-16 mt-5 flex flex-col gap-6 overflow-x-hidden"
-            >
-              {meals.map((dta) => (
-                <MealCard key={dta._id} dta={dta} />
-              ))}
-            </InfiniteScroll>
-          </div>
-        )} */}
+        <InfinityScroll
+          dataLength={meals ? meals.pages.flat().length : 0}
+          next={fetchMoreData}
+          hasMore={hasNextPage}
+          loader={
+            <div className="mb-9">
+              <MealsSkeleton />
+            </div>
+          }
+          endMessage={
+            <div className="text-center mb-9 text-5xl py-6 flex items-center justify-center gap-3">
+              <BsEmojiDizzy /> No more meals data <BsEmojiDizzy />
+            </div>
+          }
+          scrollThreshold={0.9}
+        >
+          {isLoading ? (
+            <div className="mb-16 mt-5 flex flex-col gap-6">
+              <MealsSkeleton />
+              <MealsSkeleton />
+              <MealsSkeleton />
+              <MealsSkeleton />
+              <MealsSkeleton />
+            </div>
+          ) : (
+            <div className="mb-16 mt-5 flex flex-col gap-6">
+              {meals &&
+                meals.pages.map((page, index) => (
+                  <React.Fragment key={index}>
+                    {page.map((dta) => (
+                      <MealCard key={dta._id} dta={dta} />
+                    ))}
+                  </React.Fragment>
+                ))}
+            </div>
+          )}
+        </InfinityScroll>
       </div>
     </div>
   );

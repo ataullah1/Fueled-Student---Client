@@ -133,8 +133,8 @@ const AddMeals = ({ refetch, modal }) => {
         ingredients,
         postDate,
       };
-      console.log('Meal Datas:=====', meal);
-      return;
+      // console.log('Meal Datas:=====', meal);
+      // return;
       await mutateAsync(meal);
       setLoading(false);
       setShowName('');

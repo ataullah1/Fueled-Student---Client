@@ -12,6 +12,7 @@ const PricingSection = () => {
   };
   return (
     <section
+      id="package"
       className="py-12"
       style={{
         background:

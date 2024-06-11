@@ -98,7 +98,13 @@ const UpcomingMealsDsb = () => {
     // console.log(datas);
     // console.log(id);
   };
-
+  const handleNotPublish = () => {
+    Swal.fire({
+      title: 'Oppss Sorry !',
+      text: "You won't be able to publish it until you get a minimum of 10 likes!",
+      icon: 'warning',
+    });
+  };
   return (
     <div className="relative min-h-[500px] h-[800px]">
       {modal && (
@@ -241,7 +247,10 @@ const UpcomingMealsDsb = () => {
                         <td className="px-2 py-4 text-sm leading-5 max-w-56 whitespace-no-wrap border-b border-gray-200">
                           <div className="flex items-center justify-center gap-2 capitalize">
                             {dta?.likes < 10 ? (
-                              <button className="py-2 px-5 rounded-md bg-green-500 text-white outline-none font-bold hover:scale-110 duration-300 active:scale-95">
+                              <button
+                                onClick={handleNotPublish}
+                                className="py-2 px-5 rounded-md bg-green-500 text-white outline-none font-bold hover:scale-110 duration-300 active:scale-95"
+                              >
                                 Publish
                               </button>
                             ) : (
