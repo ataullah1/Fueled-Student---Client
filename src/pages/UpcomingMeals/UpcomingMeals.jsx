@@ -9,16 +9,22 @@ import useAuth from '../../Hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import usePayment from '../../Hooks/usePayment';
 import UpcomingMealSke from '../../components/Skeleton/UpcomingMealSke';
+import FilterSearching from '../../utility/FilterSearching';
 
 const UpcomingMeals = () => {
   const { userDta } = useAuth();
   const naviget = useNavigate();
   const axiosSec = useAxiosSec();
+  const [filter, handleFilter] = useState('');
+  const [search, setSearch] = useState('');
+
   const isPay = usePayment();
   const { data = [], isLoading } = useQuery({
     queryKey: ['upcoming-meals'],
     queryFn: async () => {
-      const { data } = await axiosSec.get(`/upcoming-meals`);
+      const { data } = await axiosSec.get(
+        `/upcoming-meals?filter=${filter}&search=${search}`
+      );
       return data;
     },
   });
@@ -73,23 +79,71 @@ const UpcomingMeals = () => {
     });
   };
 
+  const handleSearchClick = (e) => {
+    e.preventDefault();
+    const text = e.target.search.value;
+    // console.log(text);
+    setSearch(text);
+  };
+  const handleSearch = (e) => {
+    const text = e.target.value;
+    // console.log(text);
+    setSearch(text);
+  };
   return (
     <div>
-      <div className="h-60 bg-yellow-500"></div>
-      <div className="w-11/12 xl:w-10/12 max-w-[1700px] mx-auto pb-8 pt-16">
+      <div
+        className="h-60 bg-pClr"
+        style={{
+          backgroundImage: `url('https://i.ibb.co/hcxp8J7/fdsfd-min.png')`,
+        }}
+      ></div>
+      <div className="w-11/12 xl:w-10/12 max-w-[1700px] mx-auto">
+        <div className="py-5 bg-slate-500 mt-6 rounded-md px-3 flex flex-col md:flex-row items-center justify-between gap-2">
+          <FilterSearching handleFilter={handleFilter} />
+          {filter && (
+            <div className="hidden lg:block py-1 w-48 text-center border rounded-md px-2">
+              <h1 className="text-xl font-medium">
+                Result: <span className="font-bold">({data.length})</span>
+                Meals
+              </h1>
+            </div>
+          )}
+          <form
+            onSubmit={handleSearchClick}
+            className="w-full md:w-auto relative"
+          >
+            <input
+              onChange={handleSearch}
+              type="text"
+              name="search"
+              placeholder="Search your meals"
+              className="rounded px-4 py-[7px] w-full md:w-80 max-w-full md:max-w-80 text-slate-600 focus:outline-none pr-20"
+            />
+            <button
+              type="submit"
+              className="absolute top-1/2 -translate-y-1/2 right-2 rounded-md bg-pClr text-slate-50 px-2 font-semibold"
+            >
+              Search
+            </button>
+          </form>
+        </div>
+
         {isLoading ? (
-          <UpcomingMealSke />
+          <div className="mb-16 mt-5">
+            <UpcomingMealSke />
+          </div>
         ) : (
-          <div className=" mx-auto grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
+          <div className="mx-auto grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 2xl:grid-cols-4 gap-5 mb-16 mt-5">
             {data.map((dta) => (
               <div
                 key={dta._id}
-                className=" mx-auto mb-5 max-w-[350px] w-full rounded-lg bg-white font-sans shadow-lg dark:bg-[#18181B]"
+                className=" mx-auto max-w-[390px] w-full rounded-lg bg-white font-sans shadow-lg dark:bg-[#18181B]"
               >
                 {/* Post Image */}
                 <div className="flex flex-col gap-1">
                   <div
-                    className="w-full bg-cover h-52 bg-center"
+                    className="w-full bg-cover h-52 bg-center rounded-t-md"
                     style={{
                       backgroundImage: `url(${
                         dta?.mealImage || 'https://i.ibb.co/t8j2kD5/sdfsaf.jpg'

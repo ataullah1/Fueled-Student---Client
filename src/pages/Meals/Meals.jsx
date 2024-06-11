@@ -37,7 +37,7 @@ const Meals = () => {
   return (
     <div>
       <div
-        className="h-60 bg-yellow-500"
+        className="h-60 bg-pClr"
         style={{
           backgroundImage: `url('https://i.ibb.co/xgfXcm8/dsfeee-min-1.png')`,
         }}

@@ -2,7 +2,7 @@ import Skeleton from 'react-loading-skeleton';
 
 const UpcMealSkltn = () => {
   return (
-    <div className=" mx-auto mb-5 max-w-[350px] w-full rounded-lg bg-white font-sans shadow-lg dark:bg-[#18181B]">
+    <div className=" mx-auto mb-5 max-w-[390px] w-full rounded-lg bg-white font-sans shadow-lg dark:bg-[#18181B]">
       {/* Post Image */}
       <div className="flex flex-col gap-1">
         <div className="w-full h-52 -mt-1">
