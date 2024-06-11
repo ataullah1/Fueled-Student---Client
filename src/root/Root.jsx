@@ -7,6 +7,7 @@ import '@smastrom/react-rating/style.css';
 import { Toaster } from 'react-hot-toast';
 import useAuth from '../Hooks/useAuth';
 import { ImSpinner3 } from 'react-icons/im';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const Root = () => {
   const { isLoading } = useAuth();

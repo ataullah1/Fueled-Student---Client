@@ -3,6 +3,7 @@ import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import useAxiosPub from '../../Hooks/useAxiosPub';
 import MealsCard from '../MealsCard/MealsCard';
 import { CgSpinnerTwoAlt } from 'react-icons/cg';
+import HomeCardSkeleton from '../Skeleton/HomeCardSkeleton';
 // import 'react-tabs/style/react-tabs.css';
 
 const MealsbyCategory = () => {
@@ -45,10 +46,6 @@ const MealsbyCategory = () => {
     },
   });
 
-  // console.log(meals);
-  // console.log('breakfast:>', breakfast);
-  // console.log('Dinner:>', dinner);
-  // console.log('lunch:>', lunch);
   if (isLoading) {
     return (
       <div className="text-slate-100 h-screen text-center w-[60px] flex items-center justify-center text-9xl scale-125 mx-auto">
@@ -78,6 +75,11 @@ const MealsbyCategory = () => {
           </TabList>
 
           <TabPanel>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              <HomeCardSkeleton />
+              <HomeCardSkeleton />
+              <HomeCardSkeleton />
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {meals.map((dta) => (
                 <MealsCard key={dta._id} data={dta} />

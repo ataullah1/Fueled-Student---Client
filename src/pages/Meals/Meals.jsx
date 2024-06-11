@@ -3,15 +3,16 @@ import useAxiosPub from '../../Hooks/useAxiosPub';
 import MealCard from './MealCard';
 import FilterSearching from '../../utility/FilterSearching';
 import { useState } from 'react';
+import MealsSkeleton from '../../components/Skeleton/MealsSkeleton';
 // import InfiniteScroll from 'react-infinite-scroll-component';
 // import { CgSpinnerTwoAlt } from 'react-icons/cg';
 
 const Meals = () => {
   const axiosPub = useAxiosPub();
-  const [filter, handleFilter] = useState(null);
-  const [search, setSearch] = useState(null);
+  const [filter, handleFilter] = useState('');
+  const [search, setSearch] = useState('');
 
-  const { data: meals = [] } = useQuery({
+  const { data: meals = [], isLoading } = useQuery({
     queryKey: ['meals', filter, search],
     queryFn: async () => {
       const { data } = await axiosPub.get(
@@ -35,7 +36,12 @@ const Meals = () => {
 
   return (
     <div>
-      <div className="h-60 bg-yellow-500"></div>
+      <div
+        className="h-60 bg-yellow-500"
+        style={{
+          backgroundImage: `url('https://i.ibb.co/xgfXcm8/dsfeee-min-1.png')`,
+        }}
+      ></div>
       <div className="w-11/12 xl:w-10/12 mx-auto">
         <div className="py-5 bg-slate-500 mt-6 rounded-md px-3 flex flex-col md:flex-row items-center justify-between gap-2">
           <FilterSearching handleFilter={handleFilter} />
@@ -66,12 +72,29 @@ const Meals = () => {
             </button>
           </form>
         </div>
+
         {/* {filter && search ? ( */}
-        <div className="mb-16 mt-5 flex flex-col gap-6">
-          {meals.map((dta) => (
-            <MealCard key={dta._id} dta={dta} />
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="mb-16 mt-5 flex flex-col gap-6">
+            <MealsSkeleton />
+            <MealsSkeleton />
+            <MealsSkeleton />
+            <MealsSkeleton />
+            <MealsSkeleton />
+            <MealsSkeleton />
+            <MealsSkeleton />
+          </div>
+        ) : (
+          <div className="mb-16 mt-5 flex flex-col gap-6">
+            {meals.length < 1 ? (
+              <div className="text-slate-100 m-14 text-center border border-red-500 rounded-md p-5 max-w-[700px] text-3xl md:text-5xl mx-auto">
+                <h1 className="font-bold">No results found !</h1>
+              </div>
+            ) : (
+              meals.map((dta) => <MealCard key={dta._id} dta={dta} />)
+            )}
+          </div>
+        )}
         {/* ) : (
           <div className="">
             <InfiniteScroll

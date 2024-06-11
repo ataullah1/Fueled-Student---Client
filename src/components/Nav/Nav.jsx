@@ -16,25 +16,18 @@ const Nav = () => {
   return (
     <div className=" flex justify-between items-center w-11/12 xl:w-10/12 mx-auto">
       <Link to={'/'} className="text-3xl font-bold w-32 ">
-        <img className="max-h-full" src="fueled-studentLgo.png" alt="" />
+        <img className="max-h-14" src="logo.png" alt="" />
       </Link>
       <div className="hidden md:flex gap-5 items-center navigation">
-        <NavLink
-          className="py-2 px-5 rounded-md shadow-md shadow-slate-200 text-white font-medium hover:shadow-lg hover:shadow-slate-200 hover:scale-110 duration-300"
-          to={'/'}
-        >
+        <NavLink className="py-2 px-5 rounded-md " to={'/'}>
           Home
         </NavLink>
-        <NavLink
-          className="py-2 px-5 rounded-md shadow-md shadow-slate-200 text-white font-medium  hover:shadow-lg hover:shadow-slate-200 hover:scale-110 duration-300"
-          font-medium
-          to={'/meals'}
-        >
+        <NavLink className="py-2 px-5 rounded-md " font-medium to={'/meals'}>
           Meals
         </NavLink>
         {isAdmin ? (
           <NavLink
-            className="py-2 px-5 rounded-md shadow-md shadow-slate-200 text-white font-medium  hover:shadow-lg hover:shadow-slate-200 hover:scale-110 duration-300"
+            className="py-2 px-5 rounded-md "
             font-medium
             to={'/Dashboard'}
           >
@@ -42,7 +35,7 @@ const Nav = () => {
           </NavLink>
         ) : (
           <NavLink
-            className="py-2 px-5 rounded-md shadow-md shadow-slate-200 text-white font-medium  hover:shadow-lg hover:shadow-slate-200 hover:scale-110 duration-300"
+            className="py-2 px-5 rounded-md "
             font-medium
             to={'/upcoming-meals'}
           >
@@ -93,7 +86,7 @@ const Nav = () => {
             </NavLink>
             <NavLink
               onClick={() => setMenu(!menu)}
-              className="py-2 w-full text-center rounded-md shadow-md shadow-slate-200 text-white font-medium  hover:shadow-lg hover:shadow-slate-200 hover:scale-110 duration-300"
+              className="py-2 w-full text-center rounded-md "
               font-medium
               to={'/meals'}
             >
@@ -101,7 +94,7 @@ const Nav = () => {
             </NavLink>
             <NavLink
               onClick={() => setMenu(!menu)}
-              className="py-2 w-full text-center rounded-md shadow-md shadow-slate-200 text-white font-medium  hover:shadow-lg hover:shadow-slate-200 hover:scale-110 duration-300"
+              className="py-2 w-full text-center rounded-md "
               font-medium
               to={'/upcoming-meals'}
             >

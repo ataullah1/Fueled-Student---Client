@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Select from 'react-select';
 
 const options = [
-  { value: null, label: 'All Meals' },
+  { value: '', label: 'All Meals' },
   { value: 'breakfast', label: 'Breakfast' },
   { value: 'lunch', label: 'Lunch' },
   { value: 'dinner', label: 'Dinner' },
