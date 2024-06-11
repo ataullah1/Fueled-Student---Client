@@ -103,7 +103,7 @@ const AddMeals = ({ refetch, modal }) => {
     const title = data.title;
     const mealType = data.mealType;
     const description = data.description;
-    const price = data.price;
+    const price = parseInt(data.price);
     const ingredients = ingredientsList;
     // console.log(data);
 
@@ -133,8 +133,8 @@ const AddMeals = ({ refetch, modal }) => {
         ingredients,
         postDate,
       };
-      // console.log('Meal Datas:=====', meal);
-      // return;
+      console.log('Meal Datas:=====', meal);
+      return;
       await mutateAsync(meal);
       setLoading(false);
       setShowName('');
@@ -224,7 +224,7 @@ const AddMeals = ({ refetch, modal }) => {
                   {/* Price */}
                   <input
                     className="py-2 px-3 rounded-md border border-slate-400 outline-none bg-transparent"
-                    type="text"
+                    type="number"
                     placeholder="Enter Meal Price"
                     {...register('price', { required: true, minLength: 1 })}
                   />
