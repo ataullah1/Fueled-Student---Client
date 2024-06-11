@@ -16,7 +16,7 @@ const MealsCard = ({ data }) => {
         }}
       >
         <div className="bg-[#fa973ab3] text-slate-100 absolute top-3 right-3 rounded-full px-2 flex items-center gap-1">
-          <FaRegStar /> {data?.rating}
+          <FaRegStar /> {data?.rating || 0}
         </div>
         <h1 className="bg-[#00000060] text-slate-100 absolute top-2 left-2 rounded-full px-2 flex items-center gap-1 text-2xl font-bold">
           <FaDollarSign />

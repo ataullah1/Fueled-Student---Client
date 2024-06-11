@@ -2,20 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import useAxiosPub from '../../Hooks/useAxiosPub';
 import MealsCard from '../MealsCard/MealsCard';
-import { CgSpinnerTwoAlt } from 'react-icons/cg';
-import HomeCardSkeleton from '../Skeleton/HomeCardSkeleton';
+import HomeCtgSkltn from '../Skeleton/HomeCtgSkltn';
 // import 'react-tabs/style/react-tabs.css';
 
 const MealsbyCategory = () => {
   const axioss = useAxiosPub();
-  //   const { data: avgofRating = {}, refetch: avgofRatingRefetch } = useQuery({
-  //     queryKey: ['avg-of-rating', id],
-  //     queryFn: async () => {
-  //       const { data } = await axioss.get(`/avg-of-rating`);
-  //       return data;
-  //     },
-  //   });
-  // console.log();
 
   const { data: meals = [], isLoading } = useQuery({
     queryKey: ['meals-six'],
@@ -46,13 +37,6 @@ const MealsbyCategory = () => {
     },
   });
 
-  if (isLoading) {
-    return (
-      <div className="text-slate-100 h-screen text-center w-[60px] flex items-center justify-center text-9xl scale-125 mx-auto">
-        <CgSpinnerTwoAlt className="animate-spin" />
-      </div>
-    );
-  }
   return (
     <div className="text-center py-10">
       <h1 className="text-5xl font-bold"> Meals by Category</h1>
@@ -75,37 +59,48 @@ const MealsbyCategory = () => {
           </TabList>
 
           <TabPanel>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              <HomeCardSkeleton />
-              <HomeCardSkeleton />
-              <HomeCardSkeleton />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {meals.map((dta) => (
-                <MealsCard key={dta._id} data={dta} />
-              ))}
-            </div>
+            {isLoading ? (
+              <HomeCtgSkltn />
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {meals.map((dta) => (
+                  <MealsCard key={dta._id} data={dta} />
+                ))}
+              </div>
+            )}
           </TabPanel>
           <TabPanel>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {breakfast.map((dta) => (
-                <MealsCard key={dta._id} data={dta} />
-              ))}
-            </div>
+            {isLoading ? (
+              <HomeCtgSkltn />
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {breakfast.map((dta) => (
+                  <MealsCard key={dta._id} data={dta} />
+                ))}
+              </div>
+            )}
           </TabPanel>
           <TabPanel>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {lunch.map((dta) => (
-                <MealsCard key={dta._id} data={dta} />
-              ))}
-            </div>
+            {isLoading ? (
+              <HomeCtgSkltn />
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {lunch.map((dta) => (
+                  <MealsCard key={dta._id} data={dta} />
+                ))}
+              </div>
+            )}
           </TabPanel>
           <TabPanel>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {dinner.map((dta) => (
-                <MealsCard key={dta._id} data={dta} />
-              ))}
-            </div>
+            {isLoading ? (
+              <HomeCtgSkltn />
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {dinner.map((dta) => (
+                  <MealsCard key={dta._id} data={dta} />
+                ))}
+              </div>
+            )}
           </TabPanel>
         </Tabs>
       </div>
