@@ -1,6 +1,6 @@
-const slide1 = 'https://i.ibb.co/QM9KrRX/aaaaaaaaa-min.png';
-const slide2 = 'https://i.ibb.co/YLWXYBX/rrrrrrrrrrrrr-min.png';
-const slide3 = 'https://i.ibb.co/NZdDC3T/eeeeeeeeeeeee-min.png';
+const slide1 = 'https://i.ibb.co/NZdDC3T/eeeeeeeeeeeee-min.png';
+const slide2 = 'https://i.ibb.co/c6wFfBL/Hot-Dogs-and-Deli-Meat.jpg';
+const slide3 = 'https://i.ibb.co/4WY6ZRN/meals10.jpg';
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';

@@ -108,7 +108,7 @@ const Payment = () => {
             <div className="hover:bg-white hover:bg-opacity-10 rounded-lg shadow-lg p-6 relative overflow-hidden">
               <div className="absolute top-0 right-0 m-4">
                 <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
-                  Silver
+                  Platinum
                 </span>
               </div>
               <div className="mb-8">
@@ -151,8 +151,8 @@ const Payment = () => {
             </div>
           )}
         </div>
-        <div className="w-full md:w-1/2">
-          <h1 className="text-3xl text-slate-100 font-bold text-center pt-12 pb-4">
+        <div className="w-full md:w-1/2 text-center">
+          <h1 className="text-3xl text-slate-100 font-bold text-center pt-12 mb-4 border-b-2 inline-block border-pClr px-3">
             Pay for the {id} Plan
           </h1>
           <div className="max-w-[550px] mx-auto pt-10 px-3 rounded-md border-slate-400 border-2 mb-10">

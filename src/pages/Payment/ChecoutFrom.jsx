@@ -39,6 +39,9 @@ const ChecoutFrom = ({ price, badge }) => {
       setLoding(false);
       naviget(location?.state ? location.state : '/');
     },
+    onError: () => {
+      setLoding(false);
+    },
   });
 
   const handleSubmit = async (event) => {

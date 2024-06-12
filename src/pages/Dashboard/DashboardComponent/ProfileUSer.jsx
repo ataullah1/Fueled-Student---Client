@@ -21,7 +21,7 @@ const ProfileUSer = () => {
         <div
           className="rounded-t-md h-4/6 bg-cover bg-center"
           style={{
-            backgroundImage: `url('https://i.ibb.co/m6LHQTD/aaaaaaaaa.png')`,
+            backgroundImage: `url('https://i.ibb.co/m5bNcBZ/dsfeee-min.png')`,
           }}
         ></div>
         <div className="flex items-center justify-between px-1 sm:px-4 h-1/3">

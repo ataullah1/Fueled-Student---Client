@@ -1,14 +1,40 @@
 import { MdDone } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import usePayment from '../../Hooks/usePayment';
+import { useQuery } from '@tanstack/react-query';
+import useAuth from '../../Hooks/useAuth';
+import useAxiosSec from '../../Hooks/useAxiosSec';
+import Swal from 'sweetalert2';
 
 const PricingSection = () => {
   const isPay = usePayment();
+  const { userDta } = useAuth();
+  const axiosSec = useAxiosSec();
+
+  const { data: ddaata = [] } = useQuery({
+    queryKey: ['payment', userDta?.email],
+    queryFn: async () => {
+      const { data } = await axiosSec.get(`/paymentss/${userDta?.email}`);
+      // console.log(data);
+      return data;
+    },
+  });
+  const data = ddaata[0]?.badge;
+  console.log(data);
 
   const handlePay = () => {
     if (isPay) {
       console.log('ase');
     }
+  };
+
+  const handleActive = () => {
+    Swal.fire({
+      title: 'Already Activated',
+      text: 'This plane is already activated.',
+      timer: 2000,
+      icon: 'warning',
+    });
   };
   return (
     <section
@@ -64,13 +90,22 @@ const PricingSection = () => {
                 <span>Basic customer support</span>
               </li>
             </ul>
-            <Link
-              onClick={handlePay}
-              to={'/checkout/Silver'}
-              className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700"
-            >
-              Purchase Plan
-            </Link>
+            {data === 'Silver' ? (
+              <button
+                onClick={handleActive}
+                className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700"
+              >
+                Activated Plan
+              </button>
+            ) : (
+              <Link
+                onClick={handlePay}
+                to={'/checkout/Silver'}
+                className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700"
+              >
+                Purchase Plan
+              </Link>
+            )}
           </div>
 
           {/* Pro Plan */}
@@ -109,13 +144,22 @@ const PricingSection = () => {
                 <span>Priority customer support</span>
               </li>
             </ul>
-            <Link
-              onClick={handlePay}
-              to={'/checkout/Gold'}
-              className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700"
-            >
-              Purchase Plan
-            </Link>
+            {data === 'Gold' ? (
+              <button
+                onClick={handleActive}
+                className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700"
+              >
+                Activated Plan
+              </button>
+            ) : (
+              <Link
+                onClick={handlePay}
+                to={'/checkout/Gold'}
+                className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700"
+              >
+                Purchase Plan
+              </Link>
+            )}
           </div>
 
           {/* Enterprise Plan */}
@@ -160,13 +204,22 @@ const PricingSection = () => {
                 <span> laundry service, gym access</span>
               </li>
             </ul>
-            <Link
-              onClick={handlePay}
-              to={'/checkout/Platinum'}
-              className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-700 hover:to-orange-700"
-            >
-              Purchase Plan
-            </Link>
+            {data === 'Platinum' ? (
+              <button
+                onClick={handleActive}
+                className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-700 hover:to-orange-700"
+              >
+                Activated Plan
+              </button>
+            ) : (
+              <Link
+                onClick={handlePay}
+                to={'/checkout/Platinum'}
+                className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-700 hover:to-orange-700"
+              >
+                Purchase Plan
+              </Link>
+            )}
           </div>
         </div>
       </div>

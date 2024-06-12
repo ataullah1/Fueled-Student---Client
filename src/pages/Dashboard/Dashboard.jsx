@@ -43,8 +43,8 @@ const Dashboard = () => {
             : '-translate-x-[700px] lg:translate-x-0 duration-300'
         }`}
       >
-        <div className="mb-10 flex items-center justify-between">
-          <h2 className="text-2xl font-bold">Dashboard Logo</h2>
+        <div className="flex items-center justify-between">
+          <img className="max-h-16" src="/logo.png" alt="" />
           {isMnu && (
             <button
               onClick={() => setMenu(false)}
@@ -55,6 +55,7 @@ const Dashboard = () => {
           )}
         </div>
         <nav className="w-full">
+          <div className="w-full h-[1px] bg-slate-500 mb-5 mt-7" />
           <ul className="list-none p-0 dashboardNav">
             {admin ? (
               <>
@@ -122,6 +123,15 @@ const Dashboard = () => {
                     Upcoming Meals
                   </NavLink>
                 </li>
+                <li className="w-full mb-2" onClick={() => setMenu(false)}>
+                  <NavLink
+                    to={'/dashboard/all-payments'}
+                    className="w-full px-4 py-2 hover:bg-gray-700 flex items-center gap-2"
+                  >
+                    <MdPayments />
+                    All Payments
+                  </NavLink>
+                </li>
               </>
             ) : (
               <>
@@ -164,7 +174,7 @@ const Dashboard = () => {
                 </li>
               </>
             )}
-            <hr className="my-3" />
+            <div className="w-full h-[1px] bg-slate-500 my-5" />
             <li className="w-full mb-2" onClick={() => setMenu(false)}>
               <Link
                 to={'/'}

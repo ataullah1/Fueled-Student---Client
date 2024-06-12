@@ -19,8 +19,8 @@ const PaymentHistory = () => {
   console.log(data);
   if (!isPay) {
     return (
-      <div className="text-slate-800 m-14 text-center border border-red-500 rounded-md p-5 max-w-[700px] text-3xl md:text-5xl mx-auto">
-        <h1>You have not Payment any meals yet!</h1>
+      <div className="text-slate-800 m-14 text-center border-2 font-semibold border-red-500 rounded-md p-5 max-w-[700px] text-3xl md:text-5xl mx-auto">
+        <h1>You have not purchased a subscription yet!</h1>
       </div>
     );
   }
@@ -47,7 +47,20 @@ const PaymentHistory = () => {
           </tr>
           <tr>
             <td className="min-w-80 py-4 px-4">Your badge: </td>
-            <td className="min-w-80 py-4 px-4">{data?.badge}</td>
+            <td className="min-w-80 py-4 px-4">
+              {' '}
+              <span
+                className={`px-3 rounded-full font-medium ${
+                  data?.badge === 'Silver'
+                    ? 'bg-purple-100 text-purple-800'
+                    : data?.badge === 'Gold'
+                    ? 'bg-yellow-100 text-green-800'
+                    : 'bg-green-100 text-yellow-800'
+                }`}
+              >
+                {data?.badge}
+              </span>
+            </td>
           </tr>
         </table>
       </div>

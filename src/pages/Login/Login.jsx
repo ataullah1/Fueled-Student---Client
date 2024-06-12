@@ -98,11 +98,13 @@ export default function Login() {
         const userEmail = user.email;
         const userPhoto = user.photoURL;
         const role = 'user';
+        const badge = 'Bronze';
         const users = {
           userName,
           userEmail,
           userPhoto,
           role,
+          badge,
         };
         await mutateAsync({ users });
         console.log(user);

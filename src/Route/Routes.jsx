@@ -21,6 +21,7 @@ import ServeMeals from '../pages/Dashboard/DashboardComponent/ServeMeals';
 import AllReviews from '../pages/Dashboard/DashboardComponent/AllReviews';
 import AddMeals from '../pages/Dashboard/DashboardComponent/AddMeals';
 import Payment from '../pages/Payment/Payment';
+import AllPayments from '../pages/Dashboard/DashboardComponent/AllPayments';
 // import PrivetRoute from './PrivetRoute';
 
 const router = createBrowserRouter([
@@ -82,6 +83,11 @@ const router = createBrowserRouter([
       {
         path: '/dashboard/Upcoming-Meals',
         element: <UpcomingMealsDsb />,
+      },
+
+      {
+        path: '/dashboard/all-payments',
+        element: <AllPayments />,
       },
       {
         path: '/dashboard/Serve-Meals',

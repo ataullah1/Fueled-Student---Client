@@ -6,11 +6,14 @@ import Swal from 'sweetalert2';
 import useAxiosSec from '../../../Hooks/useAxiosSec';
 import toast from 'react-hot-toast';
 import { CgClose } from 'react-icons/cg';
+import ServeMealFilter from '../../../utility/ServeMealFilter';
 
 const ServeMeals = () => {
   const axioss = useAxiosSec();
   const [viewBtn, setViewBtn] = useState(null);
-
+  const [search, setSearch] = useState('');
+  const [filter, handleFilter] = useState('');
+  // console.log(filter);
   const toggle = (id) => {
     if (viewBtn === id) {
       setViewBtn(null);
@@ -23,9 +26,11 @@ const ServeMeals = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ['request'],
+    queryKey: ['request', search, filter],
     queryFn: async () => {
-      const { data } = await axioss.get('/request ');
+      const { data } = await axioss.get(
+        `/request?search=${search}&filter=${filter}`
+      );
       return data;
     },
   });
@@ -80,9 +85,48 @@ const ServeMeals = () => {
     });
   };
 
+  const handleSearchClick = (e) => {
+    e.preventDefault();
+    const text = e.target.search.value;
+    setSearch(text);
+  };
+
+  const handleSearch = (e) => {
+    const text = e.target.value;
+    setSearch(text);
+  };
+
   return (
     <div className="p-5">
-      <h1 className="pt-3 pb-5 text-3xl text-slate-700">Today Orders</h1>
+      <h1 className="pt-3 pb-5 text-3xl text-slate-700 font-bold">
+        Today Orders
+      </h1>
+
+      <div className="w-full flex flex-col gap-2 md:gap-4 md:flex-row items-center justify-between pb-4">
+        <div className="w-full md:w-auto">
+          <ServeMealFilter handleFilter={handleFilter} />
+        </div>
+        <div className="w-full md:w-auto">
+          <form
+            onSubmit={handleSearchClick}
+            className="w-full md:w-auto relative"
+          >
+            <input
+              onChange={handleSearch}
+              type="text"
+              name="search"
+              placeholder="Search username or email"
+              className="rounded px-4 py-[7px] w-full md:w-80 max-w-full md:max-w-80 text-slate-600 focus:outline-none pr-20 border border-slate-400"
+            />
+            <button
+              type="submit"
+              className="absolute top-1/2 -translate-y-1/2 right-2 rounded-md bg-pClr text-slate-50 px-2 font-semibold"
+            >
+              Search
+            </button>
+          </form>
+        </div>
+      </div>
       <div className="flex flex-col">
         <div className="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-3 lg:-mx-8 lg:px-8">
           <div className="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
@@ -127,7 +171,10 @@ const ServeMeals = () => {
                     <tr>
                       <td colSpan={6} className="">
                         <div className="text-slate-800 m-14 text-center border border-red-500 rounded-md p-5 max-w-[700px] text-3xl md:text-5xl mx-auto">
-                          <h1>You have not review any meals yet!</h1>
+                          <h1>
+                            No meal requests were found according to your
+                            search!
+                          </h1>
                         </div>
                       </td>
                     </tr>
@@ -170,7 +217,7 @@ const ServeMeals = () => {
                         </td>
 
                         <td className="px-3 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
-                          <div className="flex items-center gap-2 justify-center">
+                          <div className="flex items-center gap-2 justify-center capitalize">
                             <div
                               className={
                                 dta.status === 'pending'

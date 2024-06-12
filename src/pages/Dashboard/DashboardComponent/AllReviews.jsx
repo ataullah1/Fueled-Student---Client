@@ -113,17 +113,17 @@ const AllReviews = () => {
                       </td>
                     </tr>
                   </tbody>
-                ) : data?.length < 1 ? (
-                  <tbody>
-                    <tr>
-                      <td colSpan={6} className="">
-                        <div className="text-slate-800 m-14 text-center border border-red-500 rounded-md p-5 max-w-[700px] text-3xl md:text-5xl mx-auto">
-                          <h1>You have not review any meals yet!</h1>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                ) : (
+                  ) : data?.length < 1 ? (
+                    <tbody>
+                      <tr>
+                        <td colSpan={6} className="">
+                          <div className="text-slate-800 m-14 text-center border border-red-500 rounded-md p-5 max-w-[700px] text-3xl md:text-5xl mx-auto">
+                            <h1>You have not review any meals yet!</h1>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  ) : (
                   <tbody className="text-slate-700">
                     {data?.map((dta) => (
                       <tr key={dta._id} className="hover:bg-slate-200">

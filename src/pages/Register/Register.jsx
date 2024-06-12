@@ -88,11 +88,13 @@ export default function Register() {
       const userEmail = user.email;
       const userPhoto = user.photoURL;
       const role = 'user';
+      const badge = 'Bronze';
       const users = {
         userName,
         userEmail,
         userPhoto,
         role,
+        badge,
       };
       await mutateAsync({ users });
       await mutateAsyncJwt({ userEmail });
@@ -123,11 +125,13 @@ export default function Register() {
         const userEmail = user.email;
         const userPhoto = user.photoURL;
         const role = 'user';
+        const badge = 'Bronze';
         const users = {
           userName,
           userEmail,
           userPhoto,
           role,
+          badge,
         };
         await mutateAsync({ users });
 
