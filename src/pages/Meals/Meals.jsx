@@ -59,14 +59,7 @@ const Meals = () => {
       <div className="w-11/12 xl:w-10/12 mx-auto">
         <div className="py-5 bg-slate-500 mt-6 rounded-md px-3 flex flex-col md:flex-row items-center justify-between gap-2">
           <FilterSearching handleFilter={handleFilter} />
-          {filter && (
-            <div className="hidden lg:block py-1 w-48 text-center border rounded-md px-2">
-              <h1 className="text-xl font-medium">
-                Result: <span className="font-bold">({meals?.length})</span>
-                Meals
-              </h1>
-            </div>
-          )}
+
           <form
             onSubmit={handleSearchClick}
             className="w-full md:w-auto relative"

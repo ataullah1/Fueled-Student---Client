@@ -22,6 +22,7 @@ import AllReviews from '../pages/Dashboard/DashboardComponent/AllReviews';
 import AddMeals from '../pages/Dashboard/DashboardComponent/AddMeals';
 import Payment from '../pages/Payment/Payment';
 import AllPayments from '../pages/Dashboard/DashboardComponent/AllPayments';
+import PrivetDashboard from './PrivetDashboard';
 // import PrivetRoute from './PrivetRoute';
 
 const router = createBrowserRouter([
@@ -74,32 +75,59 @@ const router = createBrowserRouter([
       },
       {
         path: '/dashboard/Manage-Users',
-        element: <ManageUsers />,
+        element: (
+          <PrivetDashboard>
+            <ManageUsers />
+          </PrivetDashboard>
+        ),
       },
       {
         path: '/dashboard/All-Meals',
-        element: <AllMeals />,
+        element: (
+          <PrivetDashboard>
+            <AllMeals />
+          </PrivetDashboard>
+        ),
       },
       {
         path: '/dashboard/Upcoming-Meals',
-        element: <UpcomingMealsDsb />,
+        element: (
+          <PrivetDashboard>
+            <UpcomingMealsDsb />
+          </PrivetDashboard>
+        ),
       },
-
       {
         path: '/dashboard/all-payments',
-        element: <AllPayments />,
+        element: (
+          <PrivetDashboard>
+            <AllPayments />
+          </PrivetDashboard>
+        ),
       },
       {
         path: '/dashboard/Serve-Meals',
-        element: <ServeMeals />,
+        element: (
+          <PrivetDashboard>
+            <ServeMeals />
+          </PrivetDashboard>
+        ),
       },
       {
         path: '/dashboard/All-Reviews',
-        element: <AllReviews />,
+        element: (
+          <PrivetDashboard>
+            <AllReviews />
+          </PrivetDashboard>
+        ),
       },
       {
         path: '/dashboard/Add-Meal',
-        element: <AddMeals />,
+        element: (
+          <PrivetDashboard>
+            <AddMeals />
+          </PrivetDashboard>
+        ),
       },
       {
         path: '/dashboard/Requested-Mealss',
