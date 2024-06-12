@@ -10,7 +10,11 @@ const UpcomingMeals = () => {
   const [filter, handleFilter] = useState('');
   const [search, setSearch] = useState('');
 
-  const { data = [], isLoading,refetch } = useQuery({
+  const {
+    data = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ['upcoming-meals', search, filter],
     queryFn: async () => {
       const { data } = await axiosSec.get(
@@ -81,7 +85,9 @@ const UpcomingMeals = () => {
                 <h1 className="font-bold">No results found !</h1>
               </div>
             ) : (
-              data.map((dta) => <UpcomingCrd key={dta._id} dta={dta} refetch={refetch}  />)
+              data.map((dta) => (
+                <UpcomingCrd key={dta._id} dta={dta} refetch={refetch} />
+              ))
             )}
           </div>
         )}
