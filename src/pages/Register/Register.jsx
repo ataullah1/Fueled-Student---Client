@@ -10,9 +10,11 @@ import Loding from '../Loding/Loding';
 import useAuth from '../../Hooks/useAuth';
 import { useMutation } from '@tanstack/react-query';
 import useAxiosPub from '../../Hooks/useAxiosPub';
+// import useAxiosSec from '../../Hooks/useAxiosSec';
 
 export default function Register() {
   const axioss = useAxiosPub();
+  // const axiosss = useAxiosSec();
   const [errPass, setErrPass] = useState(false);
   const [imgErr, setImgErr] = useState(null);
   const [eye, setEye] = useState(false);
@@ -24,12 +26,12 @@ export default function Register() {
       console.log(data);
     },
   });
-  const { mutateAsync: mutateAsyncJwt } = useMutation({
-    mutationFn: async ({ userEmail }) => {
-      const { data } = await axioss.post('/jwt', userEmail);
-      console.log(data);
-    },
-  });
+  // const { mutateAsync: mutateAsyncJwt } = useMutation({
+  //   mutationFn: async ({ userEmail }) => {
+  //     const { data } = await axiosss.post('/jwt', userEmail);
+  //     console.log(data);
+  //   },
+  // });
 
   const {
     emlPassRegister,
@@ -97,7 +99,7 @@ export default function Register() {
         badge,
       };
       await mutateAsync({ users });
-      await mutateAsyncJwt({ userEmail });
+      // await mutateAsyncJwt({ userEmail });
 
       reset();
       // naviget('/login');

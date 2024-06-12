@@ -7,6 +7,7 @@ import useAxiosSec from '../../../Hooks/useAxiosSec';
 import toast from 'react-hot-toast';
 import { CgClose } from 'react-icons/cg';
 import ServeMealFilter from '../../../utility/ServeMealFilter';
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 
 const ServeMeals = () => {
   const axioss = useAxiosSec();
@@ -14,6 +15,23 @@ const ServeMeals = () => {
   const [search, setSearch] = useState('');
   const [filter, handleFilter] = useState('');
   // console.log(filter);
+  // Pagination
+  const [itemsPerPage, setItemperpage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const { data: totalDta = {} } = useQuery({
+    queryKey: ['totalDta', search, filter, itemsPerPage, currentPage],
+    queryFn: async () => {
+      const { data } = await axioss.get(`/total-request`);
+      return data;
+    },
+  });
+  console.log(totalDta?.count);
+  const count = totalDta?.count || 0;
+  const numberOfPage = Math.ceil(count / itemsPerPage);
+  const pages = [...Array(numberOfPage).keys()];
+  // console.log(pages);
+
   const toggle = (id) => {
     if (viewBtn === id) {
       setViewBtn(null);
@@ -26,15 +44,22 @@ const ServeMeals = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ['request', search, filter],
+    queryKey: ['request', search, filter, itemsPerPage, currentPage],
     queryFn: async () => {
       const { data } = await axioss.get(
-        `/request?search=${search}&filter=${filter}`
+        `/request?search=${search}&filter=${filter}&perpage=${itemsPerPage}&currentpage=${currentPage}`
       );
       return data;
     },
   });
   console.log(request);
+
+  const handleChange = (e) => {
+    const data = parseInt(e.target.value);
+    console.log(data);
+    setItemperpage(data);
+    setCurrentPage(0);
+  };
 
   const { mutateAsync: update } = useMutation({
     mutationFn: async (statusDta) => {
@@ -289,6 +314,84 @@ const ServeMeals = () => {
                       </tr>
                     ))}
                   </tbody>
+                )}
+
+                {!filter && (
+                  <tfoot>
+                    {!search && (
+                      <tr>
+                        <td colSpan={5} className="py-3 px-3 ">
+                          <div className="flex items-center justify-between">
+                            <div className="bg-slate-400 flex items-center rounded-md px-2 gap-2">
+                              <p className="">Items Per Page:</p>
+                              <select
+                                onChange={handleChange}
+                                className="bg-transparent rounded-md focus:outline-none py-2 cursor-pointer"
+                              >
+                                <option selected={itemsPerPage === 5} value="5">
+                                  5
+                                </option>
+                                <option
+                                  selected={itemsPerPage === 10}
+                                  value="10"
+                                >
+                                  10
+                                </option>
+                                <option
+                                  selected={itemsPerPage === 20}
+                                  value="20"
+                                >
+                                  20
+                                </option>
+                                <option
+                                  selected={itemsPerPage === 50}
+                                  value="50"
+                                >
+                                  50
+                                </option>
+                                <option
+                                  selected={itemsPerPage === 100}
+                                  value="100"
+                                >
+                                  100
+                                </option>
+                              </select>
+                            </div>
+
+                            <div className="flex items-center justify-end">
+                              <button
+                                disabled={currentPage < 1}
+                                onClick={() => setCurrentPage(currentPage - 1)}
+                                className="py-2 px-4 bg-slate-400 border text-2xl rounded-l-md active:text-white active:bg-slate-800 hover:bg-slate-600 hover:text-white"
+                              >
+                                <MdKeyboardArrowLeft />
+                              </button>
+                              {pages.map((page) => (
+                                <button
+                                  onClick={() => setCurrentPage(page)}
+                                  key={page}
+                                  className={`py-2 px-3 border active:text-white active:bg-slate-800 hover:bg-slate-600 hover:text-white ${
+                                    currentPage === page
+                                      ? 'bg-slate-800 text-white'
+                                      : 'bg-slate-400'
+                                  }`}
+                                >
+                                  {page + 1}
+                                </button>
+                              ))}
+                              <button
+                                disabled={currentPage > pages?.length - 2}
+                                onClick={() => setCurrentPage(currentPage + 1)}
+                                className="py-2 px-4 bg-slate-400 border text-2xl rounded-r-md active:text-white active:bg-slate-800 hover:bg-slate-600 hover:text-white"
+                              >
+                                <MdKeyboardArrowRight />
+                              </button>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </tfoot>
                 )}
               </table>
             </div>
