@@ -8,8 +8,8 @@ import { ImSpinner9 } from 'react-icons/im';
 import { FcGoogle } from 'react-icons/fc';
 import Loding from '../Loding/Loding';
 import useAuth from '../../Hooks/useAuth';
-import useAxiosPub from '../../Hooks/useAxiosPub';
 import { useMutation } from '@tanstack/react-query';
+import useAxiosPub from '../../Hooks/useAxiosPub';
 
 export default function Register() {
   const axioss = useAxiosPub();

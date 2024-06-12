@@ -8,10 +8,10 @@ import { ImSpinner9 } from 'react-icons/im';
 import { FcGoogle } from 'react-icons/fc';
 import Loding from '../Loding/Loding';
 import { useMutation } from '@tanstack/react-query';
-import useAxiosSec from '../../Hooks/useAxiosSec';
+import useAxiosPub from '../../Hooks/useAxiosPub';
 
 export default function Login() {
-  const axioss = useAxiosSec();
+  const axioss = useAxiosPub();
   const [eye, setEye] = useState(false);
   const naviget = useNavigate();
   const location = useLocation();
