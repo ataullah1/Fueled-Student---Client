@@ -12,19 +12,19 @@ const PricingSection = () => {
   const axiosSec = useAxiosSec();
 
   const { data: ddaata = [] } = useQuery({
-    queryKey: ['payment', userDta?.email],
+    queryKey: ['payment', userDta?.email || ''],
     queryFn: async () => {
-      const { data } = await axiosSec.get(`/paymentss/${userDta?.email}`);
+      const { data } = await axiosSec.get(`/paymentss/${userDta?.email || ''}`);
       // console.log(data);
       return data;
     },
   });
   const data = ddaata[0]?.badge;
-  console.log(data);
+  // console.log(data);
 
   const handlePay = () => {
     if (isPay) {
-      console.log('ase');
+      console.log('Go To Payment Route');
     }
   };
 

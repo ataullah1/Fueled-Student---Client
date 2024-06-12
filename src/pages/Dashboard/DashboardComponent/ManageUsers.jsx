@@ -17,13 +17,22 @@ const ManageUsers = () => {
   const [search, setSearch] = useState('');
   const [filter, handleFilter] = useState('');
 
+  // Pagination
   const [itemsPerPage, setItemperpage] = useState(10);
   const [currentPage, setCurrentPage] = useState(0);
-  const count = 49;
+
+  const { data: totalDta = {} } = useQuery({
+    queryKey: ['totalDta', search, filter, itemsPerPage, currentPage],
+    queryFn: async () => {
+      const { data } = await axioss.get(`/total-users`);
+      return data;
+    },
+  });
+  console.log(totalDta?.count);
+  const count = totalDta?.count || 0;
   const numberOfPage = Math.ceil(count / itemsPerPage);
   const pages = [...Array(numberOfPage).keys()];
-
-  console.log(pages);
+  // console.log(pages);
 
   const toggle = (id) => {
     if (viewBtn === id) {
@@ -293,67 +302,73 @@ const ManageUsers = () => {
                   ))}
                 </tbody>
               )}
-              {search || filter || (
+
+              {!filter && (
                 <tfoot>
-                  <tr>
-                    <td colSpan={5} className="py-3 px-3 ">
-                      <div className="flex items-center justify-between">
-                        <div className="bg-slate-400 flex items-center rounded-md px-2 gap-2">
-                          <p className="">Items Per Page:</p>
-                          <select
-                            onChange={handleChange}
-                            className="bg-transparent rounded-md focus:outline-none py-2 cursor-pointer"
-                          >
-                            <option selected={itemsPerPage===5} value="5">
-                              5
-                            </option>
-                            <option selected={itemsPerPage===10} value="10">
-                              10
-                            </option>
-                            <option selected={itemsPerPage===20} value="20">
-                              20
-                            </option>
-                            <option selected={itemsPerPage===50} value="50">
-                              50
-                            </option>
-                            <option selected={itemsPerPage===100} value="100">
-                              100
-                            </option>
-                          </select>
-                        </div>
-                        <button>CurrentPage: {currentPage}</button>
-                        <div className="flex items-center justify-end">
-                          <button
-                            disabled={currentPage < 1}
-                            onClick={() => setCurrentPage(currentPage - 1)}
-                            className="py-2 px-4 bg-slate-400 border text-2xl rounded-l-md active:text-white active:bg-slate-800 hover:bg-slate-600 hover:text-white"
-                          >
-                            <MdKeyboardArrowLeft />
-                          </button>
-                          {pages.map((page) => (
-                            <button
-                              onClick={() => setCurrentPage(page)}
-                              key={page}
-                              className={`py-2 px-3 border active:text-white active:bg-slate-800 hover:bg-slate-600 hover:text-white ${
-                                currentPage === page
-                                  ? 'bg-slate-800 text-white'
-                                  : 'bg-slate-400'
-                              }`}
+                  {!search && (
+                    <tr>
+                      <td colSpan={5} className="py-3 px-3 ">
+                        <div className="flex items-center justify-between">
+                          <div className="bg-slate-400 flex items-center rounded-md px-2 gap-2">
+                            <p className="">Items Per Page:</p>
+                            <select
+                              onChange={handleChange}
+                              className="bg-transparent rounded-md focus:outline-none py-2 cursor-pointer"
                             >
-                              {page + 1}
+                              <option selected={itemsPerPage === 5} value="5">
+                                5
+                              </option>
+                              <option selected={itemsPerPage === 10} value="10">
+                                10
+                              </option>
+                              <option selected={itemsPerPage === 20} value="20">
+                                20
+                              </option>
+                              <option selected={itemsPerPage === 50} value="50">
+                                50
+                              </option>
+                              <option
+                                selected={itemsPerPage === 100}
+                                value="100"
+                              >
+                                100
+                              </option>
+                            </select>
+                          </div>
+
+                          <div className="flex items-center justify-end">
+                            <button
+                              disabled={currentPage < 1}
+                              onClick={() => setCurrentPage(currentPage - 1)}
+                              className="py-2 px-4 bg-slate-400 border text-2xl rounded-l-md active:text-white active:bg-slate-800 hover:bg-slate-600 hover:text-white"
+                            >
+                              <MdKeyboardArrowLeft />
                             </button>
-                          ))}
-                          <button
-                            disabled={currentPage > pages.length - 2}
-                            onClick={() => setCurrentPage(currentPage + 1)}
-                            className="py-2 px-4 bg-slate-400 border text-2xl rounded-r-md active:text-white active:bg-slate-800 hover:bg-slate-600 hover:text-white"
-                          >
-                            <MdKeyboardArrowRight />
-                          </button>
+                            {pages.map((page) => (
+                              <button
+                                onClick={() => setCurrentPage(page)}
+                                key={page}
+                                className={`py-2 px-3 border active:text-white active:bg-slate-800 hover:bg-slate-600 hover:text-white ${
+                                  currentPage === page
+                                    ? 'bg-slate-800 text-white'
+                                    : 'bg-slate-400'
+                                }`}
+                              >
+                                {page + 1}
+                              </button>
+                            ))}
+                            <button
+                              disabled={currentPage > pages?.length - 2}
+                              onClick={() => setCurrentPage(currentPage + 1)}
+                              className="py-2 px-4 bg-slate-400 border text-2xl rounded-r-md active:text-white active:bg-slate-800 hover:bg-slate-600 hover:text-white"
+                            >
+                              <MdKeyboardArrowRight />
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                    </td>
-                  </tr>
+                      </td>
+                    </tr>
+                  )}
                 </tfoot>
               )}
             </table>

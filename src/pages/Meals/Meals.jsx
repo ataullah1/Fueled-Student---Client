@@ -97,7 +97,7 @@ const Meals = () => {
             </div>
           }
           endMessage={
-            <div className="text-center mb-9 text-5xl py-6 flex items-center justify-center gap-3">
+            <div className="text-center mb-9 text-3xl sm:text-5xl py-6 flex items-center justify-center gap-3">
               <BsEmojiDizzy /> No more meals data <BsEmojiDizzy />
             </div>
           }

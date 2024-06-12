@@ -8,12 +8,32 @@ import { IoClose } from 'react-icons/io5';
 import Swal from 'sweetalert2';
 import toast from 'react-hot-toast';
 import UpdateMeal from './UpdateMeal';
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
+import FilterLikeReview from '../../../utility/FilterLikeReview';
 
 const AllMeals = () => {
   const axiosSec = useAxiosSec();
   const [viewBtn, setViewBtn] = useState(null);
   const [modal, setModal] = useState(false);
   const [dtaFilter, setDtaFilter] = useState(null);
+  const [search, setSearch] = useState('');
+  const [filter, handleFilter] = useState('');
+  // Pagination
+  const [itemsPerPage, setItemperpage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const { data: totalDta = {} } = useQuery({
+    queryKey: ['totalmeals', filter, search, itemsPerPage, currentPage],
+    queryFn: async () => {
+      const { data } = await axiosSec.get(`/total-meals`);
+      return data;
+    },
+  });
+  console.log(totalDta?.count);
+  const count = totalDta?.count || 0;
+  const numberOfPage = Math.ceil(count / itemsPerPage);
+  const pages = [...Array(numberOfPage).keys()];
+  // console.log(pages);
 
   const toggle = (id) => {
     if (viewBtn === id) {
@@ -23,19 +43,43 @@ const AllMeals = () => {
     }
   };
 
-  const {
+  let {
     data = [],
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ['meals'],
+    queryKey: ['meals', filter, search, itemsPerPage, currentPage],
     queryFn: async () => {
-      const { data } = await axiosSec.get(`/all-meals`);
+      const { data } = await axiosSec.get(
+        `/all-meals?search=${search}&filter=${filter}&perpage=${itemsPerPage}&currentpage=${currentPage}`
+      );
       // console.log(data);
       return data;
     },
   });
-  // console.log(data);
+  // // console.log(data);
+  // if (filter === 'like') {
+  //   const likeFilter = data.sort((a, b) => {
+  //     const datA = a.likes;
+  //     const datB = b.likes;
+  //     return datB - datA;
+  //   });
+  //   data = likeFilter;
+  // } else if (filter === 'review') {
+  //   const likeFilter = data.sort((a, b) => {
+  //     const datA = a.likes;
+  //     const datB = b.likes;
+  //     return datB - datA;
+  //   });
+  //   data = likeFilter;
+  // }
+
+  const handleChange = (e) => {
+    const data = parseInt(e.target.value);
+    console.log(data);
+    setItemperpage(data);
+    setCurrentPage(0);
+  };
 
   //   handleUpdate =====
   const handleUpdate = (id) => {
@@ -77,6 +121,17 @@ const AllMeals = () => {
     });
   };
 
+  const handleSearchClick = (e) => {
+    e.preventDefault();
+    const text = e.target.search.value;
+    setSearch(text);
+  };
+
+  const handleSearch = (e) => {
+    const text = e.target.value;
+    setSearch(text);
+  };
+
   return (
     <div className="relative min-h-[500px] h-[800px]">
       {modal && (
@@ -101,12 +156,37 @@ const AllMeals = () => {
         <h1 className="text-3xl text-slate-800 font-bold pb-4 pt-3">
           All Meals
         </h1>
+        <div className="w-full flex flex-col gap-2 md:gap-4 md:flex-row items-center justify-between pb-4">
+          <div className="w-full md:w-auto">
+            <FilterLikeReview handleFilter={handleFilter} />
+          </div>
+          <div className="w-full md:w-auto">
+            <form
+              onSubmit={handleSearchClick}
+              className="w-full md:w-auto relative"
+            >
+              <input
+                onChange={handleSearch}
+                type="text"
+                name="search"
+                placeholder="Search meals"
+                className="rounded px-4 py-[7px] w-full md:w-80 max-w-full md:max-w-80 text-slate-600 focus:outline-none pr-20 border border-slate-400"
+              />
+              <button
+                type="submit"
+                className="absolute top-1/2 -translate-y-1/2 right-2 rounded-md bg-pClr text-slate-50 px-2 font-semibold"
+              >
+                Search
+              </button>
+            </form>
+          </div>
+        </div>
         {/* table part */}
         <div className="w-full mx-auto ">
           {/* Table Part */}
           <div className="w-full mx-auto">
             <div className="overflow-x-auto rounded-md">
-              <table className="border rounded-md w-full min-w-[850px]">
+              <table className="border rounded-md w-full mb-14 min-w-[850px]">
                 <thead className="rounded-t-md">
                   <tr className="rounded-t-md font-semibold">
                     <th className="px-3 py-3 text-xs font-medium leading-4 tracking-wider text-lefttext-slate-800 uppercase border-b border-gray-200 bg-gray-50 text-slate-800">
@@ -239,6 +319,73 @@ const AllMeals = () => {
                       </tr>
                     ))}
                   </tbody>
+                )}
+
+                {!search && (
+                  <tfoot>
+                    <tr>
+                      <td colSpan={6} className="py-3 px-3 ">
+                        <div className="flex items-center justify-between">
+                          <div className="bg-slate-400 flex items-center rounded-md px-2 gap-2">
+                            <p className="">Items Per Page:</p>
+                            <select
+                              onChange={handleChange}
+                              className="bg-transparent rounded-md focus:outline-none py-2 cursor-pointer"
+                            >
+                              <option selected={itemsPerPage === 5} value="5">
+                                5
+                              </option>
+                              <option selected={itemsPerPage === 10} value="10">
+                                10
+                              </option>
+                              <option selected={itemsPerPage === 20} value="20">
+                                20
+                              </option>
+                              <option selected={itemsPerPage === 50} value="50">
+                                50
+                              </option>
+                              <option
+                                selected={itemsPerPage === 100}
+                                value="100"
+                              >
+                                100
+                              </option>
+                            </select>
+                          </div>
+
+                          <div className="flex items-center justify-end">
+                            <button
+                              disabled={currentPage < 1}
+                              onClick={() => setCurrentPage(currentPage - 1)}
+                              className="py-2 px-4 bg-slate-400 border text-2xl rounded-l-md active:text-white active:bg-slate-800 hover:bg-slate-600 hover:text-white"
+                            >
+                              <MdKeyboardArrowLeft />
+                            </button>
+                            {pages.map((page) => (
+                              <button
+                                onClick={() => setCurrentPage(page)}
+                                key={page}
+                                className={`py-2 px-3 border active:text-white active:bg-slate-800 hover:bg-slate-600 hover:text-white ${
+                                  currentPage === page
+                                    ? 'bg-slate-800 text-white'
+                                    : 'bg-slate-400'
+                                }`}
+                              >
+                                {page + 1}
+                              </button>
+                            ))}
+                            <button
+                              disabled={currentPage > pages?.length - 2}
+                              onClick={() => setCurrentPage(currentPage + 1)}
+                              className="py-2 px-4 bg-slate-400 border text-2xl rounded-r-md active:text-white active:bg-slate-800 hover:bg-slate-600 hover:text-white"
+                            >
+                              <MdKeyboardArrowRight />
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tfoot>
                 )}
               </table>
             </div>

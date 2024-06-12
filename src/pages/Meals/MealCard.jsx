@@ -53,8 +53,8 @@ const MealCard = ({ dta }) => {
           }}
         ></div>
       </div>
-      <div className="w-full md:w-3/4 bg-slate-700 rounded-b-md md:rounded-bl-none md:rounded-r-md p-3 flex">
-        <div className="w-3/4 space-y-2 pr-2">
+      <div className="w-full md:w-3/4 bg-slate-700 rounded-b-md md:rounded-bl-none md:rounded-r-md p-3 flex flex-col sm:flex-row gap-5 sm:gap-0">
+        <div className="w-full sm:w-3/4 space-y-2 pr-2">
           <h1 className="text-2xl sm:text-3xl font-bold">{dta?.title}</h1>
           <div className="flex items-center gap-2">
             <Rating
@@ -76,7 +76,7 @@ const MealCard = ({ dta }) => {
           </div>
           <p className="">{dta?.description.slice(0, 70)}....</p>
         </div>
-        <div className="w-1/4 min-w-32 sm:min-w-36 flex flex-col justify-between pl-2 sm:pl-3 border-l border-slate-500">
+        <div className="w-full sm:w-1/4 min-w-32 sm:min-w-36 flex flex-col justify-between pl-2 sm:pl-3 border-t sm:border-t-0 sm:border-l border-slate-500">
           <p className="text-right">
             <p className="text-right inline-block text-slate-400 border-l border-b px-1 sm:px-2 rounded-bl border-slate-400">
               {timeAgo(dta.postDate)}
