@@ -46,9 +46,15 @@ git clone https://github.com/ataullah1/Fueled-Student-Client.git
 
 2. Navigate to the project directory:
    ```
-   cd b9a12-client-side-ataullah1
+   cd Fueled-Student-Client
    ```
 3. Install dependencies:
-   `npm install`
+   ```
+   npm install
+   ```
 4. Configure environment variables (e.g., Firebase URI, Stripe API keys) in a `.env` file.
-5. Start the development server: `npm run dev`
+5. Start the development server:
+
+```
+npm run dev
+```
